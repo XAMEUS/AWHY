@@ -28,9 +28,9 @@ public class Dialog {
 
 	public void connect() throws SQLException {
 		if (this.connection != null && !this.connection.isClosed()) {
-			this.connection.close();
 			if (Debugger.isEnabled())
-				System.out.print("close old connection(" + connection.getCatalog() + ") ");
+				System.out.println("close old connection(" + connection.getCatalog() + ") ");
+			this.connection.close();
 		}
 		if (Debugger.isEnabled())
 			System.out.print("DriverManager getConnection(" + url + ") ");
