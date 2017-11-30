@@ -1,0 +1,44 @@
+
+
+import java.util.Locale;
+
+import org.awhy.core.Dialog;
+import org.awhy.ui.Controller;
+import org.awhy.ui.GContainerFX;
+
+import javafx.application.Application;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.stage.Stage;
+
+public class Awhy extends Application {
+	@Override
+	public void start(Stage primaryStage) throws Exception {
+
+		Controller.dialog = new Dialog();
+		
+		Controller.root = new GContainerFX();
+		
+		Scene scene = new Scene((Parent) Controller.root, 1600, 900);
+
+		// setting color to the scene
+		// scene.setFill(Color.BROWN);
+
+		// Setting the title to Stage.
+		primaryStage.setTitle("AWHY");
+		primaryStage.getIcons().add(new Image("img/palm-tree512.png"));
+
+		// Adding the scene to Stage
+		primaryStage.setScene(scene);
+
+		// Displaying the contents of the stage
+		primaryStage.show();
+		
+	}
+
+	public static void main(String args[]) {
+		Locale.setDefault(Locale.ENGLISH);
+		launch(args);
+	}
+}
