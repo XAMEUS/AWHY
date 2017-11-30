@@ -1,5 +1,4 @@
 
-
 import java.util.Locale;
 
 import org.awhy.core.Dialog;
@@ -9,7 +8,6 @@ import org.awhy.ui.GContainerFX;
 import javafx.application.Application;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class Awhy extends Application {
@@ -27,7 +25,6 @@ public class Awhy extends Application {
 
 		// Setting the title to Stage.
 		primaryStage.setTitle("AWHY");
-		primaryStage.getIcons().add(new Image("img/palm-tree512.png"));
 
 		// Adding the scene to Stage
 		primaryStage.setScene(scene);
