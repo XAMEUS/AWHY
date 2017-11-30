@@ -11,10 +11,12 @@ import javafx.scene.Scene;
 import javafx.scene.control.SplitPane;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 
 public class Controller {
 
 	static GConsoleFX console;
+	public static Window mainWindow;
 	public static SplitPane splitPane;
 	public static Node root;
 	public static Dialog dialog;
@@ -35,7 +37,6 @@ public class Controller {
 		Stage s = new Stage();
 		s.setTitle("AWHY - SQL Console");
 		Parent root = new GConsoleFX();
-		s.getIcons().add(new Image("img/palm-tree512.png"));
 		Scene scene = new Scene(root);
 		s.setScene(scene);
 		s.show();
@@ -43,6 +44,10 @@ public class Controller {
 	
 	public static void connect() {
 		GConnectFX.connnect();
+	}
+
+	public static void executeSQLFile() {
+		
 	}
 
 }

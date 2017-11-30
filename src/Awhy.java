@@ -11,11 +11,12 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class Awhy extends Application {
+	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 
 		Controller.dialog = new Dialog();
-		
+		Controller.mainWindow = primaryStage;
 		Controller.root = new GContainerFX();
 		
 		Scene scene = new Scene((Parent) Controller.root, 1600, 900);
