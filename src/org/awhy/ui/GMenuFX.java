@@ -59,7 +59,9 @@ public class GMenuFX extends MenuBar {
 	}
 
 	private void createDatabase() {
+
 		Menu file = new Menu("Databse");
+
 		MenuItem connect = new MenuItem("Connect ");
 		connect.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
@@ -69,14 +71,9 @@ public class GMenuFX extends MenuBar {
 		});
 		file.getItems().add(connect);
 		Menu script = new Menu("SQL Script");
-//		script.setOnAction(new EventHandler<ActionEvent>() {
-//			@Override
-//			public void handle(ActionEvent event) {
-//				Controller.executeSQLFile();
-//			}
-//		});
+
 		MenuItem clear = new MenuItem("Clear");
-		connect.setOnAction(new EventHandler<ActionEvent>() {
+		clear.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
 				System.out.println("TODO : clear");
