@@ -3,6 +3,9 @@ package org.awhy.ui;
 import java.io.File;
 import java.sql.SQLException;
 
+import org.awhy.core.Dialog;
+import org.awhy.ui.tables.VilleTable;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.CheckMenuItem;
@@ -10,11 +13,13 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
+import javafx.scene.control.TableView;
 import javafx.stage.FileChooser;
 
 public class GMenuFX extends MenuBar {
 	public GMenuFX() {
 		this.createFile();
+		this.createView();
 		this.createProfile();
 		this.createDatabase();
 		this.createTools();
@@ -34,6 +39,26 @@ public class GMenuFX extends MenuBar {
 		this.getMenus().add(file);
 	}
 
+	private void createView() {
+		Menu view = new Menu("View");
+		MenuItem villes = new MenuItem("Villes");
+		villes.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				try {
+					if (Controller.dialog == null) {
+						Controller.connect();
+					}
+					Controller.container.setTableView(new VilleTable(Controller.dialog.executeQuery("select * from ville")));
+				} catch (SQLException e) {
+					Controller.alert("SQLException", e);
+				}
+			}
+		});
+		view.getItems().add(villes);
+		this.getMenus().add(view);
+	}
+	
 	private void createProfile() {
 		Menu file = new Menu("Profile");
 		MenuItem customer = new MenuItem("Customer");

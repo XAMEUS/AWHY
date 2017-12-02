@@ -43,7 +43,7 @@ public class GTableFX extends TableView<ObservableList<String>> {
 			if (Debugger.isEnabled())
 				Debugger.println("");
 
-			while (res.next()) {
+			while (!res.isClosed() && res.next()) {
 				ObservableList<String> row = FXCollections.observableArrayList();
 				for (int i = 1; i <= res.getMetaData().getColumnCount(); i++) {
 					row.add(res.getString(i));
