@@ -1,5 +1,6 @@
 package org.awhy.ui;
 
+import java.io.File;
 import java.sql.SQLException;
 
 import org.awhy.core.Dialog;
@@ -9,7 +10,6 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.SplitPane;
-import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 
@@ -30,10 +30,6 @@ public class Controller {
 	}
 
 	public static void showSQLConsole() throws SQLException {
-		if (Controller.dialog == null) {
-			Controller.dialog = new Dialog();
-			Controller.dialog.connect();
-		}
 		Stage s = new Stage();
 		s.setTitle("AWHY - SQL Console");
 		Parent root = new GConsoleFX();
@@ -43,11 +39,15 @@ public class Controller {
 	}
 	
 	public static void connect() {
-		GConnectFX.connnect();
+		try {
+			GConnectFX.connnect();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
-	public static void executeSQLFile() {
-		
+	public static void executeSQLFile(File file) {
+		System.out.println("TODO: executeSQLFile " + file.getAbsolutePath());
 	}
 
 }

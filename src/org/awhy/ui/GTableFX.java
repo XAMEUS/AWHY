@@ -24,6 +24,8 @@ public class GTableFX extends TableView<ObservableList<String>> {
 				Debugger.print("Columns: ");
 			for (int i = 0; i < res.getMetaData().getColumnCount(); i++) {
 				final int j = i;
+				System.out.println(res.getMetaData().getColumnName(i + 1) + ":");
+				System.out.println("    " + res.getMetaData().getColumnType(i + 1) + ":" + res.getMetaData().getColumnLabel(i + 1));
 				TableColumn<ObservableList<String>, String> col = new TableColumn<>(
 						res.getMetaData().getColumnName(i + 1));
 				col.setCellValueFactory(

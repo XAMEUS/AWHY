@@ -1,5 +1,6 @@
 package org.awhy.ui;
 
+import java.io.File;
 import java.sql.SQLException;
 
 import javafx.event.ActionEvent;
@@ -14,6 +15,7 @@ import javafx.stage.FileChooser;
 public class GMenuFX extends MenuBar {
 	public GMenuFX() {
 		this.createFile();
+		this.createProfile();
 		this.createDatabase();
 		this.createTools();
 	}
@@ -28,6 +30,15 @@ public class GMenuFX extends MenuBar {
 			}
 		});
 		file.getItems().add(newFile);
+		// file.getItems().add(new SeparatorMenuItem());
+		this.getMenus().add(file);
+	}
+
+	private void createProfile() {
+		Menu file = new Menu("Profile");
+		MenuItem customer = new MenuItem("Customer");
+		MenuItem admin = new MenuItem("Admin");
+		file.getItems().add(customer);
 		// file.getItems().add(new SeparatorMenuItem());
 		this.getMenus().add(file);
 	}
@@ -93,10 +104,9 @@ public class GMenuFX extends MenuBar {
 			@Override
 			public void handle(ActionEvent event) {
 				FileChooser fileChooser = new FileChooser();
-				fileChooser.setTitle("Open Resource File");
-				fileChooser.showOpenDialog(Controller.mainWindow);
-				System.out.println("TODO : custom");
-				// Controller.dialog...;
+				fileChooser.setTitle("Open SQL file");
+				File file = fileChooser.showOpenDialog(Controller.mainWindow);
+				Controller.executeSQLFile(file);
 			}
 		});
 		script.getItems().add(clear);

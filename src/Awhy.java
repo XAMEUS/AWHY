@@ -1,7 +1,6 @@
 
 import java.util.Locale;
 
-import org.awhy.core.Dialog;
 import org.awhy.ui.Controller;
 import org.awhy.ui.GContainerFX;
 
@@ -15,7 +14,6 @@ public class Awhy extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 
-		Controller.dialog = new Dialog();
 		Controller.mainWindow = primaryStage;
 		Controller.root = new GContainerFX();
 		
