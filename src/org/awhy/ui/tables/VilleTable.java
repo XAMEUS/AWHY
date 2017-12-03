@@ -11,7 +11,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 public class VilleTable extends Table<Ville> {
 
 	public VilleTable(ResultSet res) throws SQLException {
-		super(new Ville("", ""), res);
+		super(new Ville(), res);
 
 		TableColumn<Ville, String> nomVilleCol = new TableColumn<Ville, String>("Ville");
 		nomVilleCol.setCellValueFactory(new PropertyValueFactory<Ville, String>("nomVille"));
