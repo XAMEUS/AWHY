@@ -9,7 +9,6 @@ import javafx.beans.property.SimpleStringProperty;
 public class LieuAVisiter implements Object {
 
 	public final SimpleStringProperty nomLieu;
-
 	public final SimpleStringProperty ville;
 	public final SimpleStringProperty pays;
 	public final SimpleStringProperty adresseLieu;

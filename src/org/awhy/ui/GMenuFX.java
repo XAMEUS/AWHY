@@ -5,6 +5,7 @@ import java.sql.SQLException;
 
 import org.awhy.core.Dialog;
 import org.awhy.ui.tables.LieuAVisiterTable;
+import org.awhy.ui.tables.ReserveLieuTable;
 import org.awhy.ui.tables.VilleTable;
 
 import javafx.event.ActionEvent;
@@ -69,6 +70,24 @@ public class GMenuFX extends MenuBar {
 			}
 		});
 		view.getItems().add(lav);
+		
+		Menu reservations = new Menu("Reservations");
+		MenuItem lavR = new MenuItem("Lieux à visiter");
+		lavR.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				try {
+					Controller.container
+							.setTableView(new ReserveLieuTable(Controller.executeQuery("select * from reservevisite")));
+				} catch (SQLException e) {
+					Controller.alert("SQLException", e);
+				}
+			}
+		});
+		reservations.getItems().add(lavR);
+		view.getItems().add(reservations);
+		
+		
 		this.getMenus().add(view);
 	}
 
