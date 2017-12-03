@@ -1,5 +1,9 @@
 package org.awhy.core;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -46,6 +50,37 @@ public class Dialog {
 		ResultSet res = stmt.executeQuery(sql);
 		if (Debugger.isEnabled())
 			Debugger.println(" - OK");
+		return res;
+	}
+	
+	public ResultSet executeFile(String path) throws SQLException, IOException {
+		if (Debugger.isEnabled())
+			Debugger.print("executeFile: " + path + "\n");
+        StringBuffer sqlFile = new StringBuffer();
+        String tmpFile = new String();
+        BufferedReader file = new BufferedReader(new FileReader(new File(path)));
+        while(true) {
+        	tmpFile = file.readLine();
+        	if(tmpFile == null) break;
+        	for(int i = 0; i < tmpFile.length() - 1; i++) {
+        		if(tmpFile.charAt(i) == '-' && tmpFile.charAt(i+1) == '-') {
+        			if(i > 0)
+        				tmpFile = tmpFile.substring(0, i-1);
+        			else
+        				tmpFile = null;
+    				break;
+        		}
+        	}
+        	if(tmpFile != null)
+        		sqlFile.append(tmpFile);
+        }
+        file.close();
+        String[] queries = sqlFile.toString().split(";");
+        for(String query : queries) {
+        	this.executeQuery(query);
+        }
+		if (Debugger.isEnabled())
+			Debugger.println("File - OK\n");
 		return res;
 	}
 
