@@ -3,6 +3,7 @@ package org.awhy.ui;
 import java.io.File;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import org.awhy.core.Dialog;
@@ -89,6 +90,12 @@ public class Controller {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public static ResultSet executeQuery(String sql) throws SQLException {
+		if (Controller.dialog == null)
+			Controller.connect();
+		return Controller.dialog.executeQuery(sql);
 	}
 
 	public static void executeSQLFile(File file) {

@@ -4,6 +4,7 @@ import java.io.File;
 import java.sql.SQLException;
 
 import org.awhy.core.Dialog;
+import org.awhy.ui.tables.LieuAVisiterTable;
 import org.awhy.ui.tables.VilleTable;
 
 import javafx.event.ActionEvent;
@@ -41,24 +42,36 @@ public class GMenuFX extends MenuBar {
 
 	private void createView() {
 		Menu view = new Menu("View");
+
 		MenuItem villes = new MenuItem("Villes");
 		villes.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
 				try {
-					if (Controller.dialog == null) {
-						Controller.connect();
-					}
-					Controller.container.setTableView(new VilleTable(Controller.dialog.executeQuery("select * from ville")));
+					Controller.container.setTableView(new VilleTable(Controller.executeQuery("select * from ville")));
 				} catch (SQLException e) {
 					Controller.alert("SQLException", e);
 				}
 			}
 		});
 		view.getItems().add(villes);
+
+		MenuItem lav = new MenuItem("Lieux à visiter");
+		lav.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				try {
+					Controller.container
+							.setTableView(new LieuAVisiterTable(Controller.executeQuery("select * from lieuavisiter")));
+				} catch (SQLException e) {
+					Controller.alert("SQLException", e);
+				}
+			}
+		});
+		view.getItems().add(lav);
 		this.getMenus().add(view);
 	}
-	
+
 	private void createProfile() {
 		Menu file = new Menu("Profile");
 		MenuItem customer = new MenuItem("Customer");
