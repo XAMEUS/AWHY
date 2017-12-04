@@ -29,10 +29,20 @@ END;
 /
 
 BEGIN
-    EXECUTE IMMEDIATE 'DROP TABLE Paiement';
+    EXECUTE IMMEDIATE 'DROP TABLE Confirme';
 EXCEPTION
     WHEN OTHERS THEN
       IF SQLCODE != -942 THEN
+         RAISE;
+      END IF;
+END;
+/
+
+BEGIN
+    EXECUTE IMMEDIATE 'DROP SEQUENCE numDossier';
+EXCEPTION
+   WHEN OTHERS THEN
+       IF SQLCODE != -2289 THEN
          RAISE;
       END IF;
 END;
@@ -43,6 +53,16 @@ BEGIN
 EXCEPTION
     WHEN OTHERS THEN
       IF SQLCODE != -942 THEN
+         RAISE;
+      END IF;
+END;
+/
+
+BEGIN
+    EXECUTE IMMEDIATE 'DROP SEQUENCE idClient';
+EXCEPTION
+   WHEN OTHERS THEN
+      IF SQLCODE != -2289 THEN
          RAISE;
       END IF;
 END;
@@ -67,17 +87,6 @@ EXCEPTION
       END IF;
 END;
 /
-
-BEGIN
-    EXECUTE IMMEDIATE 'DROP SEQUENCE sequence_name';
-EXCEPTION
-    WHEN OTHERS THEN
-      IF SQLCODE != -942 THEN
-         RAISE;
-      END IF;
-END;
-/
-
 
 BEGIN
     EXECUTE IMMEDIATE 'DROP TABLE Etapes';
@@ -191,11 +200,13 @@ create table Hotel(
     FOREIGN KEY (ville, pays) references Ville(nomVille, pays)
 );
 
+CREATE SEQUENCE idClient MINVALUE 0 INCREMENT BY 1 NOCACHE;
+
 create table Client(
     idClient integer NOT NULL PRIMARY KEY,
     nomClient char(20) NOT NULL,
     prenomClient char(20) NOT NULL,
-    typeClient char NOT NULL check(typeClient in ('société', 'groupe', 'individuel')),
+    typeClient char NOT NULL check(typeClient in ('societe', 'groupe', 'individuel')),
     adresseClient varchar(100) NOT NULL,
     emailClient char(50) NOT NULL,
     telClient char(20) NOT NULL,
@@ -205,16 +216,16 @@ create table Client(
 CREATE SEQUENCE numDossier MINVALUE 0 INCREMENT BY 1 NOCACHE;
 
 create table Simulation(
-    numDossier integer NOT NULL PRIMARY KEY AUTO_INCREMENT
+    numDossier integer NOT NULL PRIMARY KEY
 );
 
-create table Reservation(
+create table Confirme(
     numDossier integer NOT NULL,
     idClient integer NOT NULL,
     datePaiement date NOT NULL,
     infoPaiement varchar(1000),
     PRIMARY KEY (numDossier, idClient),
-    FOREIGN KEY (numDossier) references Simulation(numDossier)
+    FOREIGN KEY (numDossier) references Simulation(numDossier),
     FOREIGN KEY (idClient) references Client(idClient)
 );
 
