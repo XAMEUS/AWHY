@@ -29,10 +29,10 @@ lieux = ["musée Histoire", "musée peintures", "musée sculptures",
          "chateau fort", "chateau pas fort", "cirque", "reserve naturelle"]
 
 #Descriptif des lieux à visiter
-dico_description = {"musée Histoire":"musée de renommée mondiale permettant\
- de diversifier les connaissances historiques sur le pays visité",
-"musée peintures":"Présentation de diverses oeuvres artistiques parmi les plus\
- connues du pays", "musée sculptures":"Présentation de sculptures parmi les plus\
+dico_description = {"musée Histoire":"musée de renommée mondiale permettant de\
+ diversifier ses connaissances historiques","musée peintures":"Présentation de\
+ diverses oeuvres artistiques parmi les plus connues du pays",
+"musée sculptures":"Présentation de sculptures parmi les plus\
  connues du pays", "une belle statue":"Statue de personnage historique",
 "une ruine":"vestige datant de la période de suprématie Romaine",
 "un jardin fleuri":"Jardin de renommée mondiale. Sa splendeur rivalise avec la\
@@ -43,9 +43,9 @@ dico_description = {"musée Histoire":"musée de renommée mondiale permettant\
  rôle historique. Nous vous laissons découvrir pourquoi", "haut bulding":"\
  Edifice moderne, prouesse architectural du pays", "chateau fort":"Pont-levis,\
  douves et meurtrières, entrez dans un univers médiéval",
- "chateau pas fort":"un chateau on ne peut plus quelconque. Allez le visiter !",
- "cirque":"cratère causé par une météorite rarissime! Très impressionant",
- "reserve naturelle":"Confrontez vous à la faune et la flaure unique du pays"}
+"chateau pas fort":"un chateau on ne peut plus quelconque. Allez le visiter !",
+"cirque":"cratère causé par une météorite rarissime! Très impressionant",
+"reserve naturelle":"Confrontez vous à la faune et la flaure unique du pays"}
 
 #Descriptif des circuits
 descriptif_circuit = ["Un voyage dépaysant ! Découvrez des lieux uniques",
@@ -82,4 +82,4 @@ hotels = ["Sofitel", "Ibis", "Campanile", "Premiere classe", "hotel F1",
 "SEH", "Best Western", "Contact Hôtel", "Citôtel"]
 
 #Nombre de jours par mois
-mois = {1:31,2:28,3:31,4:30,5:31,6:30,7:31,8:31,9:30,10:31,11:30,12:31}
+mois = [["JAN",31],["FEV",28],["MAR",31],["APR",30],["MAY",31],["JUN",30],["JUL",31],["AUG",31],["SEP",30],["OCT",31],["NOV",30],["DEC",31]]
