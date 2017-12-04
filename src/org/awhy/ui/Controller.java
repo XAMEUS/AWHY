@@ -102,7 +102,7 @@ public class Controller {
 	public static void executeSQLFile(File file) throws SQLException, IOException {
 		if (Controller.dialog == null)
 			Controller.connect();
-		Controller.dialog.executeFile(file.getPath());
+		Controller.dialog.executeFile(file.getPath(), true);
 	}
 
 }

@@ -145,26 +145,7 @@ public class GMenuFX extends MenuBar {
 		clear.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				String[] drops = {
-					"DROP TABLE IF EXISTS ReserveHotel",
-					"DROP TABLE IF EXISTS ReserveCircuit",
-					"DROP TABLE IF EXISTS Paiement",
-					"DROP TABLE IF EXISTS Simulation",
-					"DROP TABLE IF EXISTS Client",
-					"DROP TABLE IF EXISTS Hotel",
-					"DROP TABLE IF EXISTS Etapes",
-					"DROP TABLE IF EXISTS DateCircuit",
-					"DROP TABLE IF EXISTS Circuit",
-					"DROP TABLE IF EXISTS LieuAvisiter",
-					"DROP TABLE IF EXISTS Ville",
-				};
-				try {
-					Controller.dialog.executeFile("sql/bdd.sql");
-				} catch (SQLException e) {
-					Controller.alert("SQLException", e);
-				} catch (IOException e) {
-					Controller.alert("IOException", e);
-				}
+				System.out.println("TODO : clear");
 			}
 		});
 		MenuItem populate = new MenuItem("Populate");
