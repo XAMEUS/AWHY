@@ -150,7 +150,7 @@ create table Circuit(
     idCircuit char(5) NOT NULL PRIMARY KEY,
     descriptif char(50) NOT NULL,
     villeDepart char(20) NOT NULL,
-    paysDepart char(20) NOT NULL,Avec les séquences il faut faire dans la même transaction un NEXTVAL, puis CURRVAL à chaque fois que la valeur utilisée par la requête ayant utilisé le NEXTVAL est nécessaire.
+    paysDepart char(20) NOT NULL,
     villeArrivee char(20) NOT NULL,
     paysArrivee char(20) NOT NULL,
     nbJoursTotal integer NOT NULL check(nbJoursTotal > 0),
