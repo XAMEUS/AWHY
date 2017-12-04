@@ -22,8 +22,8 @@ def main():
     module.peupler_LieuAvisiter(fichier)
     module.peupler_Hotel(fichier)
     module.creer_circuit()
-    module.peupler_DateCircuit(fichier)
     module.peupler_Etapes_et_Circuit(fichier)
+    module.peupler_DateCircuit(fichier)
 
     fichier.close()
 
