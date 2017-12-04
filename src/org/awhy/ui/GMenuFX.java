@@ -144,7 +144,7 @@ public class GMenuFX extends MenuBar {
 
 	private void createDatabase() {
 
-		Menu file = new Menu("Databse");
+		Menu file = new Menu("Database");
 
 		MenuItem connect = new MenuItem("Connect ");
 		connect.setOnAction(new EventHandler<ActionEvent>() {
