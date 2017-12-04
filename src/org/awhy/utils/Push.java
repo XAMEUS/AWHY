@@ -10,7 +10,7 @@ public class Push {
 		Dialog bdd;
 		bdd = new Dialog();
 		bdd.connect();
-		bdd.executeFile("/user/2/bouvipie/aa.sql");
+		bdd.executeFile("/user/2/bouvipie/aa.sql", false);
 	}
 
 }

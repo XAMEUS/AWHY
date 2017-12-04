@@ -53,7 +53,7 @@ public class Dialog {
 		return res;
 	}
 	
-	public ResultSet executeFile(String path) throws IOException {
+	public ResultSet executeFile(String path, boolean continueOnError) throws SQLException, IOException {
 		if (Debugger.isEnabled())
 			Debugger.print("executeFile: " + path + "\n");
         StringBuffer sqlFile = new StringBuffer();
@@ -81,7 +81,10 @@ public class Dialog {
         		this.executeQuery(query);
         	}
         	catch (SQLException e) {
-        		Debugger.println(e + "\n");
+        		if(continueOnError)
+        			Debugger.println(e + "\n");
+        		else
+        			throw new SQLException(e);
         	}
         		
         }
