@@ -1,6 +1,7 @@
 package org.awhy.ui;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.sql.ResultSet;
@@ -98,8 +99,10 @@ public class Controller {
 		return Controller.dialog.executeQuery(sql);
 	}
 
-	public static void executeSQLFile(File file) {
-		System.out.println("TODO: executeSQLFile " + file.getAbsolutePath());
+	public static void executeSQLFile(File file) throws SQLException, IOException {
+		if (Controller.dialog == null)
+			Controller.connect();
+		Controller.dialog.executeFile(file.getPath());
 	}
 
 }

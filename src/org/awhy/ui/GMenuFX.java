@@ -1,6 +1,7 @@
 package org.awhy.ui;
 
 import java.io.File;
+import java.io.IOException;
 import java.sql.SQLException;
 
 import org.awhy.core.Dialog;
@@ -144,8 +145,26 @@ public class GMenuFX extends MenuBar {
 		clear.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				System.out.println("TODO : clear");
-				// Controller.dialog...;
+				String[] drops = {
+					"DROP TABLE IF EXISTS ReserveHotel",
+					"DROP TABLE IF EXISTS ReserveCircuit",
+					"DROP TABLE IF EXISTS Paiement",
+					"DROP TABLE IF EXISTS Simulation",
+					"DROP TABLE IF EXISTS Client",
+					"DROP TABLE IF EXISTS Hotel",
+					"DROP TABLE IF EXISTS Etapes",
+					"DROP TABLE IF EXISTS DateCircuit",
+					"DROP TABLE IF EXISTS Circuit",
+					"DROP TABLE IF EXISTS LieuAvisiter",
+					"DROP TABLE IF EXISTS Ville",
+				};
+				try {
+					Controller.dialog.executeFile("sql/bdd.sql");
+				} catch (SQLException e) {
+					Controller.alert("SQLException", e);
+				} catch (IOException e) {
+					Controller.alert("IOException", e);
+				}
 			}
 		});
 		MenuItem populate = new MenuItem("Populate");
@@ -163,7 +182,13 @@ public class GMenuFX extends MenuBar {
 				FileChooser fileChooser = new FileChooser();
 				fileChooser.setTitle("Open SQL file");
 				File file = fileChooser.showOpenDialog(Controller.mainWindow);
-				Controller.executeSQLFile(file);
+				try {
+					Controller.executeSQLFile(file);
+				} catch (SQLException e) {
+					Controller.alert("SQLException", e);
+				} catch (IOException e) {
+					Controller.alert("IOException", e);
+				}
 			}
 		});
 		script.getItems().add(clear);
