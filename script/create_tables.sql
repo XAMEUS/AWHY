@@ -192,17 +192,17 @@ create table Client(
 );
 
 create table Simulation(
-    numDossier integer NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    idClient integer NOT NULL,
-    FOREIGN KEY (idClient) references Client(idClient)
+    numDossier integer NOT NULL PRIMARY KEY AUTO_INCREMENT
 );
 
-create table Paiement(
+create table Reservation(
     numDossier integer NOT NULL,
+    idClient integer NOT NULL,
     datePaiement date NOT NULL,
     infoPaiement varchar(1000),
-    PRIMARY KEY (numDossier, datePaiement),
+    PRIMARY KEY (numDossier, idClient),
     FOREIGN KEY (numDossier) references Simulation(numDossier)
+    FOREIGN KEY (idClient) references Client(idClient)
 );
 
 create table ReserveCircuit(
