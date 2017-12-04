@@ -185,7 +185,7 @@ create table Client(
     nomClient char(20) NOT NULL,
     prenomClient char(20) NOT NULL,
     typeClient char NOT NULL check(typeClient in ('société', 'groupe', 'individuel')),
-    adresseClient char(100) NOT NULL,
+    adresseClient varchar(100) NOT NULL,
     emailClient char(50) NOT NULL,
     telClient char(20) NOT NULL,
     anneeEnregistrement integer NOT NULL
