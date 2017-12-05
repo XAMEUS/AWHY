@@ -1,0 +1,14 @@
+DROP TABLE ReserveHotel;
+DROP TABLE ReserveVisite;
+DROP TABLE ReserveCircuit;
+DROP TABLE Confirme;
+DROP SEQUENCE numDossier;
+DROP TABLE Simulation;
+DROP SEQUENCE idClient;
+DROP TABLE Client;
+DROP TABLE Hotel;
+DROP TABLE Etapes;
+DROP TABLE DateCircuit;
+DROP TABLE Circuit;
+DROP TABLE LieuAvisiter;
+DROP TABLE Ville;

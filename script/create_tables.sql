@@ -29,7 +29,7 @@ END;
 /
 
 BEGIN
-    EXECUTE IMMEDIATE 'DROP TABLE Confirme';
+    EXECUTE IMMEDIATE 'DROP TABLE Reservation';
 EXCEPTION
     WHEN OTHERS THEN
       IF SQLCODE != -942 THEN
@@ -219,12 +219,11 @@ create table Simulation(
     numDossier integer NOT NULL PRIMARY KEY
 );
 
-create table Confirme(
-    numDossier integer NOT NULL,
-    idClient integer NOT NULL,
+create table Reservation(
+    numDossier integer NOT NULL PRIMARY KEY,
     datePaiement date NOT NULL,
     infoPaiement varchar(1000),
-    PRIMARY KEY (numDossier, idClient),
+    idClient integer NOT NULL,
     FOREIGN KEY (numDossier) references Simulation(numDossier),
     FOREIGN KEY (idClient) references Client(idClient)
 );
