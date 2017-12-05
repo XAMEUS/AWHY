@@ -1,5 +1,6 @@
 package org.awhy.core.objects;
 
+import java.sql.Connection;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -36,7 +37,6 @@ public class ReserveVisite implements Object {
 
 	@Override
 	public Object createFromSQL(ResultSet res) throws SQLException {
-		Date d = res.getDate(1);
 		return new ReserveVisite(res.getString(1), res.getString(2), res.getString(3), res.getInt(4), res.getDate(5), res.getInt(6));
 	}
 
@@ -63,6 +63,18 @@ public class ReserveVisite implements Object {
 
 	public Integer getNbPersonnesVisite() {
 		return nbPersonnesVisite.get();
+	}
+
+	@Override
+	public Object insertSQL(Connection c) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object createFromSQL(Connection c) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 

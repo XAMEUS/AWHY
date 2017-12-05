@@ -44,8 +44,7 @@ public class GMenuFX extends MenuBar {
 				Controller.newFile();
 			}
 		});
-		file.getItems().add(newFile);		this.container.getItems().remove(this.paneLeft);
-		this.paneLeft = null;
+		file.getItems().add(newFile);
 
 		// file.getItems().add(new SeparatorMenuItem());
 		this.getMenus().add(file);
@@ -95,26 +94,6 @@ public class GMenuFX extends MenuBar {
 				}
 			}
 		});
-<<<<<<< HEAD
-		view.getItems().add(etapes);
-
-//		MenuItem hotels = new MenuItem("Hotels");
-//		hotels.setOnAction(new EventHandler<ActionEvent>() {
-//			@Override=======
-
-//			public void handle(ActionEvent event) {
-//			Controller.container.rmPane();
-//				try {
-//					Controller.container.setTableView(new VilleTable(Controller.executeQuery("select * from Hotel")));
-//				} catch (SQLException e) {
-//					Controller.alert("SQLException", e);
-//				}
-//			}
-//		});
-//		view.getItems().add(hotels);
-=======
-		view.getItems().add(hotels);
->>>>>>> 37662840ebc248845ad1596b235f567d3851ef77
 
 		MenuItem circuits = new MenuItem("Circuits");
 		circuits.setOnAction(new EventHandler<ActionEvent>() {

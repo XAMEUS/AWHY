@@ -1,5 +1,6 @@
 package org.awhy.core.objects;
 
+import java.sql.Connection;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -41,5 +42,17 @@ public class DateCircuit implements Object {
 
 	public Integer getNbPersonnes() {
 		return nbPersonnes.get();
+	}
+
+	@Override
+	public Object insertSQL(Connection c) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object createFromSQL(Connection c) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

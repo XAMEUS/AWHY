@@ -1,5 +1,6 @@
 package org.awhy.core.objects;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -76,4 +77,16 @@ public class Circuit implements Object {
   public Integer getPrixCircuit() {
 		return prixCircuit.get();
 	}
+
+@Override
+public Object insertSQL(Connection c) throws SQLException {
+	// TODO Auto-generated method stub
+	return null;
+}
+
+@Override
+public Object createFromSQL(Connection c) throws SQLException {
+	// TODO Auto-generated method stub
+	return null;
+}
 }
