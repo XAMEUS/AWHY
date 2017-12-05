@@ -73,7 +73,40 @@ public class Circuit implements Object {
 		return nbJoursTotal.get();
 	}
 
-  public Integer getPrixCircuit() {
+  	public Integer getPrixCircuit() {
 		return prixCircuit.get();
+	}
+
+
+  	public String setIdCircuit(String idCircuit) {
+		this.idCircuit.set(idCircuit);
+	}
+
+	public String setDescriptif(String descriptif) {
+		this.descriptif.set(descriptif);
+	}
+
+	public String setVilleDepart(String villeDepart) {
+		this.villeDepart.set(villeDepart);
+	}
+
+	public String setPaysDepart(String paysDepart) {
+		this.paysDepart.set(paysDepart);
+	}
+
+	public String setVilleArrivee(String villeArrivee) {
+		this.villeArrivee.set(villeArrivee);
+	}
+
+	public String setPaysArrivee(String paysArrivee) {
+		this.paysArrivee.set(paysArrivee);
+	}
+
+	public Integer setNbJoursTotal(Integer nbJoursTotal) {
+		this.nbJoursTotal.set(nbJoursTotal);
+	}
+
+  	public Integer setPrixCircuit(Integer prixCircuit) {
+		this.prixCircuit.set(prixCircuit);
 	}
 }
