@@ -11,6 +11,7 @@ import org.awhy.ui.tables.EtapesTable;
 import org.awhy.ui.tables.HotelTable;
 import org.awhy.ui.tables.LieuAVisiterTable;
 import org.awhy.ui.tables.ReserveVisiteTable;
+import org.awhy.ui.tables.SimulationTable;
 import org.awhy.ui.tables.VilleTable;
 
 import javafx.event.ActionEvent;
@@ -133,13 +134,28 @@ public class GMenuFX extends MenuBar {
 			public void handle(ActionEvent event) {
 				try {
 					Controller.container
-							.setTableView(new ClientTable(Controller.executeQuery("select * from client")));
+							.setTableView(new ClientTable(Controller.executeQuery("select * from Client")));
 				} catch (SQLException e) {
 					Controller.alert("SQLException", e);
 				}
 			}
 		});
 		view.getItems().add(clients);
+		
+		MenuItem simulations = new MenuItem("Simulations");
+		simulations.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				try {
+					Controller.container
+							.setTableView(new SimulationTable(Controller.executeQuery("select * from Simulation")));
+				} catch (SQLException e) {
+					Controller.alert("SQLException", e);
+				}
+			}
+		});
+		view.getItems().add(simulations);
+		
 		
 		Menu reservations = new Menu("Reservations");
 		MenuItem lavR = new MenuItem("Lieux à visiter");
