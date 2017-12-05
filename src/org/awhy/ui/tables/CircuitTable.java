@@ -5,8 +5,6 @@ import java.sql.SQLException;
 
 import org.awhy.core.objects.Circuit;
 
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
 
