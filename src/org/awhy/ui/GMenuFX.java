@@ -154,25 +154,8 @@ public class GMenuFX extends MenuBar {
 			}
 		});
 		file.getItems().add(connect);
-		Menu script = new Menu("SQL Script");
-
-		MenuItem clear = new MenuItem("Clear");
-		clear.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent event) {
-				System.out.println("TODO : clear");
-			}
-		});
-		MenuItem populate = new MenuItem("Populate");
-		populate.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent event) {
-				System.out.println("TODO : populate");
-				// Controller.dialog...;
-			}
-		});
-		MenuItem custom = new MenuItem("Custom");
-		custom.setOnAction(new EventHandler<ActionEvent>() {
+		MenuItem script = new MenuItem("SQL Script");
+		script.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
 				FileChooser fileChooser = new FileChooser();
@@ -187,10 +170,6 @@ public class GMenuFX extends MenuBar {
 				}
 			}
 		});
-		script.getItems().add(clear);
-		script.getItems().add(populate);
-		script.getItems().add(new SeparatorMenuItem());
-		script.getItems().add(custom);
 		file.getItems().add(script);
 		this.getMenus().add(file);
 	}
