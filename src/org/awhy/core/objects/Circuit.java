@@ -79,35 +79,47 @@ public class Circuit implements Object {
 	}
 
 
-  	public String setIdCircuit(String idCircuit) {
+  	public void setIdCircuit(String idCircuit) {
 		this.idCircuit.set(idCircuit);
 	}
 
-	public String setDescriptif(String descriptif) {
+	public void setDescriptif(String descriptif) {
 		this.descriptif.set(descriptif);
 	}
 
-	public String setVilleDepart(String villeDepart) {
+	public void setVilleDepart(String villeDepart) {
 		this.villeDepart.set(villeDepart);
 	}
 
-	public String setPaysDepart(String paysDepart) {
+	public void setPaysDepart(String paysDepart) {
 		this.paysDepart.set(paysDepart);
 	}
 
-	public String setVilleArrivee(String villeArrivee) {
+	public void setVilleArrivee(String villeArrivee) {
 		this.villeArrivee.set(villeArrivee);
 	}
 
-	public String setPaysArrivee(String paysArrivee) {
+	public void setPaysArrivee(String paysArrivee) {
 		this.paysArrivee.set(paysArrivee);
 	}
 
-	public Integer setNbJoursTotal(Integer nbJoursTotal) {
+	public void setNbJoursTotal(Integer nbJoursTotal) {
 		this.nbJoursTotal.set(nbJoursTotal);
 	}
 
-  	public Integer setPrixCircuit(Integer prixCircuit) {
+  	public void setPrixCircuit(Integer prixCircuit) {
 		this.prixCircuit.set(prixCircuit);
+	}
+
+	@Override
+	public Object insertSQL(Connection c) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object createFromSQL(Connection c) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
