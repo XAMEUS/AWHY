@@ -39,7 +39,7 @@ public class ReserveVisite implements Object {
 		Date d = res.getDate(1);
 		return new ReserveVisite(res.getString(1), res.getString(2), res.getString(3), res.getInt(4), res.getDate(5), res.getInt(6));
 	}
-	
+
 
 	public String getNomLieu() {
 		return nomLieu.get();
@@ -57,7 +57,7 @@ public class ReserveVisite implements Object {
 		return numDossier.get();
 	}
 
-	public Date getDescriptifLieu() {
+	public Date getDateVisite() {
 		return dateVisite;
 	}
 
@@ -65,5 +65,5 @@ public class ReserveVisite implements Object {
 		return nbPersonnesVisite.get();
 	}
 
-	
+
 }
