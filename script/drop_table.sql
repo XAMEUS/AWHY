@@ -1,7 +1,7 @@
 DROP TABLE ReserveHotel;
 DROP TABLE ReserveVisite;
 DROP TABLE ReserveCircuit;
-DROP TABLE Confirme;
+DROP TABLE Reservation;
 DROP SEQUENCE numDossier;
 DROP TABLE Simulation;
 DROP SEQUENCE idClient;
