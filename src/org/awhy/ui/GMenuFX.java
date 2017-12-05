@@ -51,7 +51,7 @@ public class GMenuFX extends MenuBar {
 			@Override
 			public void handle(ActionEvent event) {
 				try {
-					Controller.container.setTableView(new VilleTable(Controller.executeQuery("select * from ville")));
+					Controller.container.setTableView(new VilleTable(Controller.executeQuery("select * from Ville")));
 				} catch (SQLException e) {
 					Controller.alert("SQLException", e);
 				}
@@ -65,14 +65,67 @@ public class GMenuFX extends MenuBar {
 			public void handle(ActionEvent event) {
 				try {
 					Controller.container
-							.setTableView(new LieuAVisiterTable(Controller.executeQuery("select * from lieuavisiter")));
+							.setTableView(new LieuAVisiterTable(Controller.executeQuery("select * from LieuAvisiter")));
 				} catch (SQLException e) {
 					Controller.alert("SQLException", e);
 				}
 			}
 		});
 		view.getItems().add(lav);
+		
+		MenuItem etapes = new MenuItem("Etapes");
+		lav.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				try {
+					Controller.container
+							.setTableView(new LieuAVisiterTable(Controller.executeQuery("select * from Etapes")));
+				} catch (SQLException e) {
+					Controller.alert("SQLException", e);
+				}
+			}
+		});
+		view.getItems().add(etapes);
+		
+		MenuItem hotels = new MenuItem("Hotels");
+		hotels.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				try {
+					Controller.container.setTableView(new VilleTable(Controller.executeQuery("select * from Hotel")));
+				} catch (SQLException e) {
+					Controller.alert("SQLException", e);
+				}
+			}
+		});
+		view.getItems().add(hotels);
 
+		MenuItem circuits = new MenuItem("Circuits");
+		circuits.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				try {
+					Controller.container.setTableView(new VilleTable(Controller.executeQuery("select * from Circuit")));
+				} catch (SQLException e) {
+					Controller.alert("SQLException", e);
+				}
+			}
+		});
+		view.getItems().add(circuits);
+		
+		MenuItem datecircuits = new MenuItem("Planning circuits");
+		circuits.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				try {
+					Controller.container.setTableView(new VilleTable(Controller.executeQuery("select * from DateCircuit")));
+				} catch (SQLException e) {
+					Controller.alert("SQLException", e);
+				}
+			}
+		});
+		view.getItems().add(datecircuits);
+		
 		MenuItem clients = new MenuItem("Clients");
 		clients.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
@@ -94,15 +147,42 @@ public class GMenuFX extends MenuBar {
 			public void handle(ActionEvent event) {
 				try {
 					Controller.container
-							.setTableView(new ReserveLieuTable(Controller.executeQuery("select * from reservevisite")));
+							.setTableView(new ReserveLieuTable(Controller.executeQuery("select * from ReserveVisite")));
 				} catch (SQLException e) {
 					Controller.alert("SQLException", e);
 				}
 			}
 		});
 		reservations.getItems().add(lavR);
-		view.getItems().add(reservations);
 		
+		MenuItem HotelsR = new MenuItem("Hotels");
+		lavR.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				try {
+					Controller.container
+							.setTableView(new ReserveLieuTable(Controller.executeQuery("select * from ReserveHotel")));
+				} catch (SQLException e) {
+					Controller.alert("SQLException", e);
+				}
+			}
+		});
+		reservations.getItems().add(HotelsR);
+		
+		MenuItem CircuitsR = new MenuItem("Circuits");
+		lavR.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				try {
+					Controller.container
+							.setTableView(new ReserveLieuTable(Controller.executeQuery("select * from ReserveCircuit")));
+				} catch (SQLException e) {
+					Controller.alert("SQLException", e);
+				}
+			}
+		});
+		reservations.getItems().add(CircuitsR);
+		view.getItems().add(reservations);
 		
 		this.getMenus().add(view);
 	}
