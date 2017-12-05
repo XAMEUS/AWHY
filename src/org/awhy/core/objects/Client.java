@@ -52,13 +52,13 @@ public class Client implements Object {
 		String insert = "INSERT INTO " + dbName
 				+ "VALUES " + "(idClient.nextval, ?, ?, ?, ?, ?, ?, ?);";
 		PreparedStatement preparedStatementInsert = c.prepareStatement(insert);
-		preparedStatementInsert.setString(2, this.getNomClient());
-		preparedStatementInsert.setString(3, this.getPrenomClient());
-		preparedStatementInsert.setString(4, this.getTypeClient());
-		preparedStatementInsert.setString(5, this.getAdresseClient());
-		preparedStatementInsert.setString(6, this.getEmailClient());
-		preparedStatementInsert.setString(7, this.getTelClient());
-		preparedStatementInsert.setInt(8, this.getAnneeEnregistrement());
+		preparedStatementInsert.setString(1, this.getNomClient());
+		preparedStatementInsert.setString(2, this.getPrenomClient());
+		preparedStatementInsert.setString(3, this.getTypeClient());
+		preparedStatementInsert.setString(4, this.getAdresseClient());
+		preparedStatementInsert.setString(5, this.getEmailClient());
+		preparedStatementInsert.setString(6, this.getTelClient());
+		preparedStatementInsert.setInt(7, this.getAnneeEnregistrement());
 		preparedStatementInsert.executeUpdate();
 	}
 
