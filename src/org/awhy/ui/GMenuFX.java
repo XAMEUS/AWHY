@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 import org.awhy.core.Dialog;
+import org.awhy.ui.pane.GAccordionFX;
 import org.awhy.ui.tables.CircuitTable;
 import org.awhy.ui.tables.ClientTable;
 import org.awhy.ui.tables.DateCircuitTable;
@@ -44,6 +45,7 @@ public class GMenuFX extends MenuBar {
 			}
 		});
 		file.getItems().add(newFile);
+
 		// file.getItems().add(new SeparatorMenuItem());
 		this.getMenus().add(file);
 	}
@@ -55,6 +57,7 @@ public class GMenuFX extends MenuBar {
 		villes.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
+				Controller.container.rmPane();
 				try {
 					Controller.container.setTableView(new VilleTable(Controller.executeQuery("select * from Ville")));
 				} catch (SQLException e) {
@@ -68,6 +71,7 @@ public class GMenuFX extends MenuBar {
 		lav.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
+				Controller.container.rmPane();
 				try {
 					Controller.container.setTableView(new LieuAVisiterTable(Controller.executeQuery("select * from LieuAvisiter")));
 				} catch (SQLException e) {
@@ -76,12 +80,13 @@ public class GMenuFX extends MenuBar {
 			}
 		});
 		view.getItems().add(lav);
-		
-		
+
+
 		MenuItem hotels = new MenuItem("Hotels");
 		hotels.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
+				Controller.container.rmPane();
 				try {
 					Controller.container.setTableView(new HotelTable(Controller.executeQuery("select * from Hotel")));
 				} catch (SQLException e) {
@@ -89,12 +94,12 @@ public class GMenuFX extends MenuBar {
 				}
 			}
 		});
-		view.getItems().add(hotels);
 
 		MenuItem circuits = new MenuItem("Circuits");
 		circuits.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
+				Controller.container.rmPane();
 				try {
 					Controller.container.setTableView(new CircuitTable(Controller.executeQuery("select * from Circuit")));
 				} catch (SQLException e) {
@@ -103,7 +108,6 @@ public class GMenuFX extends MenuBar {
 			}
 		});
 		view.getItems().add(circuits);
-		
 		MenuItem etapes = new MenuItem("Etapes");
 		etapes.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
@@ -116,7 +120,7 @@ public class GMenuFX extends MenuBar {
 			}
 		});
 		view.getItems().add(etapes);
-		
+
 		MenuItem datecircuits = new MenuItem("Date Circuits");
 		datecircuits.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
@@ -129,11 +133,11 @@ public class GMenuFX extends MenuBar {
 			}
 		});
 		view.getItems().add(datecircuits);
-		
 		MenuItem clients = new MenuItem("Clients");
 		clients.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
+				Controller.container.rmPane();
 				try {
 					Controller.container
 							.setTableView(new ClientTable(Controller.executeQuery("select * from Client")));
@@ -143,7 +147,7 @@ public class GMenuFX extends MenuBar {
 			}
 		});
 		view.getItems().add(clients);
-		
+
 		MenuItem simulations = new MenuItem("Simulations");
 		simulations.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
@@ -157,13 +161,14 @@ public class GMenuFX extends MenuBar {
 			}
 		});
 		view.getItems().add(simulations);
-		
-		
+
+
 		Menu reservations = new Menu("Reservations");
 		MenuItem lavR = new MenuItem("Lieux à visiter");
 		lavR.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
+				Controller.container.setPane(new GAccordionFX());
 				try {
 					Controller.container
 							.setTableView(new ReserveVisiteTable(Controller.executeQuery("select * from ReserveVisite")));
@@ -173,7 +178,7 @@ public class GMenuFX extends MenuBar {
 			}
 		});
 		reservations.getItems().add(lavR);
-		
+
 //		MenuItem HotelsR = new MenuItem("Hotels");
 //		lavR.setOnAction(new EventHandler<ActionEvent>() {
 //			@Override
@@ -187,7 +192,7 @@ public class GMenuFX extends MenuBar {
 //			}
 //		});
 //		reservations.getItems().add(HotelsR);
-//		
+//
 //		MenuItem CircuitsR = new MenuItem("Circuits");
 //		lavR.setOnAction(new EventHandler<ActionEvent>() {
 //			@Override
@@ -202,7 +207,7 @@ public class GMenuFX extends MenuBar {
 //		});
 //		reservations.getItems().add(CircuitsR);
 		view.getItems().add(reservations);
-		
+
 		this.getMenus().add(view);
 	}
 

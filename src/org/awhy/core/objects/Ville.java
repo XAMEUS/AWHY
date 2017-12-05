@@ -1,5 +1,6 @@
 package org.awhy.core.objects;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -39,5 +40,17 @@ public class Ville implements Object {
 	@Override
 	public Object createFromSQL(ResultSet res) throws SQLException {
 		return new Ville(res.getString(1), res.getString(2));
+	}
+
+	@Override
+	public Object insertSQL(Connection c) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object createFromSQL(Connection c) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

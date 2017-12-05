@@ -4,6 +4,7 @@ import java.sql.SQLException;
 
 import org.awhy.core.Dialog;
 import org.awhy.core.objects.Object;
+import org.awhy.ui.pane.GAccordionFX;
 import org.awhy.ui.tables.Table;
 import org.awhy.ui.tables.VilleTable;
 
@@ -19,8 +20,10 @@ public class GContainerFX extends VBox {
 
 	public GBarFX bottom;
 	private SplitPane container;
+	private GAccordionFX paneLeft;
 
 	public GContainerFX() throws SQLException {
+		this.paneLeft = null;
 		Controller.container = this;
 		ObservableList<Node> children = this.getChildren();
 		children.add(new GMenuFX());
@@ -29,7 +32,6 @@ public class GContainerFX extends VBox {
 //		Controller.connect();
 //		this.setTableView(new VilleTable(Controller.dialog.executeQuery("select * from ville")));
 		System.out.println("ok");
-		container.getItems().addAll(new GAccordionFX());
 		container.setDividerPositions(0.3);
 		// container.getChildren().add(box);
 		// container.getChildren().add(gt);
@@ -48,4 +50,16 @@ public class GContainerFX extends VBox {
 		this.container.getItems().add(tableView);
 	}
 
+	public void setPane(GAccordionFX pane) {
+		
+		this.container.getItems().addAll(pane);
+		this.paneLeft = pane;
+	}
+	
+	public void rmPane() {
+		if(this.paneLeft != null) {
+			this.container.getItems().remove(this.paneLeft);
+			this.paneLeft = null;
+		}
+	}
 }

@@ -1,6 +1,7 @@
 
 package org.awhy.core.objects;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -62,5 +63,17 @@ public class Etapes implements Object {
 
   	public Integer getNbJours() {
 		return nbJours.get();
+	}
+
+	@Override
+	public Object insertSQL(Connection c) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object createFromSQL(Connection c) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
