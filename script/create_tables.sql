@@ -195,7 +195,7 @@ create table Hotel(
     adresseHotel char(50) NOT NULL,
     nbChambresTotal integer NOT NULL check(nbChambresTotal > 0),
     prixChambre integer NOT NULL,
-    prixPetitDejeuner integer check((prixPetitDejeuner IS NULL) OR (prixPetitDejeuner > 0)),
+    prixPetitDejeuner integer NOT NULL check(prixPetitDejeuner > 0),
     PRIMARY KEY (nomHotel, ville, pays),
     FOREIGN KEY (ville, pays) references Ville(nomVille, pays)
 );
