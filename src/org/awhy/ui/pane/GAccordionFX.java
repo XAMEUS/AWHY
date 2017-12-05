@@ -1,4 +1,4 @@
-package org.awhy.ui;
+package org.awhy.ui.pane;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.Accordion;
