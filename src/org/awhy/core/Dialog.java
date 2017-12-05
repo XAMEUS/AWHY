@@ -40,7 +40,7 @@ public class Dialog {
 			System.out.print("DriverManager getConnection(" + url + ") ");
 		this.connection = (DriverManager.getConnection(url, user, passwd));
 		this.connection.setAutoCommit(false);
-		this.connection.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
+//		this.connection.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
 		if (Debugger.isEnabled())
 			System.out.println("- OK");
 		this.stmt = this.connection.createStatement();

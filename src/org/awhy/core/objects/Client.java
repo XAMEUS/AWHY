@@ -49,8 +49,8 @@ public class Client implements Object {
 	}
 	
 	public void insertSQL(Connection c) throws SQLException {
-		String insert = "INSERT INTO " + dbName
-				+ "VALUES " + "(idClient.nextval, ?, ?, ?, ?, ?, ?, ?);";
+		String insert = "INSERT INTO " + dbName + "(idClient, nomClient, prenomClient, typeClient, adresseClient, emailClient, telClient, anneeEnregistrement)"
+				+ "VALUES " + "(idClient.nextval, ?, ?, ?, ?, ?, ?, ?)";
 		PreparedStatement preparedStatementInsert = c.prepareStatement(insert);
 		preparedStatementInsert.setString(1, this.getNomClient());
 		preparedStatementInsert.setString(2, this.getPrenomClient());
@@ -61,7 +61,21 @@ public class Client implements Object {
 		preparedStatementInsert.setInt(7, this.getAnneeEnregistrement());
 		preparedStatementInsert.executeUpdate();
 	}
-
+	
+	public void updateSQL(Connection c) throws SQLException {
+		String insert = "UPDATE " + dbName + " SET nomClient=?, prenomClient=?, typeClient=?, adresseClient=?, emailClient=?, telClient=?, anneeEnregistrement=? WHERE idclient=?";
+		PreparedStatement preparedStatementInsert = c.prepareStatement(insert);
+		preparedStatementInsert.setString(1, this.getNomClient());
+		preparedStatementInsert.setString(2, this.getPrenomClient());
+		preparedStatementInsert.setString(3, this.getTypeClient());
+		preparedStatementInsert.setString(4, this.getAdresseClient());
+		preparedStatementInsert.setString(5, this.getEmailClient());
+		preparedStatementInsert.setString(6, this.getTelClient());
+		preparedStatementInsert.setInt(7, this.getAnneeEnregistrement());
+		preparedStatementInsert.setInt(8, this.getIdClient());
+		preparedStatementInsert.executeUpdate();
+	}
+	
 	public Integer getIdClient() {
 		return idClient.get();
 	}
@@ -92,6 +106,10 @@ public class Client implements Object {
 
 	public Integer getAnneeEnregistrement() {
 		return anneeEnregistrement.get();
+	}
+	
+	public void setNomClient(String name) {
+		this.nomClient.set(name);
 	}
 
 }
