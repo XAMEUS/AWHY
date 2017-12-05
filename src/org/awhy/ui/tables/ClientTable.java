@@ -15,20 +15,27 @@ public class ClientTable extends Table<Client> {
 
 		TableColumn<Client, String> idClientCol = new TableColumn<Client, String>("ID");
 		idClientCol.setCellValueFactory(new PropertyValueFactory<Client, String>("idClient"));
+		
 		TableColumn<Client, String> nomClientCol = new TableColumn<Client, String>("Nom");
 		nomClientCol.setCellValueFactory(new PropertyValueFactory<Client, String>("nomClient"));
+		
 		TableColumn<Client, String> prenomClientCol = new TableColumn<Client, String>("Prénom");
 		prenomClientCol.setCellValueFactory(new PropertyValueFactory<Client, String>("prenomClient"));
+		
 		TableColumn<Client, String> typeClientCol = new TableColumn<Client, String>("Type");
 		typeClientCol.setCellValueFactory(new PropertyValueFactory<Client, String>("typeClient"));
+		
 		TableColumn<Client, String> adresseClientCol = new TableColumn<Client, String>("Adresse");
 		adresseClientCol.setCellValueFactory(new PropertyValueFactory<Client, String>("adresseClient"));
+		
 		TableColumn<Client, String> emailClientCol = new TableColumn<Client, String>("Email");
 		emailClientCol.setCellValueFactory(new PropertyValueFactory<Client, String>("emailClient"));
+		
 		TableColumn<Client, String> telClientCol = new TableColumn<Client, String>("Téléphone");
 		telClientCol.setCellValueFactory(new PropertyValueFactory<Client, String>("telClient"));
-		TableColumn<Client, String> anneeEnregistrementCol = new TableColumn<Client, String>("Année");
-		anneeEnregistrementCol.setCellValueFactory(new PropertyValueFactory<Client, String>("anneeEnregistrement"));
+		
+		TableColumn<Client, Integer> anneeEnregistrementCol = new TableColumn<Client, Integer>("Année");
+		anneeEnregistrementCol.setCellValueFactory(new PropertyValueFactory<Client, Integer>("anneeEnregistrement"));
 
 		this.setItems(this.data);
 		this.getColumns().add(idClientCol);

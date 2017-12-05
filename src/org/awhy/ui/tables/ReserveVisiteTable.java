@@ -9,9 +9,9 @@ import org.awhy.core.objects.ReserveVisite;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-public class ReserveLieuTable extends Table<ReserveVisite> {
+public class ReserveVisiteTable extends Table<ReserveVisite> {
 	
-	public ReserveLieuTable(ResultSet res) throws SQLException {
+	public ReserveVisiteTable(ResultSet res) throws SQLException {
 		super(new ReserveVisite(), res);
 
 		TableColumn<ReserveVisite, String> nomCol = new TableColumn<ReserveVisite, String>("Nom");
