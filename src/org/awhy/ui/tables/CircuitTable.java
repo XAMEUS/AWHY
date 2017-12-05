@@ -5,6 +5,8 @@ import java.sql.SQLException;
 
 import org.awhy.core.objects.Circuit;
 
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
 
@@ -31,11 +33,11 @@ public class CircuitTable extends Table<Circuit>{
 		TableColumn<Circuit, String> paysArriveeCol = new TableColumn<Circuit, String>("Pays d'arrivée");
 		paysArriveeCol.setCellValueFactory(new PropertyValueFactory<Circuit, String>("paysArrivee"));
 		
-		TableColumn<Circuit, String> nbJoursTotalCol = new TableColumn<Circuit, String>("Jours");
-		nbJoursTotalCol.setCellValueFactory(new PropertyValueFactory<Circuit, String>("nbJoursTotal"));
+		TableColumn<Circuit, Integer> nbJoursTotalCol = new TableColumn<Circuit, Integer>("Jours");
+		nbJoursTotalCol.setCellValueFactory(new PropertyValueFactory<Circuit, Integer>("nbJoursTotal"));
 		
-		TableColumn<Circuit, String> prixCircuitCol = new TableColumn<Circuit, String>("Prix");
-		prixCircuitCol.setCellValueFactory(new PropertyValueFactory<Circuit, String>("prixCircuit"));
+		TableColumn<Circuit, Integer> prixCircuitCol = new TableColumn<Circuit, Integer>("Prix");
+		prixCircuitCol.setCellValueFactory(new PropertyValueFactory<Circuit, Integer>("prixCircuit"));
 		
 		this.setItems(this.data);
 		this.getColumns().add(idCircuitCol);

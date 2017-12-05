@@ -31,7 +31,7 @@ public class GConnectFX {
 		dialog.setHeaderText("Connect to Database");
 
 		ButtonType loginButtonType = new ButtonType("Login", ButtonData.OK_DONE);
-		dialog.getDialogPane().getButtonTypes().addAll(loginButtonType, ButtonType.CANCEL);
+		dialog.getDialogPane().getButtonTypes().addAll(loginButtonType);
 
 		GridPane grid = new GridPane();
 		grid.setHgap(10);

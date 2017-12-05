@@ -34,8 +34,8 @@ public class ClientTable extends Table<Client> {
 		TableColumn<Client, String> telClientCol = new TableColumn<Client, String>("Téléphone");
 		telClientCol.setCellValueFactory(new PropertyValueFactory<Client, String>("telClient"));
 		
-		TableColumn<Client, String> anneeEnregistrementCol = new TableColumn<Client, String>("Année");
-		anneeEnregistrementCol.setCellValueFactory(new PropertyValueFactory<Client, String>("anneeEnregistrement"));
+		TableColumn<Client, Integer> anneeEnregistrementCol = new TableColumn<Client, Integer>("Année");
+		anneeEnregistrementCol.setCellValueFactory(new PropertyValueFactory<Client, Integer>("anneeEnregistrement"));
 
 		this.setItems(this.data);
 		this.getColumns().add(idClientCol);

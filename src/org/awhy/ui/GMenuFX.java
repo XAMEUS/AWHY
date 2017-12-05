@@ -8,6 +8,7 @@ import org.awhy.core.Dialog;
 import org.awhy.ui.tables.CircuitTable;
 import org.awhy.ui.tables.ClientTable;
 import org.awhy.ui.tables.EtapesTable;
+import org.awhy.ui.tables.HotelTable;
 import org.awhy.ui.tables.LieuAVisiterTable;
 import org.awhy.ui.tables.ReserveVisiteTable;
 import org.awhy.ui.tables.VilleTable;
@@ -87,18 +88,18 @@ public class GMenuFX extends MenuBar {
 		});
 		view.getItems().add(etapes);
 		
-//		MenuItem hotels = new MenuItem("Hotels");
-//		hotels.setOnAction(new EventHandler<ActionEvent>() {
-//			@Override
-//			public void handle(ActionEvent event) {
-//				try {
-//					Controller.container.setTableView(new VilleTable(Controller.executeQuery("select * from Hotel")));
-//				} catch (SQLException e) {
-//					Controller.alert("SQLException", e);
-//				}
-//			}
-//		});
-//		view.getItems().add(hotels);
+		MenuItem hotels = new MenuItem("Hotels");
+		hotels.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				try {
+					Controller.container.setTableView(new HotelTable(Controller.executeQuery("select * from Hotel")));
+				} catch (SQLException e) {
+					Controller.alert("SQLException", e);
+				}
+			}
+		});
+		view.getItems().add(hotels);
 
 		MenuItem circuits = new MenuItem("Circuits");
 		circuits.setOnAction(new EventHandler<ActionEvent>() {
