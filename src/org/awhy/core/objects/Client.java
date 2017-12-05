@@ -1,5 +1,7 @@
 package org.awhy.core.objects;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -16,6 +18,8 @@ public class Client implements Object {
 	public final SimpleStringProperty emailClient;
 	public final SimpleStringProperty telClient;
 	public final SimpleIntegerProperty anneeEnregistrement;
+	
+	public static String dbName = "Client";
 
 	public Client() {
 		this.idClient = new SimpleIntegerProperty();
@@ -42,6 +46,20 @@ public class Client implements Object {
 	@Override
 	public Object createFromSQL(ResultSet res) throws SQLException {
 		return new Client(res.getInt(1), res.getString(2), res.getString(3), res.getString(4), res.getString(5), res.getString(6), res.getString(7), res.getInt(8));
+	}
+	
+	public void insertSQL(Connection c) throws SQLException {
+		String insert = "INSERT INTO " + dbName
+				+ "VALUES " + "(idClient.nextval, ?, ?, ?, ?, ?, ?, ?);";
+		PreparedStatement preparedStatementInsert = c.prepareStatement(insert);
+		preparedStatementInsert.setString(2, this.getNomClient());
+		preparedStatementInsert.setString(3, this.getPrenomClient());
+		preparedStatementInsert.setString(4, this.getTypeClient());
+		preparedStatementInsert.setString(5, this.getAdresseClient());
+		preparedStatementInsert.setString(6, this.getEmailClient());
+		preparedStatementInsert.setString(7, this.getTelClient());
+		preparedStatementInsert.setInt(8, this.getAnneeEnregistrement());
+		preparedStatementInsert.executeUpdate();
 	}
 
 	public Integer getIdClient() {
