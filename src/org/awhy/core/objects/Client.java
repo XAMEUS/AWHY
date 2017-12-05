@@ -18,7 +18,7 @@ public class Client implements Object {
 	public final SimpleStringProperty emailClient;
 	public final SimpleStringProperty telClient;
 	public final SimpleIntegerProperty anneeEnregistrement;
-	
+
 	public static String dbName = "Client";
 
 	public Client() {
@@ -47,7 +47,7 @@ public class Client implements Object {
 	public Object createFromSQL(ResultSet res) throws SQLException {
 		return new Client(res.getInt(1), res.getString(2), res.getString(3), res.getString(4), res.getString(5), res.getString(6), res.getString(7), res.getInt(8));
 	}
-	
+
 	public void insertSQL1(Connection c) throws SQLException {
 		String insert = "INSERT INTO " + dbName + "(idClient, nomClient, prenomClient, typeClient, adresseClient, emailClient, telClient, anneeEnregistrement)"
 				+ "VALUES " + "(idClient.nextval, ?, ?, ?, ?, ?, ?, ?)";
@@ -61,7 +61,7 @@ public class Client implements Object {
 		preparedStatementInsert.setInt(7, this.getAnneeEnregistrement());
 		preparedStatementInsert.executeUpdate();
 	}
-	
+
 	public void updateSQL(Connection c) throws SQLException {
 		String insert = "UPDATE " + dbName + " SET nomClient=?, prenomClient=?, typeClient=?, adresseClient=?, emailClient=?, telClient=?, anneeEnregistrement=? WHERE idclient=?";
 		PreparedStatement preparedStatementInsert = c.prepareStatement(insert);
@@ -75,7 +75,7 @@ public class Client implements Object {
 		preparedStatementInsert.setInt(8, this.getIdClient());
 		preparedStatementInsert.executeUpdate();
 	}
-	
+
 	public Integer getIdClient() {
 		return idClient.get();
 	}
@@ -107,10 +107,41 @@ public class Client implements Object {
 	public Integer getAnneeEnregistrement() {
 		return anneeEnregistrement.get();
 	}
-	
+
+
+	public void setIdClient(Integer idClient) {
+		this.idClient.set(idClient);
+	}
+
 	public void setNomClient(String name) {
 		this.nomClient.set(name);
 	}
+
+	public void setPrenomClient(String prenomClient) {
+		this.prenomClient.set(prenomClient);
+	}
+
+	public void setTypeClient(String typeClient) {
+		this.typeClient.set(typeClient);
+	}
+
+	public void setAdresseClient(String adresseClient) {
+		this.adresseClient.set(adresseClient);
+	}
+
+	public void setEmailClient(String emailClient) {
+		this.emailClient.set(emailClient);
+	}
+
+	public void setTelClient(String telClient) {
+		this.telClient.set(telClient);
+	}
+
+	public void setAnneeEnregistrement(Integer anneeEnregistrement) {
+		this.anneeEnregistrement.set(anneeEnregistrement);
+	}
+
+
 
 	@Override
 	public Object insertSQL(Connection c) throws SQLException {
