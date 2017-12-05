@@ -16,8 +16,8 @@ public class EtapesTable extends Table<Etapes> {
 		TableColumn<Etapes, String> idCircuitCol = new TableColumn<Etapes, String>("ID");
 		idCircuitCol.setCellValueFactory(new PropertyValueFactory<Etapes, String>("idCircuit"));
 		
-		TableColumn<Etapes, String> ordreCol = new TableColumn<Etapes, String>("Ordre");
-		ordreCol.setCellValueFactory(new PropertyValueFactory<Etapes, String>("ordre"));
+		TableColumn<Etapes, Integer> ordreCol = new TableColumn<Etapes, Integer>("Ordre");
+		ordreCol.setCellValueFactory(new PropertyValueFactory<Etapes, Integer>("ordre"));
 		
 		TableColumn<Etapes, String> nomCol = new TableColumn<Etapes, String>("Lieu");
 		nomCol.setCellValueFactory(new PropertyValueFactory<Etapes, String>("nomLieu"));
@@ -28,8 +28,8 @@ public class EtapesTable extends Table<Etapes> {
 		TableColumn<Etapes, String> paysCol = new TableColumn<Etapes, String>("Pays");
 		paysCol.setCellValueFactory(new PropertyValueFactory<Etapes, String>("pays"));
 		
-		TableColumn<Etapes, String> nbJoursCol = new TableColumn<Etapes, String>("Jours");
-		nbJoursCol.setCellValueFactory(new PropertyValueFactory<Etapes, String>("nbJours"));
+		TableColumn<Etapes, Integer> nbJoursCol = new TableColumn<Etapes, Integer>("Jours");
+		nbJoursCol.setCellValueFactory(new PropertyValueFactory<Etapes, Integer>("nbJours"));
 		
 		this.setItems(this.data);
 		this.getColumns().add(idCircuitCol);
