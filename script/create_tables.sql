@@ -29,7 +29,7 @@ END;
 /
 
 BEGIN
-    EXECUTE IMMEDIATE 'DROP TABLE Confirme';
+    EXECUTE IMMEDIATE 'DROP TABLE Reservation';
 EXCEPTION
     WHEN OTHERS THEN
       IF SQLCODE != -942 THEN
@@ -195,7 +195,7 @@ create table Hotel(
     adresseHotel char(50) NOT NULL,
     nbChambresTotal integer NOT NULL check(nbChambresTotal > 0),
     prixChambre integer NOT NULL,
-    prixPetitDejeuner integer check((prixPetitDejeuner IS NULL) OR (prixPetitDejeuner > 0)),
+    prixPetitDejeuner integer NOT NULL check(prixPetitDejeuner > 0),
     PRIMARY KEY (nomHotel, ville, pays),
     FOREIGN KEY (ville, pays) references Ville(nomVille, pays)
 );
@@ -219,12 +219,11 @@ create table Simulation(
     numDossier integer NOT NULL PRIMARY KEY
 );
 
-create table Confirme(
-    numDossier integer NOT NULL,
-    idClient integer NOT NULL,
+create table Reservation(
+    numDossier integer NOT NULL PRIMARY KEY,
     datePaiement date NOT NULL,
     infoPaiement varchar(1000),
-    PRIMARY KEY (numDossier, idClient),
+    idClient integer NOT NULL,
     FOREIGN KEY (numDossier) references Simulation(numDossier),
     FOREIGN KEY (idClient) references Client(idClient)
 );
