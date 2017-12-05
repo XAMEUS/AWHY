@@ -206,7 +206,7 @@ create table Client(
     idClient integer NOT NULL PRIMARY KEY,
     nomClient char(20) NOT NULL,
     prenomClient char(20) NOT NULL,
-    typeClient char NOT NULL check(typeClient in ('societe', 'groupe', 'individuel')),
+    typeClient char(10) NOT NULL check(typeClient in ('societe', 'groupe', 'individuel')),
     adresseClient varchar(100) NOT NULL,
     emailClient char(50) NOT NULL,
     telClient char(20) NOT NULL,
