@@ -50,7 +50,7 @@ public class Client implements Object {
 
 	public void insertSQL1(Connection c) throws SQLException {
 		String insert = "INSERT INTO " + dbName + "(idClient, nomClient, prenomClient, typeClient, adresseClient, emailClient, telClient, anneeEnregistrement)"
-				+ "VALUES " + "(idClient.nextval, ?, ?, ?, ?, ?, ?, ?)";
+				+ " VALUES " + "(idClient.nextval, ?, ?, ?, ?, ?, ?, ?)";
 		PreparedStatement preparedStatementInsert = c.prepareStatement(insert);
 		preparedStatementInsert.setString(1, this.getNomClient());
 		preparedStatementInsert.setString(2, this.getPrenomClient());
