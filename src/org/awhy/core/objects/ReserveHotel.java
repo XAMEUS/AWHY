@@ -2,6 +2,7 @@ package org.awhy.core.objects;
 
 import java.sql.Connection;
 import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -18,7 +19,8 @@ public class ReserveHotel implements Object {
 	public final Date dateArriveeHotel;
 	public final SimpleIntegerProperty nbChambresReservees;
 	public final SimpleIntegerProperty nbPetitDejReserves;
-
+	public static String dbName = "ReserveHotel";
+	
 	public ReserveHotel() {
 		this.nomHotel = new SimpleStringProperty();
 		this.ville = new SimpleStringProperty();
@@ -42,6 +44,30 @@ public class ReserveHotel implements Object {
     	this.nbPetitDejReserves = new SimpleIntegerProperty(nbPetitDejReserves);
 	}
 
+	public void insertSQL(Connection c) throws SQLException {
+		String insert = "INSERT INTO " + dbName + " VALUES " + "(?, ?, ?, ?, ?, ?)";
+		PreparedStatement preparedStatementInsert = c.prepareStatement(insert);
+		preparedStatementInsert.setString(1, this.getNomLieu());
+		preparedStatementInsert.setString(2, this.getVille());
+		preparedStatementInsert.setString(3, this.getPays());
+		preparedStatementInsert.setInt(4, this.getNumDossier());
+		preparedStatementInsert.setDate(5, this.getDateVisite());
+		preparedStatementInsert.setInt(6, this.getNbPersonnesVisite());
+		preparedStatementInsert.executeUpdate();
+	}
+
+	public void updateSQL(Connection c) throws SQLException {
+		String insert = "UPDATE " + dbName + " SET nbPersonnesVisite=? WHERE nomLieu=?, ville=?, pays=?, numDossier=?, dateVisite=?"
+		PreparedStatement preparedStatementInsert = c.prepareStatement(insert);
+		preparedStatementInsert.setString(1, this.getNbPersonnesVisite());
+		preparedStatementInsert.setString(2, this.getNomLieu());
+		preparedStatementInsert.setString(3, this.getVille());
+		preparedStatementInsert.setString(4, this.getPays());
+		preparedStatementInsert.setString(5, this.getNumDossier());
+		preparedStatementInsert.setString(6, this.getDateVisite());
+		preparedStatementInsert.executeUpdate();
+	}
+	
 	@Override
 	public Object createFromSQL(ResultSet res) throws SQLException {
 		return new ReserveHotel(res.getString(1), res.getString(2), res.getString(3), res.getInt(4), res.getDate(5), res.getDate(5), res.getInt(6), res.getInt(6));
