@@ -96,11 +96,6 @@ public class ReserveCircuit implements Object {
 	public void setIdClient(Integer idClient) {
 		this.idClient.set(idClient);
 	}
-	
-	@Override
-	public void insertSQL(Connection c) throws SQLException {
-		// TODO Auto-generated method stub
-	}
 
 	@Override
 	public Object createFromSQL(Connection c) throws SQLException {

@@ -44,9 +44,8 @@ public class Circuit implements Object {
 	    this.prixCircuit = new SimpleIntegerProperty(prixCircuit);
 	}
 
-	public void insertSQL1(Connection c) throws SQLException {
-		String insert = "INSERT INTO " + dbName + "(idCircuit, descriptif, villeDepart, paysDepart, villeArrivee, paysArrivee, nbJoursTotal, prixCircuit)"
-				+ " VALUES " + "(idCircuit.nextval, ?, ?, ?, ?, ?, ?, ?)";
+	public void insertSQL(Connection c) throws SQLException {
+		String insert = "INSERT INTO " + dbName + " VALUES " + "(idCircuit.nextval, ?, ?, ?, ?, ?, ?, ?)";
 		PreparedStatement preparedStatementInsert = c.prepareStatement(insert);
 		preparedStatementInsert.setString(1, this.getDescriptif());
 		preparedStatementInsert.setString(2, this.getVilleDepart());
@@ -140,12 +139,6 @@ public class Circuit implements Object {
 
   	public void setPrixCircuit(Integer prixCircuit) {
 		this.prixCircuit.set(prixCircuit);
-	}
-
-	@Override
-	public void insertSQL(Connection c) throws SQLException {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override

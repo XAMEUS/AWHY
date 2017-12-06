@@ -34,9 +34,8 @@ public class DateCircuit implements Object {
 		return new DateCircuit(res.getString(1), res.getDate(2), res.getInt(3));
 	}
 
-	public void insertSQL1(Connection c) throws SQLException {
-		String insert = "INSERT INTO " + dbName + "(idCircuit, dateDepartCircuit, nbPersonnes)"
-				+ " VALUES " + "(idCircuit.nextval, ?, ?)";
+	public void insertSQL(Connection c) throws SQLException {
+		String insert = "INSERT INTO " + dbName	+ " VALUES " + "(idCircuit.nextval, ?, ?)";
 		PreparedStatement preparedStatementInsert = c.prepareStatement(insert);
 		preparedStatementInsert.setDate(1, this.getDateDepartCircuit());
 		preparedStatementInsert.setInt(2, this.getNbPersonnes());
@@ -62,11 +61,6 @@ public class DateCircuit implements Object {
 
 	public Integer getNbPersonnes() {
 		return nbPersonnes.get();
-	}
-
-	@Override
-	public void insertSQL(Connection c) throws SQLException {
-		// TODO Auto-generated method stub
 	}
 
 	@Override

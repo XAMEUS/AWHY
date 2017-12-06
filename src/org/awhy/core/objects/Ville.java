@@ -5,7 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 public class Ville implements Object {
@@ -52,12 +51,7 @@ public class Ville implements Object {
 	public Object createFromSQL(ResultSet res) throws SQLException {
 		return new Ville(res.getString(1), res.getString(2));
 	}
-
-	@Override
-	public void insertSQL(Connection c) throws SQLException {
-		// TODO Auto-generated method stub
-	}
-
+	
 	@Override
 	public Object createFromSQL(Connection c) throws SQLException {
 		// TODO Auto-generated method stub
