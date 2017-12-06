@@ -18,7 +18,7 @@ public class GAccordionFX extends VBox {
 		Accordion ac = new Accordion();
 		StackPane pane = new StackPane();
 		pane.setAlignment(Pos.TOP_CENTER);
-		pane.getChildren().add(new Text("azeazazieohazoeihaoeihazoehaozeihaoziehoazih"));
+		pane.getChildren().add(new Text("TODO"));
 		TitledPane tp = new TitledPane("title", pane);
 		tp.expandedProperty().set(true);
 		ac.getPanes().add(tp);
