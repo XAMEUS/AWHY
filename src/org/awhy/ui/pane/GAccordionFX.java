@@ -22,7 +22,7 @@ public class GAccordionFX extends VBox {
 		TitledPane tp = new TitledPane("title", pane);
 		tp.expandedProperty().set(true);
 		ac.getPanes().add(tp);
-		ac.getPanes().add(new TitledPane("Reservation", new Text("aze")));
+		ac.getPanes().add(new TitledPane("Reservation", new Text("TODO")));
 
 		ScrollPane sp = new ScrollPane(new StackPane(ac));
 		sp.setFitToHeight(true);
