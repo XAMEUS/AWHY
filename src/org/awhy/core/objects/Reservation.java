@@ -50,6 +50,26 @@ public class Reservation implements Object {
 		return idClient.get();
 	}
 
+	
+	public void setNumDossier(Integer numDossier) {
+		this.numDossier.set(numDossier);
+	}
+
+//Comment je fais le set d'une date? Suppression du final?	
+//	public void setDatePaiement(Date datePaiement) {
+//		this.datePaiement.setTime(datePaiement);
+//		this.datePaiement.set(datePaiement);
+//		this.datePaiement = datePaiement;
+//	}
+
+	public void setInfoPaiement(String infoPaiement) {
+		this.infoPaiement.set(infoPaiement);
+	}
+
+	public void setIdClient(Integer idClient) {
+		this.idClient.set(idClient);
+	}
+
 	@Override
 	public Object insertSQL(Connection c) throws SQLException {
 		// TODO Auto-generated method stub

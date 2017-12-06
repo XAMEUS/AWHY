@@ -50,7 +50,27 @@ public class ReserveCircuit implements Object {
 	public Integer getIdClient() {
 		return idClient.get();
 	}
+	
+	
+	public void setIdCircuit(String idCircuit) {
+		this.idCircuit.set(idCircuit);
+	}
 
+//Comment je fais le set d'une date? Suppression du final?	
+//	public void setDatePaiement(Date datePaiement) {
+//		this.datePaiement = datePaiement;		
+//		this.datePaiement.setDate(datePaiement);
+//		this.datePaiement.set(datePaiement);
+//	}
+
+	public void setNumDossier(Integer numDossier) {
+		this.numDossier.set(numDossier);
+	}
+
+	public void setIdClient(Integer idClient) {
+		this.idClient.set(idClient);
+	}
+	
 	@Override
 	public Object insertSQL(Connection c) throws SQLException {
 		// TODO Auto-generated method stub
