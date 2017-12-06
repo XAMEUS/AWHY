@@ -18,11 +18,11 @@ public class GAccordionFX extends VBox {
 		Accordion ac = new Accordion();
 		StackPane pane = new StackPane();
 		pane.setAlignment(Pos.TOP_CENTER);
-		pane.getChildren().add(new Text("azeazazieohazoeihaoeihazoehaozeihaoziehoazih"));
+		pane.getChildren().add(new Text("TODO"));
 		TitledPane tp = new TitledPane("title", pane);
 		tp.expandedProperty().set(true);
 		ac.getPanes().add(tp);
-		ac.getPanes().add(new TitledPane("Reservation", new Text("aze")));
+		ac.getPanes().add(new TitledPane("Reservation", new Text("TODO")));
 
 		ScrollPane sp = new ScrollPane(new StackPane(ac));
 		sp.setFitToHeight(true);
