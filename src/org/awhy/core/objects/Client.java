@@ -49,8 +49,7 @@ public class Client implements Object {
 	}
 
 	public void insertSQL(Connection c) throws SQLException {
-		String insert = "INSERT INTO " + dbName + "(idClient, nomClient, prenomClient, typeClient, adresseClient, emailClient, telClient, anneeEnregistrement)"
-				+ "VALUES " + "(idClient.nextval, ?, ?, ?, ?, ?, ?, ?)";
+		String insert = "INSERT INTO " + dbName + " VALUES " + "(idClient.nextval, ?, ?, ?, ?, ?, ?, ?)";
 		PreparedStatement preparedStatementInsert = c.prepareStatement(insert);
 		preparedStatementInsert.setString(1, this.getNomClient());
 		preparedStatementInsert.setString(2, this.getPrenomClient());
@@ -144,7 +143,7 @@ public class Client implements Object {
 	@Override
 	public Object createFromSQL(Connection c) throws SQLException {
 		// TODO Auto-generated method stub
-		return null;
+		return(null);
 	}
 
 }

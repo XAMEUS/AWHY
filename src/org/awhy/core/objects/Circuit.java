@@ -1,6 +1,7 @@
 package org.awhy.core.objects;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -17,6 +18,8 @@ public class Circuit implements Object {
 	public final SimpleStringProperty paysArrivee;
   	public final SimpleIntegerProperty nbJoursTotal;
   	public final SimpleIntegerProperty prixCircuit;
+
+	public static String dbName = "Circuit";
 
 	public Circuit() {
 	    this.idCircuit = new SimpleStringProperty();
@@ -39,6 +42,34 @@ public class Circuit implements Object {
 	    this.paysArrivee = new SimpleStringProperty(paysArrivee);
 	    this.nbJoursTotal = new SimpleIntegerProperty(nbJoursTotal);
 	    this.prixCircuit = new SimpleIntegerProperty(prixCircuit);
+	}
+
+	public void insertSQL1(Connection c) throws SQLException {
+		String insert = "INSERT INTO " + dbName + "(idCircuit, descriptif, villeDepart, paysDepart, villeArrivee, paysArrivee, nbJoursTotal, prixCircuit)"
+				+ " VALUES " + "(idCircuit.nextval, ?, ?, ?, ?, ?, ?, ?)";
+		PreparedStatement preparedStatementInsert = c.prepareStatement(insert);
+		preparedStatementInsert.setString(1, this.getDescriptif());
+		preparedStatementInsert.setString(2, this.getVilleDepart());
+		preparedStatementInsert.setString(3, this.getPaysDepart());
+		preparedStatementInsert.setString(4, this.getVilleArrivee());
+		preparedStatementInsert.setString(5, this.getPaysArrivee());
+		preparedStatementInsert.setInt(6, this.getNbJoursTotal());
+		preparedStatementInsert.setInt(7, this.getPrixCircuit());
+		preparedStatementInsert.executeUpdate();
+	}
+
+	public void updateSQL(Connection c) throws SQLException {
+		String insert = "UPDATE " + dbName + " SET descriptif=?, villeDepart=?, paysDepart=?, villeArrivee=?, paysArrivee=?, nbJoursTotal=?, prixCircuit=? WHERE idCircuit=?";
+		PreparedStatement preparedStatementInsert = c.prepareStatement(insert);
+		preparedStatementInsert.setString(1, this.getDescriptif());
+		preparedStatementInsert.setString(2, this.getVilleDepart());
+		preparedStatementInsert.setString(3, this.getPaysDepart());
+		preparedStatementInsert.setString(4, this.getVilleArrivee());
+		preparedStatementInsert.setString(5, this.getPaysArrivee());
+		preparedStatementInsert.setInt(6, this.getNbJoursTotal());
+		preparedStatementInsert.setInt(7, this.getPrixCircuit());
+		preparedStatementInsert.setString(8, this.getIdCircuit());
+		preparedStatementInsert.executeUpdate();
 	}
 
 	@Override
@@ -112,14 +143,14 @@ public class Circuit implements Object {
 	}
 
 	@Override
-	public Object insertSQL(Connection c) throws SQLException {
+	public void insertSQL(Connection c) throws SQLException {
 		// TODO Auto-generated method stub
-		return null;
+
 	}
 
 	@Override
 	public Object createFromSQL(Connection c) throws SQLException {
 		// TODO Auto-generated method stub
-		return null;
+		return(null);
 	}
 }
