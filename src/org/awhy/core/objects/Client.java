@@ -63,7 +63,7 @@ public class Client implements Object {
 	}
 
 	public void updateSQL(Connection c) throws SQLException {
-		String insert = "UPDATE " + dbName + " SET nomClient=?, prenomClient=?, typeClient=?, adresseClient=?, emailClient=?, telClient=?, anneeEnregistrement=? WHERE idclient=?";
+		String insert = "UPDATE " + dbName + " SET nomClient=?, prenomClient=?, typeClient=?, adresseClient=?, emailClient=?, telClient=?, anneeEnregistrement=? WHERE idClient=?";
 		PreparedStatement preparedStatementInsert = c.prepareStatement(insert);
 		preparedStatementInsert.setString(1, this.getNomClient());
 		preparedStatementInsert.setString(2, this.getPrenomClient());

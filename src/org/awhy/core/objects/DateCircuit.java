@@ -2,6 +2,7 @@ package org.awhy.core.objects;
 
 import java.sql.Connection;
 import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -14,6 +15,8 @@ public class DateCircuit implements Object {
 	public final Date dateDepartCircuit;
   	public final SimpleIntegerProperty nbPersonnes;
 
+	public static String dbName = "DateCircuit";  	
+  	
 	public DateCircuit() {
 	    this.idCircuit = new SimpleStringProperty();
 		this.dateDepartCircuit = new Date(0);
@@ -31,6 +34,23 @@ public class DateCircuit implements Object {
 		return new DateCircuit(res.getString(1), res.getDate(2), res.getInt(3));
 	}
 
+	public void insertSQL1(Connection c) throws SQLException {
+		String insert = "INSERT INTO " + dbName + "(idCircuit, dateDepartCircuit, nbPersonnes)"
+				+ " VALUES " + "(idCircuit.nextval, ?, ?)";
+		PreparedStatement preparedStatementInsert = c.prepareStatement(insert);
+		preparedStatementInsert.setDate(1, this.getDateDepartCircuit());
+		preparedStatementInsert.setInt(2, this.getNbPersonnes());
+		preparedStatementInsert.executeUpdate();
+	}
+
+	public void updateSQL(Connection c) throws SQLException {
+		String insert = "UPDATE " + dbName + " SET dateDepartCircuit=?, nbPersonnes=? WHERE idCircuit=?";
+		PreparedStatement preparedStatementInsert = c.prepareStatement(insert);
+		preparedStatementInsert.setDate(1, this.getDateDepartCircuit());
+		preparedStatementInsert.setInt(2, this.getNbPersonnes());
+		preparedStatementInsert.setString(3, this.getIdCircuit());
+		preparedStatementInsert.executeUpdate();
+	}
 
 	public String getIdCircuit() {
 		return idCircuit.get();
