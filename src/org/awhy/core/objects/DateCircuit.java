@@ -35,19 +35,20 @@ public class DateCircuit implements Object {
 	}
 
 	public void insertSQL(Connection c) throws SQLException {
-		String insert = "INSERT INTO " + dbName	+ " VALUES " + "(idCircuit.nextval, ?, ?)";
+		String insert = "INSERT INTO " + dbName	+ " VALUES " + "(?, ?, ?)";
 		PreparedStatement preparedStatementInsert = c.prepareStatement(insert);
-		preparedStatementInsert.setDate(1, this.getDateDepartCircuit());
-		preparedStatementInsert.setInt(2, this.getNbPersonnes());
+		preparedStatementInsert.setString(1, this.getIdCircuit());
+		preparedStatementInsert.setDate(2, this.getDateDepartCircuit());
+		preparedStatementInsert.setInt(3, this.getNbPersonnes());
 		preparedStatementInsert.executeUpdate();
 	}
 
 	public void updateSQL(Connection c) throws SQLException {
-		String insert = "UPDATE " + dbName + " SET dateDepartCircuit=?, nbPersonnes=? WHERE idCircuit=?";
+		String insert = "UPDATE " + dbName + " SET nbPersonnes=? WHERE idCircuit=?, dateDepartCircuit=?";
 		PreparedStatement preparedStatementInsert = c.prepareStatement(insert);
-		preparedStatementInsert.setDate(1, this.getDateDepartCircuit());
-		preparedStatementInsert.setInt(2, this.getNbPersonnes());
-		preparedStatementInsert.setString(3, this.getIdCircuit());
+		preparedStatementInsert.setInt(1, this.getNbPersonnes());
+		preparedStatementInsert.setString(2, this.getIdCircuit());
+		preparedStatementInsert.setDate(3, this.getDateDepartCircuit());
 		preparedStatementInsert.executeUpdate();
 	}
 

@@ -20,7 +20,7 @@ public class ReserveHotel implements Object {
 	public final SimpleIntegerProperty nbChambresReservees;
 	public final SimpleIntegerProperty nbPetitDejReserves;
 	public static String dbName = "ReserveHotel";
-	
+
 	public ReserveHotel() {
 		this.nomHotel = new SimpleStringProperty();
 		this.ville = new SimpleStringProperty();
@@ -44,30 +44,35 @@ public class ReserveHotel implements Object {
     	this.nbPetitDejReserves = new SimpleIntegerProperty(nbPetitDejReserves);
 	}
 
+//On incremente numdossier?
 	public void insertSQL(Connection c) throws SQLException {
 		String insert = "INSERT INTO " + dbName + " VALUES " + "(?, ?, ?, ?, ?, ?)";
 		PreparedStatement preparedStatementInsert = c.prepareStatement(insert);
-		preparedStatementInsert.setString(1, this.getNomLieu());
+		preparedStatementInsert.setString(1, this.getNomHotel());
 		preparedStatementInsert.setString(2, this.getVille());
 		preparedStatementInsert.setString(3, this.getPays());
 		preparedStatementInsert.setInt(4, this.getNumDossier());
-		preparedStatementInsert.setDate(5, this.getDateVisite());
-		preparedStatementInsert.setInt(6, this.getNbPersonnesVisite());
+		preparedStatementInsert.setDate(5, this.getDateDepartHotel());
+		preparedStatementInsert.setDate(6, this.getDateArriveeHotel());
+		preparedStatementInsert.setInt(7, this.getNbChambresReservees());
+		preparedStatementInsert.setInt(8, this.getNbPetitDejReserves());
 		preparedStatementInsert.executeUpdate();
 	}
 
 	public void updateSQL(Connection c) throws SQLException {
-		String insert = "UPDATE " + dbName + " SET nbPersonnesVisite=? WHERE nomLieu=?, ville=?, pays=?, numDossier=?, dateVisite=?"
+		String insert = "UPDATE " + dbName + " SET nbChambresReservees=?, nbPetitDejReserves=? WHERE nomHotel=?, ville=?, pays=?, numDossier=?, dateDepartHotel=?, dateArriveeHotel=?";
 		PreparedStatement preparedStatementInsert = c.prepareStatement(insert);
-		preparedStatementInsert.setString(1, this.getNbPersonnesVisite());
-		preparedStatementInsert.setString(2, this.getNomLieu());
-		preparedStatementInsert.setString(3, this.getVille());
-		preparedStatementInsert.setString(4, this.getPays());
-		preparedStatementInsert.setString(5, this.getNumDossier());
-		preparedStatementInsert.setString(6, this.getDateVisite());
+		preparedStatementInsert.setInt(1, this.getNbChambresReservees());
+		preparedStatementInsert.setInt(2, this.getNbPetitDejReserves());
+		preparedStatementInsert.setString(3, this.getNomHotel());
+		preparedStatementInsert.setString(4, this.getVille());
+		preparedStatementInsert.setString(5, this.getPays());
+		preparedStatementInsert.setInt(6, this.getNumDossier());
+		preparedStatementInsert.setDate(7, this.getDateDepartHotel());
+		preparedStatementInsert.setDate(8, this.getDateArriveeHotel());
 		preparedStatementInsert.executeUpdate();
 	}
-	
+
 	@Override
 	public Object createFromSQL(ResultSet res) throws SQLException {
 		return new ReserveHotel(res.getString(1), res.getString(2), res.getString(3), res.getInt(4), res.getDate(5), res.getDate(5), res.getInt(6), res.getInt(6));
@@ -104,11 +109,6 @@ public class ReserveHotel implements Object {
 
 	public Integer getNbPetitDejReserves() {
 		return nbPetitDejReserves.get();
-	}
-
-	@Override
-	public void insertSQL(Connection c) throws SQLException {
-		// TODO Auto-generated method stub
 	}
 
 	@Override
