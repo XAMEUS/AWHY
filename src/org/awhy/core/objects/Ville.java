@@ -1,15 +1,18 @@
 package org.awhy.core.objects;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 public class Ville implements Object {
 	
     private final SimpleStringProperty nomVille;
 	private final SimpleStringProperty pays;
+	public static String dbName = "Ville";
 	
 	public Ville() {
 		this.nomVille = new SimpleStringProperty();
@@ -19,6 +22,14 @@ public class Ville implements Object {
 	public Ville(String nomVille, String pays) {
 		this.nomVille = new SimpleStringProperty(nomVille);
 		this.pays = new SimpleStringProperty(pays);
+	}
+	
+	public void insertSQL(Connection c) throws SQLException {
+		String insert = "INSERT INTO " + dbName + " VALUES " + "(?, ?)";
+		PreparedStatement preparedStatementInsert = c.prepareStatement(insert);
+		preparedStatementInsert.setString(1, this.getNomVille());
+		preparedStatementInsert.setString(2, this.getPays());
+		preparedStatementInsert.executeUpdate();
 	}
 	
     public String getNomVille() {

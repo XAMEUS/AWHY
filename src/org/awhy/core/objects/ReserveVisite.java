@@ -2,6 +2,7 @@ package org.awhy.core.objects;
 
 import java.sql.Connection;
 import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -16,7 +17,8 @@ public class ReserveVisite implements Object {
 	public final SimpleIntegerProperty numDossier;
 	public final Date dateVisite;
 	public final SimpleIntegerProperty nbPersonnesVisite;
-
+	public static String dbName = "ReserveVisite";
+	
 	public ReserveVisite() {
 		this.nomLieu = new SimpleStringProperty();
 		this.ville = new SimpleStringProperty();
@@ -33,6 +35,30 @@ public class ReserveVisite implements Object {
 		this.numDossier = new SimpleIntegerProperty(numDossier);
 		this.dateVisite = dateVisite;
 		this.nbPersonnesVisite = new SimpleIntegerProperty(nbPersonnesVisite);
+	}
+	
+	public void insertSQL(Connection c) throws SQLException {
+		String insert = "INSERT INTO " + dbName + " VALUES " + "(?, ?, ?, ?, ?, ?)";
+		PreparedStatement preparedStatementInsert = c.prepareStatement(insert);
+		preparedStatementInsert.setString(1, this.getNomLieu());
+		preparedStatementInsert.setString(2, this.getVille());
+		preparedStatementInsert.setString(3, this.getPays());
+		preparedStatementInsert.setInt(4, this.getNumDossier());
+		preparedStatementInsert.setDate(5, this.getDateVisite());
+		preparedStatementInsert.setInt(6, this.getNbPersonnesVisite());
+		preparedStatementInsert.executeUpdate();
+	}
+
+	public void updateSQL(Connection c) throws SQLException {
+		String insert = "UPDATE " + dbName + " SET nbPersonnesVisite=? WHERE nomLieu=?, ville=?, pays=?, numDossier=?, dateVisite=?"
+		PreparedStatement preparedStatementInsert = c.prepareStatement(insert);
+		preparedStatementInsert.setString(1, this.getNbPersonnesVisite());
+		preparedStatementInsert.setString(2, this.getNomLieu());
+		preparedStatementInsert.setString(3, this.getVille());
+		preparedStatementInsert.setString(4, this.getPays());
+		preparedStatementInsert.setString(5, this.getNumDossier());
+		preparedStatementInsert.setString(6, this.getDateVisite());
+		preparedStatementInsert.executeUpdate();
 	}
 
 	@Override
