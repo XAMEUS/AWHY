@@ -72,14 +72,13 @@ public class Hotel implements Object {
 	}
 
 	@Override
-	public Object insertSQL(Connection c) throws SQLException {
+	public void insertSQL(Connection c) throws SQLException {
 		// TODO Auto-generated method stub
-		return null;
 	}
 
 	@Override
 	public Object createFromSQL(Connection c) throws SQLException {
 		// TODO Auto-generated method stub
-		return null;
+		return(null);
 	}
 }
