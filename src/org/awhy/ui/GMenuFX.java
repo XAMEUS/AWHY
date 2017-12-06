@@ -16,6 +16,7 @@ import org.awhy.ui.tables.ReserveCircuitTable;
 import org.awhy.ui.tables.ReserveHotelTable;
 import org.awhy.ui.tables.ReserveVisiteTable;
 import org.awhy.ui.tables.SimulationTable;
+import org.awhy.ui.tables.ReservationTable;
 import org.awhy.ui.tables.VilleTable;
 
 import javafx.event.ActionEvent;
@@ -61,7 +62,8 @@ public class GMenuFX extends MenuBar {
 			public void handle(ActionEvent event) {
 				Controller.container.rmPane();
 				try {
-					Controller.container.setTableView(new VilleTable(Controller.executeQuery("select * from Ville")));
+					Controller.container
+					.setTableView(new VilleTable(Controller.executeQuery("select * from Ville")));
 				} catch (SQLException e) {
 					Controller.alert("SQLException", e);
 				}
@@ -75,7 +77,8 @@ public class GMenuFX extends MenuBar {
 			public void handle(ActionEvent event) {
 				Controller.container.rmPane();
 				try {
-					Controller.container.setTableView(new LieuAVisiterTable(Controller.executeQuery("select * from LieuAvisiter")));
+					Controller.container
+					.setTableView(new LieuAVisiterTable(Controller.executeQuery("select * from LieuAvisiter")));
 				} catch (SQLException e) {
 					Controller.alert("SQLException", e);
 				}
@@ -90,7 +93,8 @@ public class GMenuFX extends MenuBar {
 			public void handle(ActionEvent event) {
 				Controller.container.rmPane();
 				try {
-					Controller.container.setTableView(new HotelTable(Controller.executeQuery("select * from Hotel")));
+					Controller.container
+					.setTableView(new HotelTable(Controller.executeQuery("select * from Hotel")));
 				} catch (SQLException e) {
 					Controller.alert("SQLException", e);
 				}
@@ -102,7 +106,8 @@ public class GMenuFX extends MenuBar {
 			@Override
 			public void handle(ActionEvent event) {
 				try {
-					Controller.container.setTableView(new EtapesTable(Controller.executeQuery("select * from Etapes")));
+					Controller.container
+					.setTableView(new EtapesTable(Controller.executeQuery("select * from Etapes")));
 				} catch (SQLException e) {
 					Controller.alert("SQLException", e);
 				}
@@ -116,7 +121,8 @@ public class GMenuFX extends MenuBar {
 			public void handle(ActionEvent event) {
 				Controller.container.rmPane();
 				try {
-					Controller.container.setTableView(new CircuitTable(Controller.executeQuery("select * from Circuit")));
+					Controller.container
+					.setTableView(new CircuitTable(Controller.executeQuery("select * from Circuit")));
 				} catch (SQLException e) {
 					Controller.alert("SQLException", e);
 				}
@@ -129,7 +135,8 @@ public class GMenuFX extends MenuBar {
 			@Override
 			public void handle(ActionEvent event) {
 				try {
-					Controller.container.setTableView(new DateCircuitTable(Controller.executeQuery("select * from DateCircuit")));
+					Controller.container
+					.setTableView(new DateCircuitTable(Controller.executeQuery("select * from DateCircuit")));
 				} catch (SQLException e) {
 					Controller.alert("SQLException", e);
 				}
@@ -165,6 +172,20 @@ public class GMenuFX extends MenuBar {
 		});
 		view.getItems().add(simulations);
 
+		MenuItem reservation = new MenuItem("Reservations");
+		reservation.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				try {
+					Controller.container
+					.setTableView(new ReservationTable(Controller.executeQuery("select * from Reservation")));
+				} catch (SQLException e) {
+					Controller.alert("SQLException", e);
+				}
+			}
+		});
+		view.getItems().add(reservation);
+		
 		Menu reservations = new Menu("Reservations");
 		
 		MenuItem lavR = new MenuItem("Lieux à visiter");
