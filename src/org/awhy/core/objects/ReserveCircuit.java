@@ -12,21 +12,21 @@ import javafx.beans.property.SimpleStringProperty;
 public class ReserveCircuit implements Object {
 
 	public final SimpleStringProperty idCircuit;
-	public Date datePaiement;
+	public Date dateDepartCircuit;
 	public final SimpleIntegerProperty numDossier;
 	public final SimpleIntegerProperty nbPersonnesCircuit;
 	public static String dbName = "ReserveCircuit";
 	
 	public ReserveCircuit() {
 		this.idCircuit = new SimpleStringProperty();
-		this.datePaiement = new Date(0);
+		this.dateDepartCircuit = new Date(0);
 		this.numDossier = new SimpleIntegerProperty();
 		this.nbPersonnesCircuit = new SimpleIntegerProperty();
 	}
 
-	public ReserveCircuit(String idCircuit, Date datePaiement, int numDossier, int nbPersonnesCircuit) {
+	public ReserveCircuit(String idCircuit, Date dateDepartCircuit, int numDossier, int nbPersonnesCircuit) {
 		this.idCircuit = new SimpleStringProperty(idCircuit);
-		this.datePaiement = datePaiement;
+		this.dateDepartCircuit = dateDepartCircuit;
 		this.numDossier = new SimpleIntegerProperty(numDossier);
 		this.nbPersonnesCircuit = new SimpleIntegerProperty(nbPersonnesCircuit);
 	}
@@ -36,7 +36,7 @@ public class ReserveCircuit implements Object {
 		String insert = "INSERT INTO " + dbName + " VALUES " + "(?, ?, ?, ?)";
 		PreparedStatement preparedStatementInsert = c.prepareStatement(insert);
 		preparedStatementInsert.setString(1, this.getIdCircuit());
-		preparedStatementInsert.setDate(2, this.getDatePaiement());
+		preparedStatementInsert.setDate(2, this.getDateDepartCircuit());
 		preparedStatementInsert.setInt(3, this.getNumDossier());
 		preparedStatementInsert.setInt(4, this.getNbPersonnesCircuit());
 		preparedStatementInsert.executeUpdate();
@@ -48,7 +48,7 @@ public class ReserveCircuit implements Object {
 		PreparedStatement preparedStatementInsert = c.prepareStatement(insert);
 		preparedStatementInsert.setInt(1, this.getNbPersonnesCircuit());
 		preparedStatementInsert.setString(2, this.getIdCircuit());
-		preparedStatementInsert.setDate(3, this.getDatePaiement());
+		preparedStatementInsert.setDate(3, this.getDateDepartCircuit());
 		preparedStatementInsert.setInt(4, this.getNumDossier());
 		preparedStatementInsert.executeUpdate();
 	}
@@ -63,8 +63,8 @@ public class ReserveCircuit implements Object {
 		return idCircuit.get();
 	}
 
-	public Date getDatePaiement() {
-		return datePaiement;
+	public Date getDateDepartCircuit() {
+		return dateDepartCircuit;
 	}
 
 	public Integer getNumDossier() {
@@ -79,8 +79,8 @@ public class ReserveCircuit implements Object {
 		this.idCircuit.set(idCircuit);
 	}
 
-	public void setDatePaiement(Date datePaiement) {
-		this.datePaiement = datePaiement;		
+	public void setDepartCircuit(Date dateDepartCircuit) {
+		this.dateDepartCircuit = dateDepartCircuit;		
 	}
 
 	//Attention à l'utilisation de setNumDossier !
