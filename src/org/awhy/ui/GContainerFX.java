@@ -69,14 +69,13 @@ public class GContainerFX extends VBox {
 	}
 
 	public void setPane(GAccordionFX pane) {
-		this.container.getItems().addAll(pane);
-		this.paneLeft = pane;
-	}
-	
-	public void rmPane() {
 		if(this.paneLeft != null) {
 			this.container.getItems().remove(this.paneLeft);
 			this.paneLeft = null;
+		}
+		if(pane != null) {
+			this.container.getItems().addAll(pane);
+			this.paneLeft = pane;
 		}
 	}
 }
