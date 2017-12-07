@@ -1,0 +1,149 @@
+package org.awhy.ui.popup;
+import javafx.scene.text.Text;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Date;
+
+import org.awhy.core.objects.Simulation;
+
+import javafx.geometry.Insets;
+import javafx.scene.control.ButtonBar.ButtonData;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.Dialog;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
+import javafx.util.Pair;
+
+public class PopupSimulation {
+	public static void show(int numDossier, Connection c) throws SQLException {
+
+		Dialog<Pair<String, String>> dialog = new Dialog<>();
+		dialog.setTitle("Récapitulatif de la simulation");
+		dialog.setHeaderText("Récapitulatif de la simulation numéro " + numDossier);
+		
+		ButtonType confirmButtonType = new ButtonType("Confirmer", ButtonData.OK_DONE);
+		dialog.getDialogPane().getButtonTypes().addAll(confirmButtonType);
+		
+		GridPane grid = new GridPane();
+		grid.setHgap(10);
+		grid.setVgap(10);
+		grid.setPadding(new Insets(20, 20, 10, 10));
+
+		// Ajouter client si possible
+		
+		// dates départ et arrivée envisagées
+		Date dateMin = null;
+		Date dateMax = null;
+		
+		String query = "SELECT min(dateDepartHotel), max(dateArriveeHotel) FROM ReserveHotel WHERE numDossier=?";
+		PreparedStatement pS = c.prepareStatement(query);
+		pS.setInt(1, numDossier);
+		ResultSet res = pS.executeQuery();
+		while(res.next()) {
+			if(dateMin == null || (res.getDate(1) != null && dateMin.after(res.getDate(1))))
+				dateMin = res.getDate(1);
+			if(dateMax == null || (res.getDate(2) != null && res.getDate(2).after(dateMax)))
+				dateMax = res.getDate(2);
+		}
+		
+		query = "SELECT min(dateDepartCircuit), max(nbJoursTotal + dateDepartCircuit) FROM ReserveCircuit R, Circuit C WHERE numDossier=? and R.idCircuit=C.idCircuit";
+		pS = c.prepareStatement(query);
+		pS.setInt(1, numDossier);
+		res = pS.executeQuery();
+		while(res.next()) {
+			if(dateMin == null || (res.getDate(1) != null && dateMin.after(res.getDate(1))))
+				dateMin = res.getDate(1);
+			if(dateMax == null || (res.getDate(2) != null && res.getDate(2).after(dateMax)))
+				dateMax = res.getDate(2);
+		}
+		
+		query = "SELECT min(dateVisite), max(dateVisite) FROM ReserveVisite R WHERE numDossier=?";
+		pS = c.prepareStatement(query);
+		pS.setInt(1, numDossier);
+		res = pS.executeQuery();
+		while(res.next()) {
+			if(dateMin == null || (res.getDate(1) != null && dateMin.after(res.getDate(1))))
+				dateMin = res.getDate(1);
+			if(dateMax == null || (res.getDate(2) != null && res.getDate(2).after(dateMax)))
+				dateMax = res.getDate(2);
+		}
+		
+		Text dateMinText = new Text("Date de départ: " + dateMin);
+		grid.add(dateMinText, 0, 0);
+		Text dateMaxText = new Text("Date d'arrivée: " + dateMax);
+		grid.add(dateMaxText, 1, 0);
+		
+		// nombre de personnes
+		int nbPersonnes = -1;
+		query = "SELECT max(nbPersonnesVisite) FROM ReserveVisite WHERE numDossier=?";
+		pS = c.prepareStatement(query);
+		pS.setInt(1, numDossier);
+		res = pS.executeQuery();
+		while(res.next()) {
+			if(res.getInt(1) > nbPersonnes) nbPersonnes = res.getInt(1); 
+		}
+		query = "SELECT max(nbChambresReservees) FROM ReserveHotel WHERE numDossier=?";
+		pS = c.prepareStatement(query);
+		pS.setInt(1, numDossier);
+		res = pS.executeQuery();
+		while(res.next()) {
+			if(res.getInt(1) > nbPersonnes) nbPersonnes = res.getInt(1); 
+		}
+		query = "SELECT max(nbPersonnesCircuit) FROM ReserveCircuit WHERE numDossier=?";
+		pS = c.prepareStatement(query);
+		pS.setInt(1, numDossier);
+		res = pS.executeQuery();
+		while(res.next()) {
+			if(res.getInt(1) > nbPersonnes) nbPersonnes = res.getInt(1); 
+		}
+		Text nbPersonnesText = new Text(nbPersonnes + " personne.s");
+		grid.add(nbPersonnesText, 0, 1);
+		
+		// Les réservations
+		
+		
+		// Le pognon
+		int cout = 0;
+		query = "SELECT sum(prixCircuit) FROM ReserveCircuit R, Circuit C WHERE numDossier=? and R.idCircuit = C.idCircuit";
+		pS = c.prepareStatement(query);
+		pS.setInt(1, numDossier);
+		res = pS.executeQuery();
+		while(res.next()) {
+			cout += res.getInt(1); 
+		}
+		query = "SELECT sum(prixChambre * nbChambresReservees + prixPetitDejeuner * nbPetitDejReserves) FROM ReserveHotel R, Hotel H WHERE numDossier=? and R.nomHotel = H.nomHotel";
+		pS = c.prepareStatement(query);
+		pS.setInt(1, numDossier);
+		res = pS.executeQuery();
+		while(res.next()) {
+			cout += res.getInt(1); 
+		}
+		query = "SELECT sum(prix) FROM ReserveVisite R, LieuAVisiter L WHERE numDossier=? and R.nomLieu = L.nomLieu";
+		pS = c.prepareStatement(query);
+		pS.setInt(1, numDossier);
+		res = pS.executeQuery();
+		while(res.next()) {
+			cout += res.getInt(1); 
+		}
+		Text argent = new Text("Coût total: " + cout + "€");
+		grid.add(argent, 1, 1);
+		
+		// vérifier (nombre places circuits, nombre places hotels, dates)
+		Text places = new Text("Réservation possible");
+		grid.add(places, 0, 2);	
+
+
+		dialog.getDialogPane().setContent(grid);
+
+		dialog.showAndWait();
+		
+		//tp.object = new ReserveHotel(data.getNomHotel(), data.getVille(), data.getPays(), s.getNumDossier(), 
+		//		Date.valueOf(depart.getValue()), Date.valueOf(arrivee.getValue()), Integer.valueOf(nbPersonnes.getText()), Integer.valueOf(nbPDej.getText()));
+	}
+
+}
