@@ -3,6 +3,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import org.awhy.core.Dialog;
+
 import javafx.beans.property.SimpleIntegerProperty;
 
 
@@ -20,6 +23,18 @@ public class Simulation implements Object {
 
 	public Simulation() {
 		this.numDossier = new SimpleIntegerProperty();
+	}
+	
+	public Simulation(Dialog d) throws SQLException {
+		ResultSet r = d.executeQuery("select numdossier.nextval from simulation");
+		long id = 0;
+		if (r.next()) {
+			id = r.getLong(1);
+			System.out.println("id : " + id);
+		} else {
+			System.out.println("empty : select numdossier.nextval from simulation");
+		}
+		this.numDossier = new SimpleIntegerProperty((int) id);
 	}
 
 	public Simulation(int numDossier) {

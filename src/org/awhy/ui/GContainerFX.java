@@ -15,6 +15,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.util.Callback;
 
 public class GContainerFX extends VBox {
 
@@ -29,9 +30,9 @@ public class GContainerFX extends VBox {
 		children.add(new GMenuFX());
 		container = new SplitPane();
 		children.add(container);
-//		Controller.connect();
-//		this.setTableView(new VilleTable(Controller.dialog.executeQuery("select * from ville")));
-		System.out.println("ok");
+		//		Controller.connect();
+		//		this.setTableView(new VilleTable(Controller.dialog.executeQuery("select * from ville")));
+		
 		container.setDividerPositions(0.3);
 		// container.getChildren().add(box);
 		// container.getChildren().add(gt);
@@ -51,7 +52,6 @@ public class GContainerFX extends VBox {
 	}
 
 	public void setPane(GAccordionFX pane) {
-		
 		this.container.getItems().addAll(pane);
 		this.paneLeft = pane;
 	}

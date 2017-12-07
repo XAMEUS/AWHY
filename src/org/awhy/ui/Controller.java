@@ -6,9 +6,12 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.concurrent.locks.AbstractQueuedLongSynchronizer.ConditionObject;
 
 import org.awhy.core.Dialog;
 import org.awhy.core.objects.Object;
+import org.awhy.core.objects.Simulation;
+import org.awhy.ui.pane.GAccordionFX;
 import org.awhy.ui.tables.Table;
 import org.awhy.utils.Debugger;
 
@@ -34,9 +37,10 @@ public class Controller {
 	public static Dialog dialog;
 	public static GContainerFX container;
 	public static Table<? extends Object> tableView = null;
+	public static GAccordionFX g;
 
-	public static void newFile() {
-		System.out.println("TODO: newFile()");
+	public static void newFile() throws SQLException {
+		Controller.container.setPane(new GAccordionFX(new Simulation(Controller.dialog)));
 	}
 
 	public static void setDebug(boolean b) {

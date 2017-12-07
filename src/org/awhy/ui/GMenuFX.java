@@ -44,7 +44,11 @@ public class GMenuFX extends MenuBar {
 		newFile.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				Controller.newFile();
+				try {
+					Controller.newFile();
+				} catch (SQLException e) {
+					Controller.alert("ERROR", e);
+				}
 			}
 		});
 		file.getItems().add(newFile);
@@ -192,7 +196,6 @@ public class GMenuFX extends MenuBar {
 		lavR.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				Controller.container.setPane(new GAccordionFX());
 				try {
 					Controller.container
 							.setTableView(new ReserveVisiteTable(Controller.executeQuery("select * from ReserveVisite")));
