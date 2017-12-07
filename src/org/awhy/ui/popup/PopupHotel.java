@@ -1,8 +1,6 @@
 package org.awhy.ui.popup;
 
 import java.sql.Date;
-import java.time.Instant;
-import java.time.ZoneId;
 
 import org.awhy.core.objects.Hotel;
 import org.awhy.core.objects.ReserveHotel;
@@ -53,9 +51,6 @@ public class PopupHotel {
 		
 		tp.setText(data.getNomHotel());
 
-//		System.out.println(depart.getValue());
-//		Date dateDepart = Date.from(Instant.from(depart.getValue().atStartOfDay(ZoneId.systemDefault())));
-//		Date dateArrivee = Date.from(Instant.from(arrivee.getValue().atStartOfDay(ZoneId.systemDefault())));
 		tp.object = new ReserveHotel(data.getNomHotel(), data.getVille(), data.getPays(), s.getNumDossier(), 
 				Date.valueOf(depart.getValue()), Date.valueOf(arrivee.getValue()), Integer.valueOf(nbPersonnes.getText()), Integer.valueOf(nbPDej.getText()));
 	}
