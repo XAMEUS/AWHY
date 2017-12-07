@@ -14,43 +14,42 @@ public class ReserveCircuit implements Object {
 	public final SimpleStringProperty idCircuit;
 	public Date datePaiement;
 	public final SimpleIntegerProperty numDossier;
+	public final SimpleIntegerProperty nbPersonnesCircuit;
 	public static String dbName = "ReserveCircuit";
 	
 	public ReserveCircuit() {
 		this.idCircuit = new SimpleStringProperty();
 		this.datePaiement = new Date(0);
 		this.numDossier = new SimpleIntegerProperty();
+		this.nbPersonnesCircuit = new SimpleIntegerProperty();
 	}
 
-	public ReserveCircuit(String idCircuit, Date datePaiement, int numDossier) {
+	public ReserveCircuit(String idCircuit, Date datePaiement, int numDossier, int nbPersonnesCircuit) {
 		this.idCircuit = new SimpleStringProperty(idCircuit);
 		this.datePaiement = datePaiement;
 		this.numDossier = new SimpleIntegerProperty(numDossier);
+		this.nbPersonnesCircuit = new SimpleIntegerProperty(nbPersonnesCircuit);
 	}
 
 	@Override
 	public void insertSQL(Connection c) throws SQLException {
-		String insert = "INSERT INTO " + dbName + " VALUES " + "(?, ?, ?, ?, ?, ?)";
+		String insert = "INSERT INTO " + dbName + " VALUES " + "(?, ?, ?, ?)";
 		PreparedStatement preparedStatementInsert = c.prepareStatement(insert);
-		preparedStatementInsert.setString(1, this.getNomLieu());
-		preparedStatementInsert.setString(2, this.getVille());
-		preparedStatementInsert.setString(3, this.getPays());
-		preparedStatementInsert.setInt(4, this.getNumDossier());
-		preparedStatementInsert.setDate(5, this.getDateVisite());
-		preparedStatementInsert.setInt(6, this.getNbPersonnesVisite());
+		preparedStatementInsert.setString(1, this.getIdCircuit());
+		preparedStatementInsert.setDate(2, this.getDatePaiement());
+		preparedStatementInsert.setInt(3, this.getNumDossier());
+		preparedStatementInsert.setInt(4, this.getNbPersonnesCircuit());
 		preparedStatementInsert.executeUpdate();
 	}
 
 	@Override
 	public void updateSQL(Connection c) throws SQLException {
-		String insert = "UPDATE " + dbName + " SET nbPersonnesVisite=? WHERE nomLieu=?, ville=?, pays=?, numDossier=?, dateVisite=?"
+		String insert = "UPDATE " + dbName + " SET nbPersonnesCircuit=? WHERE idCircuit=?, datePaiement=?, numDossier=?";
 		PreparedStatement preparedStatementInsert = c.prepareStatement(insert);
-		preparedStatementInsert.setString(1, this.getNbPersonnesVisite());
-		preparedStatementInsert.setString(2, this.getNomLieu());
-		preparedStatementInsert.setString(3, this.getVille());
-		preparedStatementInsert.setString(4, this.getPays());
-		preparedStatementInsert.setString(5, this.getNumDossier());
-		preparedStatementInsert.setString(6, this.getDateVisite());
+		preparedStatementInsert.setInt(1, this.getNbPersonnesCircuit());
+		preparedStatementInsert.setString(2, this.getIdCircuit());
+		preparedStatementInsert.setDate(3, this.getDatePaiement());
+		preparedStatementInsert.setInt(4, this.getNumDossier());
 		preparedStatementInsert.executeUpdate();
 	}
 
@@ -72,6 +71,10 @@ public class ReserveCircuit implements Object {
 		return numDossier.get();
 	}
 	
+	public Integer getNbPersonnesCircuit() {
+		return nbPersonnesCircuit.get();
+	}
+	
 	public void setIdCircuit(String idCircuit) {
 		this.idCircuit.set(idCircuit);
 	}
@@ -80,8 +83,13 @@ public class ReserveCircuit implements Object {
 		this.datePaiement = datePaiement;		
 	}
 
+	//Attention à l'utilisation de setNumDossier !
 	public void setNumDossier(Integer numDossier) {
 		this.numDossier.set(numDossier);
+	}
+	
+	public void setNbPersonnesCircuit(Integer nbPersonnesCircuit) {
+		this.nbPersonnesCircuit.set(nbPersonnesCircuit);
 	}
 
 }

@@ -86,7 +86,6 @@ public class GMenuFX extends MenuBar {
 		});
 		view.getItems().add(lav);
 
-
 		MenuItem hotels = new MenuItem("Hotels");
 		hotels.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
@@ -100,6 +99,7 @@ public class GMenuFX extends MenuBar {
 				}
 			}
 		});
+		view.getItems().add(hotels);
 		
 		MenuItem etapes = new MenuItem("Etapes");
 		etapes.setOnAction(new EventHandler<ActionEvent>() {
