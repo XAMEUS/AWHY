@@ -26,10 +26,10 @@ public class ReserveHotelTable extends Table<ReserveHotel> {
 		TableColumn<ReserveHotel, Integer> dossierCol = new TableColumn<ReserveHotel, Integer>("Dossier");
 		dossierCol.setCellValueFactory(new PropertyValueFactory<ReserveHotel, Integer>("numDossier"));
 
-		TableColumn<ReserveHotel, Date> departCol = new TableColumn<ReserveHotel, Date>("Arrivée");
+		TableColumn<ReserveHotel, Date> departCol = new TableColumn<ReserveHotel, Date>("Départ");
 		departCol.setCellValueFactory(new PropertyValueFactory<ReserveHotel, Date>("dateDepartHotel"));
 
-		TableColumn<ReserveHotel, Date> arriveeCol = new TableColumn<ReserveHotel, Date>("Départ");
+		TableColumn<ReserveHotel, Date> arriveeCol = new TableColumn<ReserveHotel, Date>("Arrivée");
 		arriveeCol.setCellValueFactory(new PropertyValueFactory<ReserveHotel, Date>("dateArriveeHotel"));
 
 		TableColumn<ReserveHotel, Integer> nbChambreCol = new TableColumn<ReserveHotel, Integer>("Chambres");

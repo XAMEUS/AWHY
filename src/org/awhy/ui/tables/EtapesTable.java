@@ -19,8 +19,8 @@ public class EtapesTable extends Table<Etapes> {
 		TableColumn<Etapes, Integer> ordreCol = new TableColumn<Etapes, Integer>("Ordre");
 		ordreCol.setCellValueFactory(new PropertyValueFactory<Etapes, Integer>("ordre"));
 		
-		TableColumn<Etapes, String> nomCol = new TableColumn<Etapes, String>("Lieu");
-		nomCol.setCellValueFactory(new PropertyValueFactory<Etapes, String>("nomLieu"));
+		TableColumn<Etapes, String> lieuCol = new TableColumn<Etapes, String>("Lieu");
+		lieuCol.setCellValueFactory(new PropertyValueFactory<Etapes, String>("nomLieu"));
 		
 		TableColumn<Etapes, String> nomVilleCol = new TableColumn<Etapes, String>("Ville");
 		nomVilleCol.setCellValueFactory(new PropertyValueFactory<Etapes, String>("ville"));
@@ -34,6 +34,7 @@ public class EtapesTable extends Table<Etapes> {
 		this.setItems(this.data);
 		this.getColumns().add(idCircuitCol);
 		this.getColumns().add(ordreCol);
+		this.getColumns().add(lieuCol);
 		this.getColumns().add(nomVilleCol);
 		this.getColumns().add(paysCol);
 		this.getColumns().add(nbJoursCol);
