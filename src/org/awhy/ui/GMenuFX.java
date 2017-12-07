@@ -65,7 +65,7 @@ public class GMenuFX extends MenuBar {
 		villes.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				Controller.container.rmPane();
+				Controller.container.setPane(null);
 				try {
 					Controller.container
 					.setTableView(new VilleTable(Controller.executeQuery("select * from Ville")));
@@ -80,7 +80,7 @@ public class GMenuFX extends MenuBar {
 		lav.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				Controller.container.rmPane();
+				Controller.container.setPane(null);
 				try {
 					Controller.container
 					.setTableView(new LieuAVisiterTable(Controller.executeQuery("select * from LieuAvisiter")));
@@ -96,7 +96,7 @@ public class GMenuFX extends MenuBar {
 		hotels.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				Controller.container.rmPane();
+				Controller.container.setPane(null);
 				try {
 					Controller.container
 					.setTableView(new HotelTable(Controller.executeQuery("select * from Hotel")));
@@ -111,7 +111,7 @@ public class GMenuFX extends MenuBar {
 		circuits.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				Controller.container.rmPane();
+				Controller.container.setPane(null);
 				try {
 					Controller.container
 					.setTableView(new CircuitTable(Controller.executeQuery("select * from Circuit")));
@@ -227,7 +227,7 @@ public class GMenuFX extends MenuBar {
 		clients.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				Controller.container.rmPane();
+				Controller.container.setPane(null);
 				try {
 					Controller.container
 							.setTableView(new ClientTable(Controller.executeQuery("select * from Client")));
