@@ -33,9 +33,9 @@ public class GContainerFX extends VBox {
 		container = new SplitPane();
 		children.add(container);
 
-//		Controller.connect();
+		Controller.connect();
 //		this.setTableView(new VilleTable(Controller.dialog.executeQuery("select * from ville")));
-//		
+		
 //		TableView<Ville> v = (TableView<Ville>)(Controller.tableView);
 //		v.setRowFactory( tv -> {
 //		    TableRow<Ville> row = new TableRow<>();
@@ -48,7 +48,7 @@ public class GContainerFX extends VBox {
 //		    });
 //		    return row ;
 //		});
-//		
+		
 
 		container.setDividerPositions(0.3);
 		// container.getChildren().add(box);
