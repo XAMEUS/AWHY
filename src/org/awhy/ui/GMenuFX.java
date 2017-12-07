@@ -268,8 +268,8 @@ public class GMenuFX extends MenuBar {
 		});
 		simu.getItems().add(simuNotOK);
 		
-		MenuItem lavR = new MenuItem("Lieux à visiter");
-		lavR.setOnAction(new EventHandler<ActionEvent>() {
+		MenuItem lavS = new MenuItem("Lieux à visiter");
+		lavS.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
 				try {
@@ -280,10 +280,10 @@ public class GMenuFX extends MenuBar {
 				}
 			}
 		});
-		simu.getItems().add(lavR);
+		simu.getItems().add(lavS);
 		
-		MenuItem HotelsR = new MenuItem("Hotels");
-		lavR.setOnAction(new EventHandler<ActionEvent>() {
+		MenuItem hotelsS = new MenuItem("Hotels");
+		hotelsS.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
 				try {
@@ -294,10 +294,10 @@ public class GMenuFX extends MenuBar {
 				}
 			}
 		});
-		simu.getItems().add(HotelsR);
+		simu.getItems().add(hotelsS);
 		
-		MenuItem CircuitsR = new MenuItem("Circuits");
-		lavR.setOnAction(new EventHandler<ActionEvent>() {
+		MenuItem circuitS = new MenuItem("Circuits");
+		circuitS.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
 				try {
@@ -308,7 +308,7 @@ public class GMenuFX extends MenuBar {
 				}
 			}
 		});
-		simu.getItems().add(CircuitsR);
+		simu.getItems().add(circuitS);
 		
 		agence.getItems().add(simu);
 		
@@ -327,14 +327,14 @@ public class GMenuFX extends MenuBar {
 			}
 		});
 		dispo.getItems().add(reservation);
-		/*
+		
 		MenuItem lavR = new MenuItem("Lieux à visiter");
 		lavR.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
 				try {
 					Controller.container
-							.setTableView(new ReserveVisiteTable(Controller.executeQuery("select * from ReserveVisite")));
+							.setTableView(new ReserveVisiteTable(Controller.executeQuery("select * from ReserveVisite, Reservation")));
 				} catch (SQLException e) {
 					Controller.alert("SQLException", e);
 				}
@@ -348,7 +348,7 @@ public class GMenuFX extends MenuBar {
 			public void handle(ActionEvent event) {
 				try {
 					Controller.container
-							.setTableView(new ReserveHotelTable(Controller.executeQuery("select * from ReserveHotel")));
+							.setTableView(new ReserveHotelTable(Controller.executeQuery("select * from ReserveHotel, Reservation")));
 				} catch (SQLException e) {
 					Controller.alert("SQLException", e);
 				}
@@ -357,19 +357,19 @@ public class GMenuFX extends MenuBar {
 		dispo.getItems().add(hotelsR);
 
 		MenuItem CircuitsR = new MenuItem("Circuits");
-		lavR.setOnAction(new EventHandler<ActionEvent>() {
+		CircuitsR.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
 				try {
 					Controller.container
-							.setTableView(new ReserveCircuitTable(Controller.executeQuery("select * from ReserveCircuit")));
+							.setTableView(new ReserveCircuitTable(Controller.executeQuery("select * from ReserveCircuit, Reservation")));
 				} catch (SQLException e) {
 					Controller.alert("SQLException", e);
 				}
 			}
 		});
 		dispo.getItems().add(CircuitsR);
-		*/
+		
 		agence.getItems().add(dispo);
 		
 		this.getMenus().add(agence);

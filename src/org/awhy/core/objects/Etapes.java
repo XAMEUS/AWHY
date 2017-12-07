@@ -1,4 +1,3 @@
-
 package org.awhy.core.objects;
 
 import java.sql.Connection;

@@ -27,10 +27,10 @@ public class ReserveVisiteTable extends Table<ReserveVisite> {
 		dossierCol.setCellValueFactory(new PropertyValueFactory<ReserveVisite, Integer>("numDossier"));
 
 		TableColumn<ReserveVisite, Date> dateCol = new TableColumn<ReserveVisite, Date>("Date");
-		dateCol.setCellValueFactory(new PropertyValueFactory<ReserveVisite, Date>("dateVisite"));
+		dateCol.setCellValueFactory(new PropertyValueFactory<ReserveVisite, Date>("dateReserveVisite"));
 		
 		TableColumn<ReserveVisite, Integer> nbPersonnesCol = new TableColumn<ReserveVisite, Integer>("Quantité");
-		nbPersonnesCol.setCellValueFactory(new PropertyValueFactory<ReserveVisite, Integer>("nbPersonnesVisite"));
+		nbPersonnesCol.setCellValueFactory(new PropertyValueFactory<ReserveVisite, Integer>("nbPersonnesReserveVisite"));
 
 		this.setItems(this.data);
 		this.getColumns().add(nomCol);

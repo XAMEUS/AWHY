@@ -35,7 +35,7 @@ public class ReserveHotelTable extends Table<ReserveHotel> {
 		TableColumn<ReserveHotel, Integer> nbChambreCol = new TableColumn<ReserveHotel, Integer>("Chambres");
 		nbChambreCol.setCellValueFactory(new PropertyValueFactory<ReserveHotel, Integer>("nbChambresReservees"));
 
-		TableColumn<ReserveHotel, Integer> nbDejCol = new TableColumn<ReserveHotel, Integer>("Petits Déjeuner");
+		TableColumn<ReserveHotel, Integer> nbDejCol = new TableColumn<ReserveHotel, Integer>("Petits Déjeuners");
 		nbDejCol.setCellValueFactory(new PropertyValueFactory<ReserveHotel, Integer>("nbPetitDejReserves"));
 
 		this.setItems(this.data);
