@@ -37,6 +37,5 @@ public class Simulation implements Object {
 
 	@Override
 	public void updateSQL(Connection c) throws SQLException {
-		// TODO Auto-generated method stub
 	}
 }

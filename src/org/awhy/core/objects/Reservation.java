@@ -11,7 +11,7 @@ import javafx.beans.property.SimpleStringProperty;
 public class Reservation implements Object {
 
 	public final SimpleIntegerProperty numDossier;
-	public final Date datePaiement;
+	public Date datePaiement;
 	public final SimpleStringProperty infoPaiement;
 	public final SimpleIntegerProperty idClient;
 
@@ -55,12 +55,9 @@ public class Reservation implements Object {
 		this.numDossier.set(numDossier);
 	}
 
-//Comment je fais le set d'une date? Suppression du final?	
-//	public void setDatePaiement(Date datePaiement) {
-//		this.datePaiement.setTime(datePaiement);
-//		this.datePaiement.set(datePaiement);
-//		this.datePaiement = datePaiement;
-//	}
+	public void setDatePaiement(Date datePaiement) {
+		this.datePaiement = datePaiement;
+	}
 
 	public void setInfoPaiement(String infoPaiement) {
 		this.infoPaiement.set(infoPaiement);
@@ -68,15 +65,5 @@ public class Reservation implements Object {
 
 	public void setIdClient(Integer idClient) {
 		this.idClient.set(idClient);
-	}
-
-	@Override
-	public void insertSQL(Connection c) throws SQLException {
-		// TODO Auto-generated method stub
-	}
-
-	@Override
-	public void updateSQL(Connection c) throws SQLException {
-		// TODO Auto-generated method stub
 	}
 }

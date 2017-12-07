@@ -70,14 +70,4 @@ public class Hotel implements Object {
 	public Integer getPrixPetitDejeuner() {
   		return prixPetitDejeuner.get();
 	}
-
-	@Override
-	public void insertSQL(Connection c) throws SQLException {
-		// TODO Auto-generated method stub
-	}
-
-	@Override
-	public void updateSQL(Connection c) throws SQLException {
-		// TODO Auto-generated method stub
-	}
 }
