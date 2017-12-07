@@ -258,7 +258,8 @@ public class GMenuFX extends MenuBar {
 			public void handle(ActionEvent event) {
 				try {
 					Controller.container
-							.setTableView(new ReservationTable(Controller.executeQuery("select * from Reservation r minus select numDossier from Simulation s")));
+							.setTableView(new SimulationTable(Controller.executeQuery
+									("select * from Simulation minus (select numDossier from Reservation )")));
 				} catch (SQLException e) {
 					Controller.alert("SQLException", e);
 				}
@@ -289,7 +290,7 @@ public class GMenuFX extends MenuBar {
 			public void handle(ActionEvent event) {
 				try {
 					Controller.container
-							.setTableView(new ReserveVisiteTable(Controller.executeQuery("select * from ReserveVisite")));
+							.setTableView(new ReserveVisiteTable(Controller.executeQuery("select * from ReserveVisite, Reservation")));
 				} catch (SQLException e) {
 					Controller.alert("SQLException", e);
 				}
@@ -303,7 +304,7 @@ public class GMenuFX extends MenuBar {
 			public void handle(ActionEvent event) {
 				try {
 					Controller.container
-							.setTableView(new ReserveHotelTable(Controller.executeQuery("select * from ReserveHotel")));
+							.setTableView(new ReserveHotelTable(Controller.executeQuery("select * from ReserveHotel, Reservation")));
 				} catch (SQLException e) {
 					Controller.alert("SQLException", e);
 				}
@@ -317,7 +318,7 @@ public class GMenuFX extends MenuBar {
 			public void handle(ActionEvent event) {
 				try {
 					Controller.container
-							.setTableView(new ReserveCircuitTable(Controller.executeQuery("select * from ReserveCircuit")));
+							.setTableView(new ReserveCircuitTable(Controller.executeQuery("select * from ReserveCircuit, Reservation")));
 				} catch (SQLException e) {
 					Controller.alert("SQLException", e);
 				}
