@@ -3,12 +3,14 @@ package org.awhy.ui.pane;
 import java.sql.Date;
 import java.sql.SQLException;
 
+import org.awhy.core.objects.Circuit;
 import org.awhy.core.objects.Hotel;
 import org.awhy.core.objects.LieuAVisiter;
 import org.awhy.core.objects.ReserveHotel;
 import org.awhy.core.objects.Simulation;
 import org.awhy.core.objects.Ville;
 import org.awhy.ui.Controller;
+import org.awhy.ui.popup.PopupCircuit;
 import org.awhy.ui.popup.PopupHotel;
 import org.awhy.ui.popup.PopupVisite;
 import org.awhy.ui.tables.CircuitTable;
@@ -107,12 +109,23 @@ public class GAccordionFX extends VBox {
 		b3.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				ac.getPanes().add(new HotelPane());
+				CircuitPane tp = new CircuitPane();
+				ac.getPanes().add(new CircuitPane());
 				try {
 					Controller.container
 							.setTableView(new CircuitTable(Controller.executeQuery("select * from circuit")));
 					// TODO : on click, reservation.
-					// more complex...
+					TableView<Circuit> v = (TableView<Circuit>) (Controller.tableView);
+					v.setRowFactory(tv -> {
+						TableRow<Circuit> row = new TableRow<>();
+						row.setOnMouseClicked(e -> {
+							if (e.getClickCount() == 2 && (!row.isEmpty())) {
+								Circuit rowData = row.getItem();
+								PopupCircuit.show(tp, rowData, s);
+							}
+						});
+						return row;
+					});
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
