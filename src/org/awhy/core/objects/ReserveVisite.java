@@ -15,7 +15,7 @@ public class ReserveVisite implements Object {
 	public final SimpleStringProperty ville;
 	public final SimpleStringProperty pays;
 	public final SimpleIntegerProperty numDossier;
-	public final Date dateVisite;
+	public Date dateVisite;
 	public final SimpleIntegerProperty nbPersonnesVisite;
 	public static String dbName = "ReserveVisite";
 	
@@ -91,5 +91,29 @@ public class ReserveVisite implements Object {
 
 	public Integer getNbPersonnesVisite() {
 		return nbPersonnesVisite.get();
+	}
+
+	public void setNomLieu(String nomLieu) {
+		this.nomLieu.set(nomLieu);
+	}
+
+	public void setVille(String ville) {
+		this.ville.set(ville);
+	}
+
+	public void setPays(String pays) {
+		this.pays.set(pays);
+	}
+
+	public void setNumDossier(Integer numDossier) {
+		this.numDossier.set(numDossier);
+	}
+
+	public void setDateVisite(Date dateVisite) {
+		this.dateVisite = dateVisite;
+	}
+
+	public void setNbPersonnesVisite(Integer nbPersonnesVisite) {
+		this.nbPersonnesVisite.set(nbPersonnesVisite);
 	}
 }

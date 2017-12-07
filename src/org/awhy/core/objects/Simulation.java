@@ -31,10 +31,16 @@ public class Simulation implements Object {
 		return new Simulation(res.getInt(1));
 	}
 
+
 	public Integer getNumDossier() {
 		return numDossier.get();
 	}
 
+	//Attention à l'utilisation de setNumDossier !
+	public void setNumDossier(Integer numDossier) {
+		this.numDossier.set(numDossier);
+	}
+	
 	@Override
 	public void updateSQL(Connection c) throws SQLException {
 		// TODO Auto-generated method stub
