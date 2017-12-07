@@ -42,12 +42,13 @@ public class PopupHotel {
 		grid.add(arrivee, 1, 1);
 		grid.add(new Label("Nombre de chambres:"), 0, 2);
 		grid.add(nbPersonnes, 1, 2);
-		grid.add(new Label("Nombres de petits déjeuners:"), 0, 3);
+		grid.add(new Label("Nombre de petits déjeuners:"), 0, 3);
 		grid.add(nbPDej, 1, 3);
 
 		dialog.getDialogPane().setContent(grid);
 
 		dialog.showAndWait();
+		
 		
 		tp.setText(data.getNomHotel());
 
