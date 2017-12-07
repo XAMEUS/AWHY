@@ -149,19 +149,32 @@ public class PopupSimulation {
 				if(cRes.getInt(1) < res.getInt(1))
 					possible = false;
 		}
-		/*query = "SELECT nbPersonnesCircuit, idCircuit, dateDepartCircuit FROM ReserveCircuit WHERE numDossier=?";
+		query = "SELECT nomHotel, ville, pays, nbChambresReservees, dateDepartHotel, dateArriveeHotel FROM ReserveHotel WHERE numDossier=?";
 		pS = c.prepareStatement(query);
 		pS.setInt(1, numDossier);
 		res = pS.executeQuery();
 		while(res.next()) {
 			if(!possible) break;
-			String check = "";
-			PreparedStatement cPS = c.prepareStatement(check);
-			cPS.setString(1, res.getString(2));
-			cPS.setDate(2, res.getDate(3));
-			ResultSet cRes = cPS.executeQuery();
-			while(cRes.next()) ;
-		}*/
+			Date curr = new Date(res.getDate(5).getTime());
+			while(res.getDate(6).after(curr)) {
+				if(!possible) break;
+				String check = "select (h.nbChambresTotal - sum(rhd.nbChambresReservees)) as nbPlaces from Hotel h, (select * from ReserveHotel rh where exists (select * from Reservation r where r.numDossier = rh.numDossier) and (dateDepartHotel <= ? and dateArriveeHotel > ?) and rh.nomHotel = ? and rh.ville = ? and rh.pays = ?) rhd where h.nomHotel = ? and h.ville = ? and h.pays = ? group by h.nomHotel, h.ville, h.pays, h.nbChambresTotal";
+				PreparedStatement cPS = c.prepareStatement(check);
+				cPS.setDate(1, curr);
+				cPS.setDate(2, curr);
+				cPS.setString(3, res.getString(1));
+				cPS.setString(4, res.getString(2));
+				cPS.setString(5, res.getString(3));
+				cPS.setString(6, res.getString(1));
+				cPS.setString(7, res.getString(2));
+				cPS.setString(8, res.getString(3));
+				ResultSet cRes = cPS.executeQuery();
+				while(cRes.next())
+					if(res.getInt(4) > cRes.getInt(1))
+						possible = false;
+			}
+			curr = new Date(curr.getTime() + ((long) 1000) * 60 * 60 * 24);
+		}
 		Text placesOK;
 		if(possible)
 			placesOK = new Text("Réservation possible");
