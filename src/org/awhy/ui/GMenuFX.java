@@ -105,6 +105,7 @@ public class GMenuFX extends MenuBar {
 				}
 			}
 		});
+		view.getItems().add(hotels);
 
 		MenuItem circuits = new MenuItem("Circuits");
 		circuits.setOnAction(new EventHandler<ActionEvent>() {
@@ -281,8 +282,8 @@ public class GMenuFX extends MenuBar {
 		});
 		simu.getItems().add(lavS);
 		
-		MenuItem HotelsS = new MenuItem("Hotels");
-		HotelsS.setOnAction(new EventHandler<ActionEvent>() {
+		MenuItem hotelsS = new MenuItem("Hotels");
+		hotelsS.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
 				try {
@@ -293,10 +294,10 @@ public class GMenuFX extends MenuBar {
 				}
 			}
 		});
-		simu.getItems().add(HotelsS);
+		simu.getItems().add(hotelsS);
 		
-		MenuItem CircuitS = new MenuItem("Circuits");
-		CircuitS.setOnAction(new EventHandler<ActionEvent>() {
+		MenuItem circuitS = new MenuItem("Circuits");
+		circuitS.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
 				try {
@@ -307,7 +308,7 @@ public class GMenuFX extends MenuBar {
 				}
 			}
 		});
-		simu.getItems().add(CircuitS);
+		simu.getItems().add(circuitS);
 		
 		agence.getItems().add(simu);
 		
@@ -341,8 +342,8 @@ public class GMenuFX extends MenuBar {
 		});
 		dispo.getItems().add(lavR);
 
-		MenuItem HotelsR = new MenuItem("Hotels");
-		HotelsR.setOnAction(new EventHandler<ActionEvent>() {
+		MenuItem hotelsR = new MenuItem("Hotels");
+		hotelsR.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
 				try {
@@ -353,7 +354,7 @@ public class GMenuFX extends MenuBar {
 				}
 			}
 		});
-		dispo.getItems().add(HotelsR);
+		dispo.getItems().add(hotelsR);
 
 		MenuItem CircuitsR = new MenuItem("Circuits");
 		CircuitsR.setOnAction(new EventHandler<ActionEvent>() {

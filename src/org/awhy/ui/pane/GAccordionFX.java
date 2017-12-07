@@ -58,7 +58,6 @@ public class GAccordionFX extends VBox {
 				try {
 					// TODO : filter ?
 					Controller.container.setTableView(new HotelTable(Controller.executeQuery("select * from hotel")));
-
 					TableView<Hotel> v = (TableView<Hotel>) (Controller.tableView);
 					v.setRowFactory(tv -> {
 						TableRow<Hotel> row = new TableRow<>();
@@ -70,7 +69,6 @@ public class GAccordionFX extends VBox {
 						});
 						return row;
 					});
-
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
