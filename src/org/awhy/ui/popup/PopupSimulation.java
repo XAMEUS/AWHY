@@ -50,6 +50,7 @@ public class PopupSimulation {
 			if(dateMax == null || (res.getDate(2) != null && res.getDate(2).after(dateMax)))
 				dateMax = res.getDate(2);
 		}
+		pS.close();
 		
 		query = "SELECT min(dateDepartCircuit), max(nbJoursTotal + dateDepartCircuit) FROM ReserveCircuit R, Circuit C WHERE numDossier=? and R.idCircuit=C.idCircuit";
 		pS = c.prepareStatement(query);
@@ -61,6 +62,7 @@ public class PopupSimulation {
 			if(dateMax == null || (res.getDate(2) != null && res.getDate(2).after(dateMax)))
 				dateMax = res.getDate(2);
 		}
+		pS.close();
 		
 		query = "SELECT min(dateVisite), max(dateVisite) FROM ReserveVisite R WHERE numDossier=?";
 		pS = c.prepareStatement(query);
@@ -72,6 +74,7 @@ public class PopupSimulation {
 			if(dateMax == null || (res.getDate(2) != null && res.getDate(2).after(dateMax)))
 				dateMax = res.getDate(2);
 		}
+		pS.close();
 		
 		Text dateMinText = new Text("Date de départ: " + dateMin);
 		grid.add(dateMinText, 0, 0);
@@ -85,7 +88,8 @@ public class PopupSimulation {
 		pS.setInt(1, numDossier);
 		res = pS.executeQuery();
 		while(res.next())
-			if(res.getInt(1) > nbPersonnes) nbPersonnes = res.getInt(1); 
+			if(res.getInt(1) > nbPersonnes) nbPersonnes = res.getInt(1);
+		pS.close();
 
 		query = "SELECT max(nbChambresReservees) FROM ReserveHotel WHERE numDossier=?";
 		pS = c.prepareStatement(query);
@@ -93,6 +97,7 @@ public class PopupSimulation {
 		res = pS.executeQuery();
 		while(res.next())
 			if(res.getInt(1) > nbPersonnes) nbPersonnes = res.getInt(1); 
+		pS.close();
 
 		query = "SELECT max(nbPersonnesCircuit) FROM ReserveCircuit WHERE numDossier=?";
 		pS = c.prepareStatement(query);
@@ -100,6 +105,7 @@ public class PopupSimulation {
 		res = pS.executeQuery();
 		while(res.next())
 			if(res.getInt(1) > nbPersonnes) nbPersonnes = res.getInt(1); 
+		pS.close();
 
 		Text nbPersonnesText = new Text(nbPersonnes + " personne.s");
 		grid.add(nbPersonnesText, 0, 1);
@@ -115,6 +121,7 @@ public class PopupSimulation {
 		res = pS.executeQuery();
 		while(res.next())
 			cout += res.getInt(1); 
+		pS.close();
 
 		query = "SELECT sum(prixChambre * nbChambresReservees + prixPetitDejeuner * nbPetitDejReserves) FROM ReserveHotel R, Hotel H WHERE numDossier=? and R.nomHotel = H.nomHotel";
 		pS = c.prepareStatement(query);
@@ -122,6 +129,7 @@ public class PopupSimulation {
 		res = pS.executeQuery();
 		while(res.next())
 			cout += res.getInt(1); 
+		pS.close();
 
 		query = "SELECT sum(prix) FROM ReserveVisite R, LieuAVisiter L WHERE numDossier=? and R.nomLieu = L.nomLieu";
 		pS = c.prepareStatement(query);
@@ -129,6 +137,8 @@ public class PopupSimulation {
 		res = pS.executeQuery();
 		while(res.next())
 			cout += res.getInt(1); 
+		pS.close();
+
 		Text argent = new Text("Coût total: " + cout + "€");
 		grid.add(argent, 1, 1);
 		
@@ -148,7 +158,10 @@ public class PopupSimulation {
 			while(cRes.next())
 				if(cRes.getInt(1) < res.getInt(1))
 					possible = false;
+			cPS.close();
 		}
+		pS.close();
+
 		query = "SELECT nomHotel, ville, pays, nbChambresReservees, dateDepartHotel, dateArriveeHotel FROM ReserveHotel WHERE numDossier=?";
 		pS = c.prepareStatement(query);
 		pS.setInt(1, numDossier);
@@ -172,9 +185,13 @@ public class PopupSimulation {
 				while(cRes.next())
 					if(res.getInt(4) > cRes.getInt(1))
 						possible = false;
+				cPS.close();
+
 			}
 			curr = new Date(curr.getTime() + ((long) 1000) * 60 * 60 * 24);
 		}
+		pS.close();
+
 		Text placesOK;
 		if(possible)
 			placesOK = new Text("Réservation possible");
