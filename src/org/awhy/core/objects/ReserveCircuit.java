@@ -27,7 +27,8 @@ public class ReserveCircuit implements Object {
 		this.datePaiement = datePaiement;
 		this.numDossier = new SimpleIntegerProperty(numDossier);
 	}
-	
+
+	@Override
 	public void insertSQL(Connection c) throws SQLException {
 		String insert = "INSERT INTO " + dbName + " VALUES " + "(?, ?, ?, ?, ?, ?)";
 		PreparedStatement preparedStatementInsert = c.prepareStatement(insert);
@@ -40,6 +41,7 @@ public class ReserveCircuit implements Object {
 		preparedStatementInsert.executeUpdate();
 	}
 
+	@Override
 	public void updateSQL(Connection c) throws SQLException {
 		String insert = "UPDATE " + dbName + " SET nbPersonnesVisite=? WHERE nomLieu=?, ville=?, pays=?, numDossier=?, dateVisite=?"
 		PreparedStatement preparedStatementInsert = c.prepareStatement(insert);
@@ -69,11 +71,6 @@ public class ReserveCircuit implements Object {
 	public Integer getNumDossier() {
 		return numDossier.get();
 	}
-
-	public Integer getIdClient() {
-		return idClient.get();
-	}
-	
 	
 	public void setIdCircuit(String idCircuit) {
 		this.idCircuit.set(idCircuit);
@@ -87,13 +84,4 @@ public class ReserveCircuit implements Object {
 		this.numDossier.set(numDossier);
 	}
 
-	public void setIdClient(Integer idClient) {
-		this.idClient.set(idClient);
-	}
-
-	@Override
-	public Object createFromSQL(Connection c) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }

@@ -36,7 +36,8 @@ public class ReserveVisite implements Object {
 		this.dateVisite = dateVisite;
 		this.nbPersonnesVisite = new SimpleIntegerProperty(nbPersonnesVisite);
 	}
-	
+
+	@Override
 	public void insertSQL(Connection c) throws SQLException {
 		String insert = "INSERT INTO " + dbName + " VALUES " + "(?, ?, ?, ?, ?, ?)";
 		PreparedStatement preparedStatementInsert = c.prepareStatement(insert);
@@ -49,6 +50,7 @@ public class ReserveVisite implements Object {
 		preparedStatementInsert.executeUpdate();
 	}
 
+	@Override
 	public void updateSQL(Connection c) throws SQLException {
 		String insert = "UPDATE " + dbName + " SET nbPersonnesVisite=? WHERE nomLieu=?, ville=?, pays=?, numDossier=?, dateVisite=?";
 		PreparedStatement preparedStatementInsert = c.prepareStatement(insert);
@@ -89,11 +91,5 @@ public class ReserveVisite implements Object {
 
 	public Integer getNbPersonnesVisite() {
 		return nbPersonnesVisite.get();
-	}
-
-	@Override
-	public Object createFromSQL(Connection c) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
 	}
 }

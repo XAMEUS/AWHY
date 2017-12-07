@@ -48,6 +48,7 @@ public class Client implements Object {
 		return new Client(res.getInt(1), res.getString(2), res.getString(3), res.getString(4), res.getString(5), res.getString(6), res.getString(7), res.getInt(8));
 	}
 
+	@Override
 	public void insertSQL(Connection c) throws SQLException {
 		String insert = "INSERT INTO " + dbName + " VALUES " + "(idClient.nextval, ?, ?, ?, ?, ?, ?, ?)";
 		PreparedStatement preparedStatementInsert = c.prepareStatement(insert);
@@ -61,6 +62,7 @@ public class Client implements Object {
 		preparedStatementInsert.executeUpdate();
 	}
 
+	@Override
 	public void updateSQL(Connection c) throws SQLException {
 		String insert = "UPDATE " + dbName + " SET nomClient=?, prenomClient=?, typeClient=?, adresseClient=?, emailClient=?, telClient=?, anneeEnregistrement=? WHERE idClient=?";
 		PreparedStatement preparedStatementInsert = c.prepareStatement(insert);
@@ -138,12 +140,6 @@ public class Client implements Object {
 
 	public void setAnneeEnregistrement(Integer anneeEnregistrement) {
 		this.anneeEnregistrement.set(anneeEnregistrement);
-	}
-
-	@Override
-	public Object createFromSQL(Connection c) throws SQLException {
-		// TODO Auto-generated method stub
-		return(null);
 	}
 
 }

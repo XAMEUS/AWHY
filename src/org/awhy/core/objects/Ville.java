@@ -53,8 +53,7 @@ public class Ville implements Object {
 	}
 	
 	@Override
-	public Object createFromSQL(Connection c) throws SQLException {
+	public void updateSQL(Connection c) throws SQLException {
 		// TODO Auto-generated method stub
-		return null;
 	}
 }
