@@ -5,7 +5,11 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 import org.awhy.core.Dialog;
+import org.awhy.core.objects.Hotel;
+import org.awhy.core.objects.Simulation;
 import org.awhy.ui.pane.GAccordionFX;
+import org.awhy.ui.popup.PopupHotel;
+import org.awhy.ui.popup.PopupSimulation;
 import org.awhy.ui.tables.CircuitTable;
 import org.awhy.ui.tables.ClientTable;
 import org.awhy.ui.tables.DateCircuitTable;
@@ -18,6 +22,7 @@ import org.awhy.ui.tables.ReserveVisiteTable;
 import org.awhy.ui.tables.SimulationTable;
 import org.awhy.ui.tables.ReservationTable;
 import org.awhy.ui.tables.VilleTable;
+import org.awhy.utils.Debugger;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -26,6 +31,7 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.stage.FileChooser;
 
@@ -261,6 +267,21 @@ public class GMenuFX extends MenuBar {
 					Controller.container
 							.setTableView(new SimulationTable(Controller.executeQuery
 									("select * from Simulation minus (select numDossier from Reservation )")));
+					TableView<Simulation> v = (TableView<Simulation>) (Controller.tableView);
+					v.setRowFactory(tv -> {
+						TableRow<Simulation> row = new TableRow<>();
+						row.setOnMouseClicked(e -> {
+							if (e.getClickCount() == 2 && (!row.isEmpty())) {
+								Simulation rowData = row.getItem();
+								try {
+									PopupSimulation.show(rowData.getNumDossier(), Controller.dialog.getConnection());
+								} catch (Exception e1) {
+									e1.printStackTrace();
+								}
+							}
+						});
+						return row;
+					});
 				} catch (SQLException e) {
 					Controller.alert("SQLException", e);
 				}
