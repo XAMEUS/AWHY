@@ -186,9 +186,8 @@ public class PopupSimulation {
 					if(res.getInt(4) > cRes.getInt(1))
 						possible = false;
 				cPS.close();
-
+				curr = new Date(curr.getTime() + ((long) 1000) * 60 * 60 * 24);
 			}
-			curr = new Date(curr.getTime() + ((long) 1000) * 60 * 60 * 24);
 		}
 		pS.close();
 
