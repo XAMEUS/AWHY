@@ -84,23 +84,23 @@ public class PopupSimulation {
 		pS = c.prepareStatement(query);
 		pS.setInt(1, numDossier);
 		res = pS.executeQuery();
-		while(res.next()) {
+		while(res.next())
 			if(res.getInt(1) > nbPersonnes) nbPersonnes = res.getInt(1); 
-		}
+
 		query = "SELECT max(nbChambresReservees) FROM ReserveHotel WHERE numDossier=?";
 		pS = c.prepareStatement(query);
 		pS.setInt(1, numDossier);
 		res = pS.executeQuery();
-		while(res.next()) {
+		while(res.next())
 			if(res.getInt(1) > nbPersonnes) nbPersonnes = res.getInt(1); 
-		}
+
 		query = "SELECT max(nbPersonnesCircuit) FROM ReserveCircuit WHERE numDossier=?";
 		pS = c.prepareStatement(query);
 		pS.setInt(1, numDossier);
 		res = pS.executeQuery();
-		while(res.next()) {
+		while(res.next())
 			if(res.getInt(1) > nbPersonnes) nbPersonnes = res.getInt(1); 
-		}
+
 		Text nbPersonnesText = new Text(nbPersonnes + " personne.s");
 		grid.add(nbPersonnesText, 0, 1);
 		
@@ -113,29 +113,61 @@ public class PopupSimulation {
 		pS = c.prepareStatement(query);
 		pS.setInt(1, numDossier);
 		res = pS.executeQuery();
-		while(res.next()) {
+		while(res.next())
 			cout += res.getInt(1); 
-		}
+
 		query = "SELECT sum(prixChambre * nbChambresReservees + prixPetitDejeuner * nbPetitDejReserves) FROM ReserveHotel R, Hotel H WHERE numDossier=? and R.nomHotel = H.nomHotel";
 		pS = c.prepareStatement(query);
 		pS.setInt(1, numDossier);
 		res = pS.executeQuery();
-		while(res.next()) {
+		while(res.next())
 			cout += res.getInt(1); 
-		}
+
 		query = "SELECT sum(prix) FROM ReserveVisite R, LieuAVisiter L WHERE numDossier=? and R.nomLieu = L.nomLieu";
 		pS = c.prepareStatement(query);
 		pS.setInt(1, numDossier);
 		res = pS.executeQuery();
-		while(res.next()) {
+		while(res.next())
 			cout += res.getInt(1); 
-		}
 		Text argent = new Text("Coût total: " + cout + "€");
 		grid.add(argent, 1, 1);
 		
 		// vérifier (nombre places circuits, nombre places hotels, dates)
-		Text places = new Text("Réservation possible");
-		grid.add(places, 0, 2);	
+		boolean possible = true;
+		query = "SELECT nbPersonnesCircuit, idCircuit, dateDepartCircuit FROM ReserveCircuit WHERE numDossier=?";
+		pS = c.prepareStatement(query);
+		pS.setInt(1, numDossier);
+		res = pS.executeQuery();
+		while(res.next()) {
+			if(!possible) break;
+			String check = "select (dc.nbPersonnes - sum(rcd.nbPersonnesCircuit)) as nbPlaces from DateCircuit dc, (select * from ReserveCircuit rc where exists (select * from Reservation r where r.numDossier = rc.numDossier) and rc.idCircuit = ? and rc.dateDepartCircuit = ?) rcd where dc.idCircuit = rcd.idCircuit and dc.dateDepartCircuit = rcd.dateDepartCircuit group by dc.idCircuit, dc.dateDepartCircuit, dc.nbPersonnes";
+			PreparedStatement cPS = c.prepareStatement(check);
+			cPS.setString(1, res.getString(2));
+			cPS.setDate(2, res.getDate(3));
+			ResultSet cRes = cPS.executeQuery();
+			while(cRes.next())
+				if(cRes.getInt(1) < res.getInt(1))
+					possible = false;
+		}
+		/*query = "SELECT nbPersonnesCircuit, idCircuit, dateDepartCircuit FROM ReserveCircuit WHERE numDossier=?";
+		pS = c.prepareStatement(query);
+		pS.setInt(1, numDossier);
+		res = pS.executeQuery();
+		while(res.next()) {
+			if(!possible) break;
+			String check = "";
+			PreparedStatement cPS = c.prepareStatement(check);
+			cPS.setString(1, res.getString(2));
+			cPS.setDate(2, res.getDate(3));
+			ResultSet cRes = cPS.executeQuery();
+			while(cRes.next()) ;
+		}*/
+		Text placesOK;
+		if(possible)
+			placesOK = new Text("Réservation possible");
+		else
+			placesOK = new Text("Réservation impossible");
+		grid.add(placesOK, 0, 2);	
 
 
 		dialog.getDialogPane().setContent(grid);
