@@ -140,10 +140,4 @@ public class Circuit implements Object {
   	public void setPrixCircuit(Integer prixCircuit) {
 		this.prixCircuit.set(prixCircuit);
 	}
-
-	@Override
-	public Object createFromSQL(Connection c) throws SQLException {
-		// TODO Auto-generated method stub
-		return(null);
-	}
 }
