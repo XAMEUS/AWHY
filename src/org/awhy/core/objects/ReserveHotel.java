@@ -15,8 +15,8 @@ public class ReserveHotel implements Object {
 	public final SimpleStringProperty ville;
 	public final SimpleStringProperty pays;
 	public final SimpleIntegerProperty numDossier;
-	public final Date dateDepartHotel;
-	public final Date dateArriveeHotel;
+	public Date dateDepartHotel;
+	public Date dateArriveeHotel;
 	public final SimpleIntegerProperty nbChambresReservees;
 	public final SimpleIntegerProperty nbPetitDejReserves;
 	public static String dbName = "ReserveHotel";
@@ -44,10 +44,9 @@ public class ReserveHotel implements Object {
     	this.nbPetitDejReserves = new SimpleIntegerProperty(nbPetitDejReserves);
 	}
 
-	//TODO: On incremente numdossier?
 	@Override
 	public void insertSQL(Connection c) throws SQLException {
-		String insert = "INSERT INTO " + dbName + " VALUES " + "(?, ?, ?, ?, ?, ?)";
+		String insert = "INSERT INTO " + dbName + " VALUES " + "(?, ?, ?, ?, ?, ?, ?, ?)";
 		PreparedStatement preparedStatementInsert = c.prepareStatement(insert);
 		preparedStatementInsert.setString(1, this.getNomHotel());
 		preparedStatementInsert.setString(2, this.getVille());
@@ -113,4 +112,37 @@ public class ReserveHotel implements Object {
 		return nbPetitDejReserves.get();
 	}
 
+	public void setNomHotel(String nomHotel) {
+		this.nomHotel.set(nomHotel);
+	}
+
+	public void setVille(String ville) {
+		this.ville.set(ville);
+	}
+
+	public void setPays(String pays) {
+		this.pays.set(pays);
+	}
+
+	//Attention à l'utilisation de setNumDossier
+	public void setNumDossier(Integer numDossier) {
+		this.numDossier.set(numDossier);
+	}
+
+	public void setDateDepartHotel(Date dateDepartHotel) {
+		this.dateDepartHotel = dateDepartHotel;
+	}
+
+	public void setDateArriveeHotel(Date dateArriveeHotel) {
+		this.dateArriveeHotel = dateArriveeHotel;
+	}
+
+	public void setNbChambresReservees(Integer nbChambresReservees) {
+		this.nbChambresReservees.set(nbChambresReservees);
+	}
+
+	public void setNbPetitDejReserves(Integer nbPetitDejReserves) {
+		this.nbPetitDejReserves.set(nbPetitDejReserves);
+	}
+	
 }

@@ -2,6 +2,7 @@
 package org.awhy.core.objects;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -16,6 +17,7 @@ public class Etapes implements Object {
 	public final SimpleStringProperty ville;
 	public final SimpleStringProperty pays;
   	public final SimpleIntegerProperty nbJours;
+  	public static String dbName = "Etapes";
 
 	public Etapes() {
 	    this.idCircuit = new SimpleStringProperty();
@@ -34,6 +36,32 @@ public class Etapes implements Object {
 	    this.ville = new SimpleStringProperty(ville);
 	    this.pays = new SimpleStringProperty(pays);
 	    this.nbJours = new SimpleIntegerProperty(nbJours);
+	}
+
+	@Override
+	public void insertSQL(Connection c) throws SQLException {
+		String insert = "INSERT INTO " + dbName + " VALUES " + "(?, ?, ?, ?, ?, ?)";
+		PreparedStatement preparedStatementInsert = c.prepareStatement(insert);
+		preparedStatementInsert.setString(1, this.getIdCircuit());
+		preparedStatementInsert.setInt(2, this.getOrdre());
+		preparedStatementInsert.setString(3, this.getNomLieu());
+		preparedStatementInsert.setString(4, this.getVille());
+		preparedStatementInsert.setString(5, this.getPays());
+		preparedStatementInsert.setInt(6, this.getNbJours());
+		preparedStatementInsert.executeUpdate();
+	}
+
+	@Override
+	public void updateSQL(Connection c) throws SQLException {
+		String insert = "UPDATE " + dbName + " SET nbJours=? WHERE idCircuit=?, ordre=?, nomLieu=?, ville=?, pays=?";
+		PreparedStatement preparedStatementInsert = c.prepareStatement(insert);
+		preparedStatementInsert.setInt(1, this.getNbJours());
+		preparedStatementInsert.setString(2, this.getIdCircuit());
+		preparedStatementInsert.setInt(3, this.getOrdre());
+		preparedStatementInsert.setString(4, this.getNomLieu());
+		preparedStatementInsert.setString(5, this.getVille());
+		preparedStatementInsert.setString(6, this.getPays());
+		preparedStatementInsert.executeUpdate();
 	}
 
 	@Override
@@ -64,14 +92,28 @@ public class Etapes implements Object {
   	public Integer getNbJours() {
 		return nbJours.get();
 	}
-
-	@Override
-	public void insertSQL(Connection c) throws SQLException {
-		// TODO Auto-generated method stub
+  	
+  	public void setIdCircuit(String idCircuit) {
+		this.idCircuit.set(idCircuit);
 	}
 
-	@Override
-	public void updateSQL(Connection c) throws SQLException {
-		// TODO Auto-generated method stub
+	public void setOrdre(Integer ordre) {
+		this.ordre.set(ordre);
+	}
+
+	public void setNomLieu(String nomLieu) {
+		this.nomLieu.set(nomLieu);
+	}
+
+	public void setVille(String ville) {
+		this.ville.set(ville);
+	}
+
+	public void setPays(String pays) {
+		this.pays.set(pays);
+	}
+
+  	public void setNbJours(Integer nbJours) {
+		this.nbJours.set(nbJours);
 	}
 }

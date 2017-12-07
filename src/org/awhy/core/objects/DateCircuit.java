@@ -12,7 +12,7 @@ import javafx.beans.property.SimpleStringProperty;
 public class DateCircuit implements Object {
 
 	public final SimpleStringProperty idCircuit;
-	public final Date dateDepartCircuit;
+	public Date dateDepartCircuit;
   	public final SimpleIntegerProperty nbPersonnes;
 
 	public static String dbName = "DateCircuit";  	
@@ -64,5 +64,17 @@ public class DateCircuit implements Object {
 
 	public Integer getNbPersonnes() {
 		return nbPersonnes.get();
+	}
+	
+	public void setIdCircuit(String idCircuit) {
+		this.idCircuit.set(idCircuit);
+	}
+
+	public void setDateDepartCircuit(Date dateDepartCicuit) {
+		this.dateDepartCircuit = dateDepartCicuit;
+	}
+
+	public void setNbPersonnes(Integer nbPersonnes) {
+		this.nbPersonnes.set(nbPersonnes);
 	}
 }
