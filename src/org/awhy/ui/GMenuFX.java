@@ -237,8 +237,9 @@ public class GMenuFX extends MenuBar {
 		});
 		agence.getItems().add(clients);
 
-		MenuItem simulations = new MenuItem("Simulations");
-		simulations.setOnAction(new EventHandler<ActionEvent>() {
+		Menu simu = new Menu("Simulations");
+		MenuItem simuAll = new MenuItem("Toutes");
+		simuAll.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
 				try {
@@ -249,23 +250,26 @@ public class GMenuFX extends MenuBar {
 				}
 			}
 		});
-		agence.getItems().add(simulations);
+		simu.getItems().add(simuAll);
 		
-		MenuItem simuNotOK = new MenuItem("Simulations non payées");
+		MenuItem simuNotOK = new MenuItem("Non payées");
 		simuNotOK.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
 				try {
 					Controller.container
-							.setTableView(new ReservationTable(Controller.executeQuery("select * from Simulation s, Reservation r where s.numDossier = r.numDossier")));
+							.setTableView(new ReservationTable(Controller.executeQuery("select * from Reservation r minus select numDossier from Simulation s")));
 				} catch (SQLException e) {
 					Controller.alert("SQLException", e);
 				}
 			}
 		});
-		agence.getItems().add(simuNotOK);
-
-		MenuItem reservation = new MenuItem("Réservations");
+		simu.getItems().add(simuNotOK);
+		agence.getItems().add(simu);
+		
+		
+		Menu dispo = new Menu("Réservations");
+		MenuItem reservation = new MenuItem("Dossiers");
 		reservation.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
@@ -277,9 +281,7 @@ public class GMenuFX extends MenuBar {
 				}
 			}
 		});
-		agence.getItems().add(reservation);
-		
-		Menu dispo = new Menu("Disponibilités");
+		dispo.getItems().add(reservation);
 		
 		MenuItem lavR = new MenuItem("Lieux à visiter");
 		lavR.setOnAction(new EventHandler<ActionEvent>() {
