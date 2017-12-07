@@ -1,5 +1,4 @@
 package org.awhy.ui.popup;
-import javafx.scene.text.Text;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -7,16 +6,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Date;
 
-import org.awhy.core.objects.Simulation;
-
 import javafx.geometry.Insets;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.DatePicker;
 import javafx.scene.control.Dialog;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.scene.text.Text;
 import javafx.util.Pair;
 
 public class PopupSimulation {
@@ -26,8 +21,12 @@ public class PopupSimulation {
 		dialog.setTitle("Récapitulatif de la simulation");
 		dialog.setHeaderText("Récapitulatif de la simulation numéro " + numDossier);
 		
-		ButtonType confirmButtonType = new ButtonType("Confirmer", ButtonData.OK_DONE);
+		ButtonType confirmButtonType = new ButtonType("Confirmer (nouveau client)", ButtonData.OK_DONE);
 		dialog.getDialogPane().getButtonTypes().addAll(confirmButtonType);
+		
+		confirmButtonType = new ButtonType("Confirmer (client existant)", ButtonData.OK_DONE);
+		dialog.getDialogPane().getButtonTypes().addAll(confirmButtonType);
+
 		
 		GridPane grid = new GridPane();
 		grid.setHgap(10);
@@ -202,9 +201,6 @@ public class PopupSimulation {
 		dialog.getDialogPane().setContent(grid);
 
 		dialog.showAndWait();
-		
-		//tp.object = new ReserveHotel(data.getNomHotel(), data.getVille(), data.getPays(), s.getNumDossier(), 
-		//		Date.valueOf(depart.getValue()), Date.valueOf(arrivee.getValue()), Integer.valueOf(nbPersonnes.getText()), Integer.valueOf(nbPDej.getText()));
 	}
 
 }

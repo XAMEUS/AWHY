@@ -252,6 +252,21 @@ public class GMenuFX extends MenuBar {
 				try {
 					Controller.container
 							.setTableView(new SimulationTable(Controller.executeQuery("select * from Simulation")));
+					TableView<Simulation> v = (TableView<Simulation>) (Controller.tableView);
+					v.setRowFactory(tv -> {
+						TableRow<Simulation> row = new TableRow<>();
+						row.setOnMouseClicked(e -> {
+							if (e.getClickCount() == 2 && (!row.isEmpty())) {
+								Simulation rowData = row.getItem();
+								try {
+									PopupSimulation.show(rowData.getNumDossier(), Controller.dialog.getConnection());
+								} catch (Exception e1) {
+									e1.printStackTrace();
+								}
+							}
+						});
+						return row;
+					});
 				} catch (SQLException e) {
 					Controller.alert("SQLException", e);
 				}
