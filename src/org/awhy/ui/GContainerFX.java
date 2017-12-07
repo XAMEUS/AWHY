@@ -4,6 +4,7 @@ import java.sql.SQLException;
 
 import org.awhy.core.Dialog;
 import org.awhy.core.objects.Object;
+import org.awhy.core.objects.Ville;
 import org.awhy.ui.pane.GAccordionFX;
 import org.awhy.ui.tables.Table;
 import org.awhy.ui.tables.VilleTable;
@@ -11,10 +12,12 @@ import org.awhy.ui.tables.VilleTable;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.SplitPane;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.util.Callback;
 
 public class GContainerFX extends VBox {
 
@@ -31,6 +34,22 @@ public class GContainerFX extends VBox {
 		children.add(container);
 //		Controller.connect();
 //		this.setTableView(new VilleTable(Controller.dialog.executeQuery("select * from ville")));
+//		
+//		TableView<Ville> v = (TableView<Ville>)(Controller.tableView);
+//		v.setRowFactory( tv -> {
+//		    TableRow<Ville> row = new TableRow<>();
+//		    row.setOnMouseClicked(event -> {
+//		        if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
+//		           Ville rowData = row.getItem();
+//		            System.out.println(rowData.getNomVille());
+//		            System.out.println(rowData.getPays());
+//		        }
+//		    });
+//		    return row ;
+//		});
+//		
+	    
+		
 		System.out.println("ok");
 		container.setDividerPositions(0.3);
 		// container.getChildren().add(box);
