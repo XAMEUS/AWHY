@@ -105,6 +105,7 @@ public class GMenuFX extends MenuBar {
 				}
 			}
 		});
+		view.getItems().add(hotels);
 
 		MenuItem circuits = new MenuItem("Circuits");
 		circuits.setOnAction(new EventHandler<ActionEvent>() {
@@ -297,8 +298,8 @@ public class GMenuFX extends MenuBar {
 		});
 		dispo.getItems().add(lavR);
 
-		MenuItem HotelsR = new MenuItem("Hotels");
-		lavR.setOnAction(new EventHandler<ActionEvent>() {
+		MenuItem hotelsR = new MenuItem("Hotels");
+		hotelsR.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
 				try {
@@ -309,7 +310,7 @@ public class GMenuFX extends MenuBar {
 				}
 			}
 		});
-		dispo.getItems().add(HotelsR);
+		dispo.getItems().add(hotelsR);
 
 		MenuItem CircuitsR = new MenuItem("Circuits");
 		lavR.setOnAction(new EventHandler<ActionEvent>() {

@@ -3,6 +3,7 @@ package org.awhy.ui.pane;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import org.awhy.core.objects.Hotel;
 import org.awhy.core.objects.Simulation;
 import org.awhy.ui.Controller;
 import org.awhy.ui.tables.CircuitTable;
@@ -15,6 +16,8 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TableRow;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TitledPane;
 import javafx.scene.control.ToolBar;
 import javafx.scene.layout.StackPane;
@@ -57,6 +60,19 @@ public class GAccordionFX extends VBox {
 					//TODO : filter ?
 					Controller.container.setTableView(new HotelTable(Controller.executeQuery("select * from hotel")));
 					//TODO : on click, reservation.
+					TableView<Hotel> v = (TableView<Hotel>)(Controller.tableView);
+					v.setRowFactory( tv -> {
+					    TableRow<Hotel> row = new TableRow<>();
+					    row.setOnMouseClicked(eventHotel -> {
+					        if (eventHotel.getClickCount() == 2 && (! row.isEmpty()) ) {
+					           Hotel rowData = row.getItem();
+					            System.out.println(rowData.getNomHotel());
+					            //TODO : popup reservation
+					        }
+					    });
+					    return row ;
+					});
+					
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
