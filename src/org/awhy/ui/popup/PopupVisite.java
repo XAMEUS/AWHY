@@ -3,7 +3,6 @@ package org.awhy.ui.popup;
 import java.sql.Date;
 
 import org.awhy.core.objects.LieuAVisiter;
-import org.awhy.core.objects.ReserveHotel;
 import org.awhy.core.objects.ReserveVisite;
 import org.awhy.core.objects.Simulation;
 import org.awhy.ui.pane.VisitePane;
@@ -17,7 +16,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.util.Pair;
-import oracle.sql.DATE;
 
 public class PopupVisite {
 	public static void show(VisitePane tp, LieuAVisiter data, Simulation s) {
@@ -48,8 +46,8 @@ public class PopupVisite {
 		
 		tp.setText(data.getNomLieu() + data.getVille());
 
-		tp.object = new ReserveVisite(data.getNomLieu(), data.getVille(), data.getPays(), s.getNumDossier(), 
-				Date.valueOf(dateVisite.getValue()), Integer.valueOf(nbPersonnes.getText()));
+		tp.objects.add(new ReserveVisite(data.getNomLieu(), data.getVille(), data.getPays(), s.getNumDossier(), 
+				Date.valueOf(dateVisite.getValue()), Integer.valueOf(nbPersonnes.getText())));
 
 	}
 }

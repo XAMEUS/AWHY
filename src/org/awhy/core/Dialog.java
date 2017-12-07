@@ -47,7 +47,8 @@ public class Dialog {
 	}
 
 	public ResultSet executeQuery(String sql) throws SQLException {
-		this.connect();
+		// Ty pierre
+//		this.connect();
 		if (Debugger.isEnabled())
 			Debugger.print("executeQuery: " + sql);
 		ResultSet res = stmt.executeQuery(sql);

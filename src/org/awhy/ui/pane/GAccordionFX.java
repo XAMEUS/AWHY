@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import org.awhy.core.objects.Circuit;
 import org.awhy.core.objects.Hotel;
 import org.awhy.core.objects.LieuAVisiter;
+import org.awhy.core.objects.Object;
 import org.awhy.core.objects.ReserveHotel;
 import org.awhy.core.objects.Simulation;
 import org.awhy.core.objects.Ville;
@@ -139,7 +140,8 @@ public class GAccordionFX extends VBox {
 				try {
 					s.insertSQL(Controller.dialog.getConnection());
 					for (TitledPane tp : ac.getPanes()) {
-						((TPane) tp).object.insertSQL(Controller.dialog.getConnection());
+						for (Object o : ((TPane) tp).objects)
+							o.insertSQL(Controller.dialog.getConnection());
 					}
 					Controller.dialog.getConnection().commit();
 				} catch (SQLException e) {

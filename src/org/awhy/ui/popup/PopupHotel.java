@@ -1,15 +1,12 @@
 package org.awhy.ui.popup;
 
 import java.sql.Date;
-import java.sql.SQLException;
 import java.util.Optional;
 
 import org.awhy.core.objects.Hotel;
 import org.awhy.core.objects.ReserveHotel;
 import org.awhy.core.objects.Simulation;
-import org.awhy.ui.Controller;
-import org.awhy.ui.pane.HotelPane;
-import org.awhy.ui.tables.DateCircuitTable;
+import org.awhy.ui.pane.TPane;
 
 import javafx.geometry.Insets;
 import javafx.scene.control.ButtonBar.ButtonData;
@@ -19,10 +16,9 @@ import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
-import javafx.util.Pair;
 
 public class PopupHotel {
-	public static void show(HotelPane tp, Hotel data, Simulation s) {
+	public static void show(TPane tp, Hotel data, Simulation s) {
 
 		Dialog<ButtonType> dialog = new Dialog<>();
 		dialog.setTitle("Reserve Hotel");
@@ -54,10 +50,10 @@ public class PopupHotel {
 		Optional<ButtonType> result = dialog.showAndWait();
 
 		if (result.isPresent()) {
+			// TODO : if Integer.valueOf(nbPersonnes.getText() == 0 -> pas de reservation
 			tp.setText(data.getNomHotel());
-
-			tp.object = new ReserveHotel(data.getNomHotel(), data.getVille(), data.getPays(), s.getNumDossier(), 
-					Date.valueOf(depart.getValue()), Date.valueOf(arrivee.getValue()), Integer.valueOf(nbPersonnes.getText()), Integer.valueOf(nbPDej.getText()));
+			tp.objects.add(new ReserveHotel(data.getNomHotel(), data.getVille(), data.getPays(), s.getNumDossier(), 
+					Date.valueOf(depart.getValue()), Date.valueOf(arrivee.getValue()), Integer.valueOf(nbPersonnes.getText()), Integer.valueOf(nbPDej.getText())));
 		}
 
 	}
