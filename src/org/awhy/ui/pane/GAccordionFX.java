@@ -8,6 +8,7 @@ import org.awhy.core.objects.ReserveHotel;
 import org.awhy.core.objects.Simulation;
 import org.awhy.core.objects.Ville;
 import org.awhy.ui.Controller;
+import org.awhy.ui.popup.PopupHotel;
 import org.awhy.ui.tables.CircuitTable;
 import org.awhy.ui.tables.HotelTable;
 import org.awhy.ui.tables.LieuAVisiterTable;
@@ -64,7 +65,7 @@ public class GAccordionFX extends VBox {
 						row.setOnMouseClicked(e -> {
 							if (e.getClickCount() == 2 && (!row.isEmpty())) {
 								Hotel rowData = row.getItem();
-								tp.object = new ReserveHotel(rowData.getNomHotel(), rowData.getVille(), rowData.getPays(), s.getNumDossier(), new Date(0), new Date(1000), 10, 10);
+								PopupHotel.show(tp, rowData, s);
 							}
 						});
 						return row;
