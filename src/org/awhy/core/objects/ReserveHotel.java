@@ -44,10 +44,9 @@ public class ReserveHotel implements Object {
     	this.nbPetitDejReserves = new SimpleIntegerProperty(nbPetitDejReserves);
 	}
 
-	//TODO: On incremente numdossier?
 	@Override
 	public void insertSQL(Connection c) throws SQLException {
-		String insert = "INSERT INTO " + dbName + " VALUES " + "(?, ?, ?, ?, ?, ?)";
+		String insert = "INSERT INTO " + dbName + " VALUES " + "(?, ?, ?, ?, ?, ?, ?, ?)";
 		PreparedStatement preparedStatementInsert = c.prepareStatement(insert);
 		preparedStatementInsert.setString(1, this.getNomHotel());
 		preparedStatementInsert.setString(2, this.getVille());

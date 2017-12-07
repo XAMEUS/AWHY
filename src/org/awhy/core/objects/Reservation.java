@@ -78,7 +78,7 @@ public class Reservation implements Object {
 	public void setNumDossier(Integer numDossier) {
 		this.numDossier.set(numDossier);
 	}
-	
+
 	public void setDatePaiement(Date datePaiement) {
 		this.datePaiement = datePaiement;
 	}

@@ -142,5 +142,4 @@ public class Circuit implements Object {
   	public void setPrixCircuit(Integer prixCircuit) {
 		this.prixCircuit.set(prixCircuit);
 	}
-
 }

@@ -1,6 +1,7 @@
 package org.awhy.core.objects;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -16,6 +17,8 @@ public class Hotel implements Object {
   	public final SimpleIntegerProperty nbChambresTotal;
   	public final SimpleIntegerProperty prixChambre;
   	public final SimpleIntegerProperty prixPetitDejeuner;
+  	
+	public static String dbName = "Hotel";
 
 	public Hotel() {
 	    this.nomHotel = new SimpleStringProperty();
@@ -38,6 +41,35 @@ public class Hotel implements Object {
 	    this.prixChambre = new SimpleIntegerProperty(prixChambre);
 	}
 
+	@Override
+	public void insertSQL(Connection c) throws SQLException {
+		String insert = "INSERT INTO " + dbName + " VALUES " + "(?, ?, ?, ?, ?, ?, ?)";
+		PreparedStatement preparedStatementInsert = c.prepareStatement(insert);
+		preparedStatementInsert.setString(1, this.getDescriptif());
+		preparedStatementInsert.setString(2, this.getVilleDepart());
+		preparedStatementInsert.setString(3, this.getPaysDepart());
+		preparedStatementInsert.setString(4, this.getVilleArrivee());
+		preparedStatementInsert.setString(5, this.getPaysArrivee());
+		preparedStatementInsert.setInt(6, this.getNbJoursTotal());
+		preparedStatementInsert.setInt(7, this.getPrixCircuit());
+		preparedStatementInsert.executeUpdate();
+	}
+
+	@Override
+	public void updateSQL(Connection c) throws SQLException {
+		String insert = "UPDATE " + dbName + " SET descriptif=?, villeDepart=?, paysDepart=?, villeArrivee=?, paysArrivee=?, nbJoursTotal=?, prixCircuit=? WHERE idCircuit=?";
+		PreparedStatement preparedStatementInsert = c.prepareStatement(insert);
+		preparedStatementInsert.setString(1, this.getDescriptif());
+		preparedStatementInsert.setString(2, this.getVilleDepart());
+		preparedStatementInsert.setString(3, this.getPaysDepart());
+		preparedStatementInsert.setString(4, this.getVilleArrivee());
+		preparedStatementInsert.setString(5, this.getPaysArrivee());
+		preparedStatementInsert.setInt(6, this.getNbJoursTotal());
+		preparedStatementInsert.setInt(7, this.getPrixCircuit());
+		preparedStatementInsert.setString(8, this.getIdCircuit());
+		preparedStatementInsert.executeUpdate();
+	}
+	
 	@Override
 	public Object createFromSQL(ResultSet res) throws SQLException {
 		return new Hotel(res.getString(1), res.getString(2), res.getString(3), res.getString(4), res.getInt(5), res.getInt(6), res.getInt(7));
@@ -70,14 +102,33 @@ public class Hotel implements Object {
 	public Integer getPrixPetitDejeuner() {
   		return prixPetitDejeuner.get();
 	}
-
-	@Override
-	public void insertSQL(Connection c) throws SQLException {
-		// TODO Auto-generated method stub
+	
+	
+  	public void setNomHotel(String nomHotel) {
+		this.nomHotel.set(nomHotel);
 	}
 
-	@Override
-	public void updateSQL(Connection c) throws SQLException {
-		// TODO Auto-generated method stub
+	public void setVille(String ville) {
+		this.ville.set(ville);
+	}
+
+	public void setPays(String pays) {
+		this.pays.set(pays);
+	}
+
+	public void setAdresseHotel(String adresseHotel) {
+		this.adresseHotel.set(adresseHotel);
+	}
+
+	public void setNbChambresTotal(Integer nbChambresTotal) {
+		this.nbChambresTotal.set(nbChambresTotal);
+	}
+
+  	public void setPrixChambre(Integer prixChambre) {
+		this.prixChambre.set(prixChambre);
+	}
+
+	public void setPrixPetitDejeuner(Integer prixPetitDejeuner) {
+  		this.prixPetitDejeuner.set(prixPetitDejeuner);
 	}
 }
