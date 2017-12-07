@@ -3,3 +3,4 @@ bin/
 .project
 .settings
 script/__pycache__
+.metadata/
