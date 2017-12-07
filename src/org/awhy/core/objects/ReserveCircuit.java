@@ -12,25 +12,23 @@ import javafx.beans.property.SimpleStringProperty;
 public class ReserveCircuit implements Object {
 
 	public final SimpleStringProperty idCircuit;
-	public final Date datePaiement;
+	public Date datePaiement;
 	public final SimpleIntegerProperty numDossier;
-	public final SimpleIntegerProperty idClient;
 	public static String dbName = "ReserveCircuit";
 	
 	public ReserveCircuit() {
 		this.idCircuit = new SimpleStringProperty();
 		this.datePaiement = new Date(0);
 		this.numDossier = new SimpleIntegerProperty();
-		this.idClient = new SimpleIntegerProperty();
 	}
 
-	public ReserveCircuit(String idCircuit, Date datePaiement, int numDossier,int idClient) {
+	public ReserveCircuit(String idCircuit, Date datePaiement, int numDossier) {
 		this.idCircuit = new SimpleStringProperty(idCircuit);
 		this.datePaiement = datePaiement;
 		this.numDossier = new SimpleIntegerProperty(numDossier);
-		this.idClient = new SimpleIntegerProperty(idClient);
 	}
-	
+
+	@Override
 	public void insertSQL(Connection c) throws SQLException {
 		String insert = "INSERT INTO " + dbName + " VALUES " + "(?, ?, ?, ?, ?, ?)";
 		PreparedStatement preparedStatementInsert = c.prepareStatement(insert);
@@ -43,6 +41,7 @@ public class ReserveCircuit implements Object {
 		preparedStatementInsert.executeUpdate();
 	}
 
+	@Override
 	public void updateSQL(Connection c) throws SQLException {
 		String insert = "UPDATE " + dbName + " SET nbPersonnesVisite=? WHERE nomLieu=?, ville=?, pays=?, numDossier=?, dateVisite=?"
 		PreparedStatement preparedStatementInsert = c.prepareStatement(insert);
@@ -72,34 +71,17 @@ public class ReserveCircuit implements Object {
 	public Integer getNumDossier() {
 		return numDossier.get();
 	}
-
-	public Integer getIdClient() {
-		return idClient.get();
-	}
-	
 	
 	public void setIdCircuit(String idCircuit) {
 		this.idCircuit.set(idCircuit);
 	}
 
-//Comment je fais le set d'une date? Suppression du final?	
-//	public void setDatePaiement(Date datePaiement) {
-//		this.datePaiement = datePaiement;		
-//		this.datePaiement.setDate(datePaiement);
-//		this.datePaiement.set(datePaiement);
-//	}
+	public void setDatePaiement(Date datePaiement) {
+		this.datePaiement = datePaiement;		
+	}
 
 	public void setNumDossier(Integer numDossier) {
 		this.numDossier.set(numDossier);
 	}
 
-	public void setIdClient(Integer idClient) {
-		this.idClient.set(idClient);
-	}
-
-	@Override
-	public Object createFromSQL(Connection c) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }

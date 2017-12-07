@@ -44,7 +44,8 @@ public class ReserveHotel implements Object {
     	this.nbPetitDejReserves = new SimpleIntegerProperty(nbPetitDejReserves);
 	}
 
-//On incremente numdossier?
+	//TODO: On incremente numdossier?
+	@Override
 	public void insertSQL(Connection c) throws SQLException {
 		String insert = "INSERT INTO " + dbName + " VALUES " + "(?, ?, ?, ?, ?, ?)";
 		PreparedStatement preparedStatementInsert = c.prepareStatement(insert);
@@ -59,6 +60,7 @@ public class ReserveHotel implements Object {
 		preparedStatementInsert.executeUpdate();
 	}
 
+	@Override
 	public void updateSQL(Connection c) throws SQLException {
 		String insert = "UPDATE " + dbName + " SET nbChambresReservees=?, nbPetitDejReserves=? WHERE nomHotel=?, ville=?, pays=?, numDossier=?, dateDepartHotel=?, dateArriveeHotel=?";
 		PreparedStatement preparedStatementInsert = c.prepareStatement(insert);
@@ -111,9 +113,4 @@ public class ReserveHotel implements Object {
 		return nbPetitDejReserves.get();
 	}
 
-	@Override
-	public Object createFromSQL(Connection c) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }
