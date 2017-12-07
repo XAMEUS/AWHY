@@ -45,28 +45,27 @@ public class Hotel implements Object {
 	public void insertSQL(Connection c) throws SQLException {
 		String insert = "INSERT INTO " + dbName + " VALUES " + "(?, ?, ?, ?, ?, ?, ?)";
 		PreparedStatement preparedStatementInsert = c.prepareStatement(insert);
-		preparedStatementInsert.setString(1, this.getDescriptif());
-		preparedStatementInsert.setString(2, this.getVilleDepart());
-		preparedStatementInsert.setString(3, this.getPaysDepart());
-		preparedStatementInsert.setString(4, this.getVilleArrivee());
-		preparedStatementInsert.setString(5, this.getPaysArrivee());
-		preparedStatementInsert.setInt(6, this.getNbJoursTotal());
-		preparedStatementInsert.setInt(7, this.getPrixCircuit());
+		preparedStatementInsert.setString(1, this.getNomHotel());
+		preparedStatementInsert.setString(2, this.getVille());
+		preparedStatementInsert.setString(3, this.getPays());
+		preparedStatementInsert.setString(4, this.getAdresseHotel());
+		preparedStatementInsert.setInt(5, this.getNbChambresTotal());
+		preparedStatementInsert.setInt(6, this.getPrixChambre());
+		preparedStatementInsert.setInt(7, this.getPrixPetitDejeuner());
 		preparedStatementInsert.executeUpdate();
 	}
 
 	@Override
 	public void updateSQL(Connection c) throws SQLException {
-		String insert = "UPDATE " + dbName + " SET descriptif=?, villeDepart=?, paysDepart=?, villeArrivee=?, paysArrivee=?, nbJoursTotal=?, prixCircuit=? WHERE idCircuit=?";
+		String insert = "UPDATE " + dbName + " SET adresseHotel=?, nbChambresTotal=?, prixchambre=?, prixPetitDejeuner=? WHERE nomHotel=?, ville=?, pays=?";
 		PreparedStatement preparedStatementInsert = c.prepareStatement(insert);
-		preparedStatementInsert.setString(1, this.getDescriptif());
-		preparedStatementInsert.setString(2, this.getVilleDepart());
-		preparedStatementInsert.setString(3, this.getPaysDepart());
-		preparedStatementInsert.setString(4, this.getVilleArrivee());
-		preparedStatementInsert.setString(5, this.getPaysArrivee());
-		preparedStatementInsert.setInt(6, this.getNbJoursTotal());
-		preparedStatementInsert.setInt(7, this.getPrixCircuit());
-		preparedStatementInsert.setString(8, this.getIdCircuit());
+		preparedStatementInsert.setString(1, this.getAdresseHotel());
+		preparedStatementInsert.setInt(2, this.getNbChambresTotal());
+		preparedStatementInsert.setInt(3, this.getPrixChambre());
+		preparedStatementInsert.setInt(4, this.getPrixPetitDejeuner());
+		preparedStatementInsert.setString(5, this.getNomHotel());
+		preparedStatementInsert.setString(6, this.getVille());
+		preparedStatementInsert.setString(7, this.getPays());
 		preparedStatementInsert.executeUpdate();
 	}
 	
