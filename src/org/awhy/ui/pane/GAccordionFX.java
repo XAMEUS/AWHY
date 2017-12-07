@@ -4,11 +4,13 @@ import java.sql.Date;
 import java.sql.SQLException;
 
 import org.awhy.core.objects.Hotel;
+import org.awhy.core.objects.LieuAVisiter;
 import org.awhy.core.objects.ReserveHotel;
 import org.awhy.core.objects.Simulation;
 import org.awhy.core.objects.Ville;
 import org.awhy.ui.Controller;
 import org.awhy.ui.popup.PopupHotel;
+import org.awhy.ui.popup.PopupVisite;
 import org.awhy.ui.tables.CircuitTable;
 import org.awhy.ui.tables.HotelTable;
 import org.awhy.ui.tables.LieuAVisiterTable;
@@ -80,11 +82,21 @@ public class GAccordionFX extends VBox {
 		b2.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				ac.getPanes().add(new HotelPane());
+				VisitePane tp = new VisitePane();
+				ac.getPanes().add(tp);
 				try {
-					Controller.container
-							.setTableView(new LieuAVisiterTable(Controller.executeQuery("select * from lieuavisiter")));
-					// TODO : on click, reservation.
+					Controller.container.setTableView(new LieuAVisiterTable(Controller.executeQuery("select * from lieuavisiter")));
+					TableView<LieuAVisiter> v = (TableView<LieuAVisiter>) (Controller.tableView);
+					v.setRowFactory(tv -> {
+						TableRow<LieuAVisiter> row = new TableRow<>();
+						row.setOnMouseClicked(e -> {
+							if (e.getClickCount() == 2 && (!row.isEmpty())) {
+								LieuAVisiter rowData = row.getItem();
+								PopupVisite.show(tp, rowData, s);
+							}
+						});
+						return row;
+					});
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}

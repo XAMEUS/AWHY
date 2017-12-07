@@ -1,8 +1,6 @@
 package org.awhy.ui.popup;
 
 import java.sql.Date;
-import java.time.Instant;
-import java.time.ZoneId;
 
 import org.awhy.core.objects.Hotel;
 import org.awhy.core.objects.ReserveHotel;
@@ -44,18 +42,16 @@ public class PopupHotel {
 		grid.add(arrivee, 1, 1);
 		grid.add(new Label("Nombre de chambres:"), 0, 2);
 		grid.add(nbPersonnes, 1, 2);
-		grid.add(new Label("Nombres de petits déjeuners:"), 0, 3);
+		grid.add(new Label("Nombre de petits déjeuners:"), 0, 3);
 		grid.add(nbPDej, 1, 3);
 
 		dialog.getDialogPane().setContent(grid);
 
 		dialog.showAndWait();
 		
+		
 		tp.setText(data.getNomHotel());
 
-//		System.out.println(depart.getValue());
-//		Date dateDepart = Date.from(Instant.from(depart.getValue().atStartOfDay(ZoneId.systemDefault())));
-//		Date dateArrivee = Date.from(Instant.from(arrivee.getValue().atStartOfDay(ZoneId.systemDefault())));
 		tp.object = new ReserveHotel(data.getNomHotel(), data.getVille(), data.getPays(), s.getNumDossier(), 
 				Date.valueOf(depart.getValue()), Date.valueOf(arrivee.getValue()), Integer.valueOf(nbPersonnes.getText()), Integer.valueOf(nbPDej.getText()));
 	}
