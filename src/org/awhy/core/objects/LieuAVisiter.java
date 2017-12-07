@@ -62,4 +62,16 @@ public class LieuAVisiter implements Object {
 	public Integer getPrix() {
 		return prix.get();
 	}
+
+	@Override
+	public void insertSQL(Connection c) throws SQLException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updateSQL(Connection c) throws SQLException {
+		// TODO Auto-generated method stub
+		
+	}
 }

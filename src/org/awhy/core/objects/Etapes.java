@@ -92,4 +92,28 @@ public class Etapes implements Object {
   	public Integer getNbJours() {
 		return nbJours.get();
 	}
+  	
+  	public void setIdCircuit(String idCircuit) {
+		this.idCircuit.set(idCircuit);
+	}
+
+	public void setOrdre(Integer ordre) {
+		this.ordre.set(ordre);
+	}
+
+	public void setNomLieu(String nomLieu) {
+		this.nomLieu.set(nomLieu);
+	}
+
+	public void setVille(String ville) {
+		this.ville.set(ville);
+	}
+
+	public void setPays(String pays) {
+		this.pays.set(pays);
+	}
+
+  	public void setNbJours(Integer nbJours) {
+		this.nbJours.set(nbJours);
+	}
 }
