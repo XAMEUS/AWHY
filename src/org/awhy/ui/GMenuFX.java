@@ -267,8 +267,8 @@ public class GMenuFX extends MenuBar {
 		});
 		simu.getItems().add(simuNotOK);
 		
-		MenuItem lavR = new MenuItem("Lieux à visiter");
-		lavR.setOnAction(new EventHandler<ActionEvent>() {
+		MenuItem lavS = new MenuItem("Lieux à visiter");
+		lavS.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
 				try {
@@ -279,10 +279,10 @@ public class GMenuFX extends MenuBar {
 				}
 			}
 		});
-		simu.getItems().add(lavR);
+		simu.getItems().add(lavS);
 		
-		MenuItem HotelsR = new MenuItem("Hotels");
-		lavR.setOnAction(new EventHandler<ActionEvent>() {
+		MenuItem HotelsS = new MenuItem("Hotels");
+		HotelsS.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
 				try {
@@ -293,10 +293,10 @@ public class GMenuFX extends MenuBar {
 				}
 			}
 		});
-		simu.getItems().add(HotelsR);
+		simu.getItems().add(HotelsS);
 		
-		MenuItem CircuitsR = new MenuItem("Circuits");
-		lavR.setOnAction(new EventHandler<ActionEvent>() {
+		MenuItem CircuitS = new MenuItem("Circuits");
+		CircuitS.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
 				try {
@@ -307,7 +307,7 @@ public class GMenuFX extends MenuBar {
 				}
 			}
 		});
-		simu.getItems().add(CircuitsR);
+		simu.getItems().add(CircuitS);
 		
 		agence.getItems().add(simu);
 		
@@ -326,7 +326,7 @@ public class GMenuFX extends MenuBar {
 			}
 		});
 		dispo.getItems().add(reservation);
-		/*
+		
 		MenuItem lavR = new MenuItem("Lieux à visiter");
 		lavR.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
@@ -342,7 +342,7 @@ public class GMenuFX extends MenuBar {
 		dispo.getItems().add(lavR);
 
 		MenuItem HotelsR = new MenuItem("Hotels");
-		lavR.setOnAction(new EventHandler<ActionEvent>() {
+		HotelsR.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
 				try {
@@ -356,7 +356,7 @@ public class GMenuFX extends MenuBar {
 		dispo.getItems().add(HotelsR);
 
 		MenuItem CircuitsR = new MenuItem("Circuits");
-		lavR.setOnAction(new EventHandler<ActionEvent>() {
+		CircuitsR.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
 				try {
@@ -368,7 +368,7 @@ public class GMenuFX extends MenuBar {
 			}
 		});
 		dispo.getItems().add(CircuitsR);
-		*/
+		
 		agence.getItems().add(dispo);
 		
 		this.getMenus().add(agence);
