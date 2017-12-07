@@ -259,7 +259,8 @@ public class GMenuFX extends MenuBar {
 			public void handle(ActionEvent event) {
 				try {
 					Controller.container
-							.setTableView(new ReservationTable(Controller.executeQuery("select * from Reservation r minus select numDossier from Simulation s")));
+							.setTableView(new SimulationTable(Controller.executeQuery
+									("select * from Simulation minus (select numDossier from Reservation )")));
 				} catch (SQLException e) {
 					Controller.alert("SQLException", e);
 				}

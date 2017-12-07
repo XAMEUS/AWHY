@@ -6,6 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.awhy.utils.Debugger;
+
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
@@ -34,6 +36,12 @@ public class ReserveHotel implements Object {
 
 	public ReserveHotel(String nomHotel, String ville, String pays, int numDossier,
                         Date dateDepartHotel, Date dateArriveeHotel, int nbChambresReservees, int nbPetitDejReserves) {
+		if (Debugger.isEnabled()) {
+			Debugger.println("ReservHotel : " + nomHotel + ", "
+					+ ville + ", " + pays + ", " + numDossier + ", "
+					+ dateArriveeHotel + ", " + dateDepartHotel + ", "
+					+ nbChambresReservees + ", " + nbPetitDejReserves);
+		}
 		this.nomHotel = new SimpleStringProperty(nomHotel);
 		this.ville = new SimpleStringProperty(ville);
 		this.pays = new SimpleStringProperty(pays);
