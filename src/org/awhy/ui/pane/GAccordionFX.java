@@ -60,7 +60,6 @@ public class GAccordionFX extends VBox {
 			@Override
 			public void handle(ActionEvent event) {
 				HotelPane tp = new HotelPane();
-				ac.getPanes().add(tp);
 				try {
 					// TODO : filter ?
 					Controller.container.setTableView(new HotelTable(Controller.executeQuery("select * from hotel")));
@@ -70,7 +69,8 @@ public class GAccordionFX extends VBox {
 						row.setOnMouseClicked(e -> {
 							if (e.getClickCount() == 2 && (!row.isEmpty())) {
 								Hotel rowData = row.getItem();
-								PopupHotel.show(tp, rowData, s);
+								if(PopupHotel.show(tp, rowData, s))
+									ac.getPanes().add(tp);
 							}
 						});
 						return row;
@@ -86,7 +86,6 @@ public class GAccordionFX extends VBox {
 			@Override
 			public void handle(ActionEvent event) {
 				VisitePane tp = new VisitePane();
-				ac.getPanes().add(tp);
 				try {
 					Controller.container.setTableView(new LieuAVisiterTable(Controller.executeQuery("select * from lieuavisiter")));
 					TableView<LieuAVisiter> v = (TableView<LieuAVisiter>) (Controller.tableView);
@@ -95,7 +94,8 @@ public class GAccordionFX extends VBox {
 						row.setOnMouseClicked(e -> {
 							if (e.getClickCount() == 2 && (!row.isEmpty())) {
 								LieuAVisiter rowData = row.getItem();
-								PopupVisite.show(tp, rowData, s);
+								if(PopupVisite.show(tp, rowData, s))
+									ac.getPanes().add(tp);
 							}
 						});
 						return row;
@@ -111,7 +111,6 @@ public class GAccordionFX extends VBox {
 			@Override
 			public void handle(ActionEvent event) {
 				CircuitPane tp = new CircuitPane();
-				ac.getPanes().add(tp);
 				try {
 					Controller.container
 							.setTableView(new CircuitTable(Controller.executeQuery("select * from circuit")));
@@ -122,7 +121,8 @@ public class GAccordionFX extends VBox {
 						row.setOnMouseClicked(e -> {
 							if (e.getClickCount() == 2 && (!row.isEmpty())) {
 								Circuit rowData = row.getItem();
-								PopupCircuit.show(tp, rowData, s);
+								if(PopupCircuit.show(tp, rowData, s))
+									ac.getPanes().add(tp);
 							}
 						});
 						return row;
