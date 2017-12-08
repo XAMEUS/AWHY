@@ -7,6 +7,7 @@ import org.awhy.core.objects.Hotel;
 import org.awhy.core.objects.ReserveHotel;
 import org.awhy.core.objects.Simulation;
 import org.awhy.ui.pane.TPane;
+import org.awhy.utils.Debugger;
 
 import javafx.geometry.Insets;
 import javafx.scene.control.ButtonBar.ButtonData;
@@ -50,13 +51,21 @@ public class PopupHotel {
 		Optional<ButtonType> result = dialog.showAndWait();
 
 		if (result.isPresent()) {
-			// TODO : if Integer.valueOf(nbPersonnes.getText() == 0 -> pas de reservation
-			tp.setText(data.getNomHotel());
-			tp.objects.add(new ReserveHotel(data.getNomHotel(), data.getVille(), data.getPays(), s.getNumDossier(), 
-					Date.valueOf(depart.getValue()), Date.valueOf(arrivee.getValue()), Integer.valueOf(nbPersonnes.getText()), Integer.valueOf(nbPDej.getText())));
-		}
-		return true;
+			try {
+				if(Integer.valueOf(nbPersonnes.getText()) <= 0 || Integer.valueOf(nbPDej.getText()) < 0 || Date.valueOf(depart.getValue()).after(Date.valueOf(arrivee.getValue())))
+					return false;
+				tp.setText(data.getNomHotel());
+				tp.objects.add(new ReserveHotel(data.getNomHotel(), data.getVille(), data.getPays(), s.getNumDossier(), 
+						Date.valueOf(depart.getValue()), Date.valueOf(arrivee.getValue()), Integer.valueOf(nbPersonnes.getText()), Integer.valueOf(nbPDej.getText())));
+				return true;
 
+			}
+			catch (NumberFormatException e) {
+				Debugger.println(e.toString());
+				return false;
+			}			
+		}
+		return false;
 	}
 
 }

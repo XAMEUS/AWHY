@@ -6,6 +6,7 @@ import org.awhy.core.objects.LieuAVisiter;
 import org.awhy.core.objects.ReserveVisite;
 import org.awhy.core.objects.Simulation;
 import org.awhy.ui.pane.VisitePane;
+import org.awhy.utils.Debugger;
 
 import javafx.geometry.Insets;
 import javafx.scene.control.ButtonBar.ButtonData;
@@ -42,13 +43,18 @@ public class PopupVisite {
 		dialog.getDialogPane().setContent(grid);
 
 		dialog.showAndWait();
-		
-		
-		tp.setText(data.getNomLieu() + data.getVille());
-
-		tp.objects.add(new ReserveVisite(data.getNomLieu(), data.getVille(), data.getPays(), s.getNumDossier(), 
-				Date.valueOf(dateVisite.getValue()), Integer.valueOf(nbPersonnes.getText())));
-		return true;
-
+				
+		try {
+			if(Integer.valueOf(nbPersonnes.getText()) <= 0)
+				return false;
+			tp.setText(data.getNomLieu() + data.getVille());
+			tp.objects.add(new ReserveVisite(data.getNomLieu(), data.getVille(), data.getPays(), s.getNumDossier(), 
+					Date.valueOf(dateVisite.getValue()), Integer.valueOf(nbPersonnes.getText())));
+			return true;
+		}
+		catch (NumberFormatException e) {
+			Debugger.println(e.toString());
+			return false;
+		}
 	}
 }
