@@ -7,6 +7,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Optional;
 
+import org.awhy.ui.Controller;
+import org.awhy.ui.tables.ReserveCircuitTable;
+import org.awhy.ui.tables.ReserveHotelTable;
+import org.awhy.ui.tables.ReserveVisiteTable;
+
 import javafx.geometry.Insets;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
@@ -21,11 +26,11 @@ public class PopupSimulation {
 
 		Dialog<ButtonType> dialog = new Dialog<>();
 		dialog.setTitle("Récapitulatif de la simulation");
-		dialog.setHeaderText("Récapitulatif de la simulation n° " + numDossier);
+		dialog.setHeaderText("Simulation n°" + numDossier);
 
 		ButtonType cancelButtonType = new ButtonType("Retour", ButtonData.CANCEL_CLOSE);
 		dialog.getDialogPane().getButtonTypes().addAll(cancelButtonType);
-		
+
 		ButtonType addButtonType = new ButtonType("Client\nexistant", ButtonData.OK_DONE);
 		ButtonType confirmButtonType = new ButtonType("Nouveau\n client", ButtonData.NEXT_FORWARD);
 
@@ -192,6 +197,17 @@ public class PopupSimulation {
 		}
 		pS.close();
 
+		// TODO: recap simulation
+		final ReserveCircuitTable recapCircuit= new ReserveCircuitTable(
+				Controller.executeQuery("select * from reservecircuit where numDossier = '" + numDossier + "'"));
+		grid.add(recapCircuit, 0, 3);
+		final ReserveHotelTable recapHotel = new ReserveHotelTable(
+				Controller.executeQuery("select * from reservehotel where numDossier = '" + numDossier + "'"));
+		grid.add(recapHotel, 1, 3);
+		final ReserveVisiteTable recapVisite= new ReserveVisiteTable(
+				Controller.executeQuery("select * from reservevisite where numDossier = '" + numDossier + "'"));
+		grid.add(recapVisite, 2, 3);
+
 		Text placesOK;
 		if (possible) {
 			placesOK = new Text("Réservation possible");
@@ -226,13 +242,12 @@ public class PopupSimulation {
 		if (resDialog.isPresent()) {
 			System.out.println(resDialog.get());
 			if (resDialog.get() == addButtonType) {
-				//TODO: chercher client, popup reservation
-				
-				
+				// TODO: chercher client, popup reservation
+
 			} else if (resDialog.get() == confirmButtonType) {
-				//TODO: popupclient
+				// TODO: popupclient
 				PopupClient.show(numDossier);
-				
+
 			}
 		}
 	}
