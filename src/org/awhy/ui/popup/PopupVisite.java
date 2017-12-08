@@ -54,6 +54,7 @@ public class PopupVisite {
 		}
 		catch (NumberFormatException e) {
 			Debugger.println("PopupVisite: valeur incorrecte: " + e.toString());
+			PopupError.bang();
 			return false;
 		}
 	}

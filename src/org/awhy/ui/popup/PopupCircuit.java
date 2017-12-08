@@ -135,6 +135,7 @@ public class PopupCircuit {
 			e.printStackTrace();
 		} catch (NumberFormatException | NullPointerException e) {
 			Debugger.println("PopupCircuit: valeur incorrecte: " + e.toString());
+			PopupError.bang();
 		}
 		return false;
 	}
@@ -179,6 +180,7 @@ public class PopupCircuit {
 			e.printStackTrace();
 		} catch (NumberFormatException e) {
 			Debugger.println("PopupCircuit: valeur incorrecte: " + e.toString());
+			PopupError.bang();
 		}
 		return false;
 	}
