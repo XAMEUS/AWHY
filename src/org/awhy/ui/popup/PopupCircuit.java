@@ -18,6 +18,7 @@ import org.awhy.ui.pane.CircuitPane;
 import org.awhy.ui.tables.DateCircuitTable;
 import org.awhy.ui.tables.EtapesTable;
 import org.awhy.ui.tables.HotelTable;
+import org.awhy.utils.Debugger;
 
 import javafx.geometry.Insets;
 import javafx.scene.control.ButtonBar.ButtonData;
@@ -61,7 +62,7 @@ public class PopupCircuit {
 		Optional<ButtonType> result = dialog.showAndWait();
 
 		if (result.isPresent()) {
-			PopupCircuit.show2(tp, data, s);
+			return PopupCircuit.show2(tp, data, s);
 			// try {
 			// Controller.container.setTableView(new DateCircuitTable(
 			// Controller.executeQuery("select * from dateCircuit where
@@ -88,10 +89,10 @@ public class PopupCircuit {
 			// e.printStackTrace();
 			// }
 		}
-		return true;
+		return false;
 	}
 
-	public static void show2(CircuitPane tp, Circuit data, Simulation s) {
+	public static boolean show2(CircuitPane tp, Circuit data, Simulation s) {
 
 		Dialog<ButtonType> dialog = new Dialog<>();
 		dialog.setTitle("Reserve Circuit");
@@ -127,15 +128,18 @@ public class PopupCircuit {
 
 				ResultSet res = Controller
 						.executeQuery("select * from etapes where idCircuit = " + data.getIdCircuit());
-				PopupCircuit.show3(tp, data, s, res, Integer.valueOf(nbPersonnes.getText()));
+				return PopupCircuit.show3(tp, data, s, res, Integer.valueOf(nbPersonnes.getText()));
 
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} catch (NumberFormatException | NullPointerException e) {
+			Debugger.println("PopupCircuit: valeur incorrecte: " + e.toString());
 		}
+		return false;
 	}
 
-	public static void show3(CircuitPane tp, Circuit data, Simulation s, ResultSet res, int nbPersonnes) {
+	public static boolean show3(CircuitPane tp, Circuit data, Simulation s, ResultSet res, int nbPersonnes) {
 
 		try {
 			ArrayList<Etapes> etapes = new ArrayList<>();
@@ -168,13 +172,15 @@ public class PopupCircuit {
 					tp.objects.add(new ReserveVisite(etape.getNomLieu(), etape.getVille(), etape.getPays(),
 							s.getNumDossier(), new Date(0), nbPersonnes));
 					PopupHotel.show(tp, hotels.getSelectionModel().getSelectedItem(), s);
-
+					return true;
 				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} catch (NumberFormatException e) {
+			Debugger.println("PopupCircuit: valeur incorrecte: " + e.toString());
 		}
-
+		return false;
 	}
 
 }
