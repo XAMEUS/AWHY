@@ -36,7 +36,7 @@ public class PopupClient {
 		TextField nomClient = new TextField();
 		TextField prenomClient = new TextField();
 		ChoiceBox<String> typeClient = new ChoiceBox<>(
-				FXCollections.observableArrayList("Individuel", "Société", "Groupe"));
+				FXCollections.observableArrayList("individuel", "societe", "groupe"));
 		TextField adresseClient = new TextField();
 		TextField emailClient = new TextField();
 		TextField telClient = new TextField();
