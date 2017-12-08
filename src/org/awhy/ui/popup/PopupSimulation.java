@@ -149,7 +149,12 @@ public class PopupSimulation {
 		res = pS.executeQuery();
 		while(res.next()) {
 			if(!possible) break;
-			String check = "select (dc.nbPersonnes - sum(rcd.nbPersonnesCircuit)) as nbPlaces from DateCircuit dc, (select * from ReserveCircuit rc where exists (select * from Reservation r where r.numDossier = rc.numDossier) and rc.idCircuit = ? and rc.dateDepartCircuit = ?) rcd where dc.idCircuit = rcd.idCircuit and dc.dateDepartCircuit = rcd.dateDepartCircuit group by dc.idCircuit, dc.dateDepartCircuit, dc.nbPersonnes";
+			String check = "select (dc.nbPersonnes - sum(rcd.nbPersonnesCircuit)) as nbPlaces from DateCircuit dc, "
+					+ "(select idCircuit, dateDepartCircuit, nbPersonnesCircuit"
+					+ "from ReserveCircuit rc, Reservation r"
+					+ "where r.numDossier = rc.numDossier and rc.idCircuit = ? and rc.dateDepartCircuit = ?) rcd"
+					+ "where dc.idCircuit = rcd.idCircuit and dc.dateDepartCircuit = rcd.dateDepartCircuit"
+					+ "group by dc.idCircuit, dc.dateDepartCircuit, dc.nbPersonnes";
 			PreparedStatement cPS = c.prepareStatement(check);
 			cPS.setString(1, res.getString(2));
 			cPS.setDate(2, res.getDate(3));
