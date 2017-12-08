@@ -16,8 +16,6 @@ import javafx.geometry.Insets;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
-import javafx.scene.control.Separator;
-import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 
@@ -217,24 +215,6 @@ public class PopupSimulation {
 			placesOK = new Text("Réservation impossible");
 		grid.add(placesOK, 0, 2);
 		
-		// Les réservations
-		/*String textReservations = "Réservation de visite";
-		query = "SELECT nomLieu, ville, pays, dateVisite, nbPersonnesVisite FROM ReserveVisite R, LieuAVisiter L WHERE numDossier=? and R.nomLieu = L.nomLieu";
-		pS = c.prepareStatement(query);
-		pS.setInt(1, numDossier);
-		res = pS.executeQuery();
-		while (res.next())
-			cout += res.getInt(1);
-		pS.close();*/
-		
-
-		grid.add(new Separator(), 0, 3, 2, 1);
-		TextArea textArea = new TextArea();
-		textArea.setEditable(false);
-		textArea.setWrapText(true);
-		//textArea.setText(textReservations);
-		grid.add(textArea, 0, 4, 2, 1);
-
 		dialog.getDialogPane().setContent(grid);
 
 		Optional<ButtonType> resDialog = dialog.showAndWait();
