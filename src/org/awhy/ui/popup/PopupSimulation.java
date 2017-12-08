@@ -5,6 +5,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Optional;
 
 import javafx.geometry.Insets;
 import javafx.scene.control.ButtonBar.ButtonData;
@@ -17,16 +18,15 @@ import javafx.util.Pair;
 public class PopupSimulation {
 	public static void show(int numDossier, Connection c) throws SQLException {
 
-		Dialog<Pair<String, String>> dialog = new Dialog<>();
+		Dialog<ButtonType> dialog = new Dialog<>();
 		dialog.setTitle("Récapitulatif de la simulation");
 		dialog.setHeaderText("Récapitulatif de la simulation n° " + numDossier);
 
-		// ButtonType confirmButtonType = new ButtonType("Client existant)",
-		// ButtonData.OK_DONE);
-		// dialog.getDialogPane().getButtonTypes().addAll(confirmButtonType);
-
 		ButtonType cancelButtonType = new ButtonType("Retour", ButtonData.CANCEL_CLOSE);
 		dialog.getDialogPane().getButtonTypes().addAll(cancelButtonType);
+		
+		ButtonType addButtonType = new ButtonType("Client\nexistant", ButtonData.OK_DONE);
+		ButtonType confirmButtonType = new ButtonType("Nouveau\n client", ButtonData.NEXT_FORWARD);
 
 		GridPane grid = new GridPane();
 		grid.setHgap(10);
@@ -196,9 +196,7 @@ public class PopupSimulation {
 		Text placesOK;
 		if (possible) {
 			placesOK = new Text("Réservation possible");
-			ButtonType confirmButtonType = new ButtonType("Nouveau\n client", ButtonData.NEXT_FORWARD);
 			dialog.getDialogPane().getButtonTypes().addAll(confirmButtonType);
-			ButtonType addButtonType = new ButtonType("Client\nexistant", ButtonData.OK_DONE);
 			dialog.getDialogPane().getButtonTypes().addAll(addButtonType);
 		} else
 			placesOK = new Text("Réservation impossible");
@@ -206,7 +204,20 @@ public class PopupSimulation {
 
 		dialog.getDialogPane().setContent(grid);
 
-		dialog.showAndWait();
+		Optional<ButtonType> resDialog = dialog.showAndWait();
+
+		if (resDialog.isPresent()) {
+			System.out.println(resDialog.get());
+			if (resDialog.get() == addButtonType) {
+				//TODO: chercher client, popup reservation
+				
+				
+			} else if (resDialog.get() == confirmButtonType) {
+				//TODO: popupclient
+				PopupClient.show(numDossier);
+				
+			}
+		}
 	}
 
 }

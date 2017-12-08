@@ -5,6 +5,7 @@ import java.time.Year;
 import java.util.Optional;
 
 import org.awhy.core.objects.Client;
+import org.awhy.core.objects.Simulation;
 import org.awhy.ui.Controller;
 
 import javafx.collections.FXCollections;
@@ -18,29 +19,29 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 
 public class PopupClient {
-	public static void show() {
+	public static void show(int numDossier) {
 
-		try {
 		Dialog<ButtonType> dialog = new Dialog<>();
 		dialog.setTitle("Nouveau client");
 		dialog.setHeaderText("Ajouter un client");
 
 		ButtonType confirmButtonType = new ButtonType("Confimer", ButtonData.OK_DONE);
 		dialog.getDialogPane().getButtonTypes().addAll(confirmButtonType);
-		
+
 		GridPane grid = new GridPane();
 		grid.setHgap(10);
 		grid.setVgap(10);
 		grid.setPadding(new Insets(20, 20, 10, 10));
-		
+
 		TextField nomClient = new TextField();
 		TextField prenomClient = new TextField();
-		ChoiceBox<String> typeClient = new ChoiceBox<>(FXCollections.observableArrayList("Individuel", "Société", "Groupe"));
+		ChoiceBox<String> typeClient = new ChoiceBox<>(
+				FXCollections.observableArrayList("Individuel", "Société", "Groupe"));
 		TextField adresseClient = new TextField();
 		TextField emailClient = new TextField();
 		TextField telClient = new TextField();
 		int anneeEnregistrement = (int) Year.now().getValue();
-		
+
 		grid.add(new Label("Nom:"), 0, 0);
 		grid.add(nomClient, 1, 0);
 		grid.add(new Label("Prénom:"), 0, 1);
@@ -53,21 +54,24 @@ public class PopupClient {
 		grid.add(emailClient, 1, 4);
 		grid.add(new Label("Téléphone:"), 0, 5);
 		grid.add(telClient, 1, 5);
-		
+
 		dialog.getDialogPane().setContent(grid);
-		
+
 		Optional<ButtonType> result = dialog.showAndWait();
-		
+
 		if (result.isPresent() && (nomClient.getText() != null && !nomClient.getText().trim().isEmpty())) {
-			Client c = new Client(Controller.dialog, nomClient.getText(), prenomClient.getText(), typeClient.getValue(), adresseClient.getText(), emailClient.getText(), telClient.getText(), anneeEnregistrement);
-			c.insertSQL(Controller.dialog.getConnection());
-			//TODO: confirmer simulation / ajouter reservation
+
+			Client c;
+			try {
+				c = new Client(Controller.dialog, nomClient.getText(), prenomClient.getText(), typeClient.getValue(),
+						adresseClient.getText(), emailClient.getText(), telClient.getText(), anneeEnregistrement);
+				c.insertSQL(Controller.dialog.getConnection());
+				PopupReservation.show(numDossier, c.getIdClient());
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
-		
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
+
 	}
 
 }
