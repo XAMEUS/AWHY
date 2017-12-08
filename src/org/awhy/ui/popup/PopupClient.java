@@ -68,10 +68,9 @@ public class PopupClient {
 				c.insertSQL(Controller.dialog.getConnection());
 				PopupReservation.show(numDossier, c.getIdClient());
 			} catch (SQLException e) {
-				e.printStackTrace();
+				PopupError.bang();
 			}
 		}
-
 	}
 
 }

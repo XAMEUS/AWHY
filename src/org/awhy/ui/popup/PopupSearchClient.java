@@ -81,7 +81,7 @@ public class PopupSearchClient {
 
 		Dialog<ButtonType> dialog = new Dialog<>();
 		dialog.setTitle("Client existant");
-		dialog.setHeaderText("Selectionner le client");
+		dialog.setHeaderText("Sélectionner le client");
 
 		ButtonType confirmButtonType = new ButtonType("Rechercher à nouveau", ButtonData.OK_DONE);
 		dialog.getDialogPane().getButtonTypes().addAll(confirmButtonType);
@@ -99,6 +99,7 @@ public class PopupSearchClient {
 				if (e.getClickCount() == 2 && (!row.isEmpty())) {
 					Client rowData = row.getItem();
 					PopupReservation.show(numDossier, rowData.getIdClient());
+					dialog.close();
 				}
 			});
 			return row;

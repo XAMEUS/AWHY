@@ -57,8 +57,10 @@ public class PopupReservation {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
+			catch (NumberFormatException | NullPointerException e) {
+				PopupError.bang();
+			}
 		}
-		
 	}
 
 }
