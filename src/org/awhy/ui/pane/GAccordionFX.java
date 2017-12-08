@@ -111,7 +111,7 @@ public class GAccordionFX extends VBox {
 			@Override
 			public void handle(ActionEvent event) {
 				CircuitPane tp = new CircuitPane();
-				ac.getPanes().add(new CircuitPane());
+				ac.getPanes().add(tp);
 				try {
 					Controller.container
 							.setTableView(new CircuitTable(Controller.executeQuery("select * from circuit")));
@@ -140,8 +140,10 @@ public class GAccordionFX extends VBox {
 				try {
 					s.insertSQL(Controller.dialog.getConnection());
 					for (TitledPane tp : ac.getPanes()) {
-						for (Object o : ((TPane) tp).objects)
+						for (Object o : ((TPane) tp).objects) {
+							System.out.println(o);
 							o.insertSQL(Controller.dialog.getConnection());
+						}
 					}
 					Controller.dialog.getConnection().commit();
 				} catch (SQLException e) {
