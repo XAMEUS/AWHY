@@ -11,9 +11,10 @@ import javafx.geometry.Insets;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
+import javafx.scene.control.Separator;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
-import javafx.util.Pair;
 
 public class PopupSimulation {
 	public static void show(int numDossier, Connection c) throws SQLException {
@@ -112,8 +113,6 @@ public class PopupSimulation {
 		Text nbPersonnesText = new Text(nbPersonnes + " personne.s");
 		grid.add(nbPersonnesText, 0, 1);
 
-		// Les réservations
-
 		// Le pognon
 		int cout = 0;
 		query = "SELECT sum(prixCircuit) FROM ReserveCircuit R, Circuit C WHERE numDossier=? and R.idCircuit = C.idCircuit";
@@ -124,7 +123,7 @@ public class PopupSimulation {
 			cout += res.getInt(1);
 		pS.close();
 
-		query = "SELECT sum(prixChambre * nbChambresReservees + prixPetitDejeuner * nbPetitDejReserves) FROM ReserveHotel R, Hotel H WHERE numDossier=? and R.nomHotel = H.nomHotel";
+		query = "SELECT sum(prixChambre * nbChambresReservees + prixPetitDejeuner * nbPetitDejReserves) FROM ReserveHotel R, Hotel H WHERE numDossier=? and R.nomHotel = H.nomHotel and R.ville = H.ville and R.pays = H.pays";
 		pS = c.prepareStatement(query);
 		pS.setInt(1, numDossier);
 		res = pS.executeQuery();
@@ -132,7 +131,7 @@ public class PopupSimulation {
 			cout += res.getInt(1);
 		pS.close();
 
-		query = "SELECT sum(prix) FROM ReserveVisite R, LieuAVisiter L WHERE numDossier=? and R.nomLieu = L.nomLieu";
+		query = "SELECT sum(prix) FROM ReserveVisite R, LieuAVisiter L WHERE numDossier=? and R.nomLieu = L.nomLieu and R.ville = L.ville and R.pays = L.pays";
 		pS = c.prepareStatement(query);
 		pS.setInt(1, numDossier);
 		res = pS.executeQuery();
@@ -201,6 +200,24 @@ public class PopupSimulation {
 		} else
 			placesOK = new Text("Réservation impossible");
 		grid.add(placesOK, 0, 2);
+		
+		// Les réservations
+		/*String textReservations = "Réservation de visite";
+		query = "SELECT nomLieu, ville, pays, dateVisite, nbPersonnesVisite FROM ReserveVisite R, LieuAVisiter L WHERE numDossier=? and R.nomLieu = L.nomLieu";
+		pS = c.prepareStatement(query);
+		pS.setInt(1, numDossier);
+		res = pS.executeQuery();
+		while (res.next())
+			cout += res.getInt(1);
+		pS.close();*/
+		
+
+		grid.add(new Separator(), 0, 3, 2, 1);
+		TextArea textArea = new TextArea();
+		textArea.setEditable(false);
+		textArea.setWrapText(true);
+		//textArea.setText(textReservations);
+		grid.add(textArea, 0, 4, 2, 1);
 
 		dialog.getDialogPane().setContent(grid);
 
