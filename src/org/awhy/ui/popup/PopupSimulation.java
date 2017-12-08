@@ -116,8 +116,6 @@ public class PopupSimulation {
 		Text nbPersonnesText = new Text(nbPersonnes + " personne.s");
 		grid.add(nbPersonnesText, 0, 1);
 
-		// Les réservations
-
 		// Le pognon
 		int cout = 0;
 		query = "SELECT sum(prixCircuit) FROM ReserveCircuit R, Circuit C WHERE numDossier=? and R.idCircuit = C.idCircuit";
@@ -128,7 +126,7 @@ public class PopupSimulation {
 			cout += res.getInt(1);
 		pS.close();
 
-		query = "SELECT sum(prixChambre * nbChambresReservees + prixPetitDejeuner * nbPetitDejReserves) FROM ReserveHotel R, Hotel H WHERE numDossier=? and R.nomHotel = H.nomHotel";
+		query = "SELECT sum(prixChambre * nbChambresReservees + prixPetitDejeuner * nbPetitDejReserves) FROM ReserveHotel R, Hotel H WHERE numDossier=? and R.nomHotel = H.nomHotel and R.ville = H.ville and R.pays = H.pays";
 		pS = c.prepareStatement(query);
 		pS.setInt(1, numDossier);
 		res = pS.executeQuery();
@@ -136,7 +134,7 @@ public class PopupSimulation {
 			cout += res.getInt(1);
 		pS.close();
 
-		query = "SELECT sum(prix) FROM ReserveVisite R, LieuAVisiter L WHERE numDossier=? and R.nomLieu = L.nomLieu";
+		query = "SELECT sum(prix) FROM ReserveVisite R, LieuAVisiter L WHERE numDossier=? and R.nomLieu = L.nomLieu and R.ville = L.ville and R.pays = L.pays";
 		pS = c.prepareStatement(query);
 		pS.setInt(1, numDossier);
 		res = pS.executeQuery();
@@ -216,7 +214,7 @@ public class PopupSimulation {
 		} else
 			placesOK = new Text("Réservation impossible");
 		grid.add(placesOK, 0, 2);
-
+		
 		dialog.getDialogPane().setContent(grid);
 
 		Optional<ButtonType> resDialog = dialog.showAndWait();

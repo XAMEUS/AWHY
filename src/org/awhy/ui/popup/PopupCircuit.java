@@ -28,7 +28,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 
 public class PopupCircuit {
-	public static void show(CircuitPane tp, Circuit data, Simulation s) {
+	public static boolean show(CircuitPane tp, Circuit data, Simulation s) {
 
 		Dialog<ButtonType> dialog = new Dialog<>();
 		dialog.setTitle("Reserve Circuit");
@@ -88,7 +88,7 @@ public class PopupCircuit {
 			// e.printStackTrace();
 			// }
 		}
-
+		return true;
 	}
 
 	public static void show2(CircuitPane tp, Circuit data, Simulation s) {
