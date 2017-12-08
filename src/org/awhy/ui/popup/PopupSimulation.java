@@ -149,15 +149,11 @@ public class PopupSimulation {
 		res = pS.executeQuery();
 		while(res.next()) {
 			if(!possible) break;
-			String check = "select (dc.nbPersonnes - sum(rcd.nbPersonnesCircuit)) as nbPlaces from DateCircuit dc, "
-					+ "(select idCircuit, dateDepartCircuit, nbPersonnesCircuit"
-					+ "from ReserveCircuit rc, Reservation r"
-					+ "where r.numDossier = rc.numDossier and rc.idCircuit = ? and rc.dateDepartCircuit = ?) rcd"
-					+ "where dc.idCircuit = rcd.idCircuit and dc.dateDepartCircuit = rcd.dateDepartCircuit"
-					+ "group by dc.idCircuit, dc.dateDepartCircuit, dc.nbPersonnes";
+			String check = "select (dc.nbPersonnes - sum(rcd.nbPersonnesCircuit)) as nbPlaces from DateCircuit dc, (select idCircuit, dateDepartCircuit, nbPersonnesCircuit from ReserveCircuit rc, Reservation r where r.numDossier = rc.numDossier and rc.idCircuit = ? and rc.dateDepartCircuit = ?) rcd where dc.idCircuit = rcd.idCircuit and dc.dateDepartCircuit = rcd.dateDepartCircuit group by dc.idCircuit, dc.dateDepartCircuit, dc.nbPersonnes";
 			PreparedStatement cPS = c.prepareStatement(check);
 			cPS.setString(1, res.getString(2));
 			cPS.setDate(2, res.getDate(3));
+			System.out.println(check);
 			ResultSet cRes = cPS.executeQuery();
 			while(cRes.next())
 				if(cRes.getInt(1) < res.getInt(1))
@@ -175,16 +171,13 @@ public class PopupSimulation {
 			Date curr = new Date(res.getDate(5).getTime());
 			while(res.getDate(6).after(curr)) {
 				if(!possible) break;
-				String check = "select (h.nbChambresTotal - sum(rhd.nbChambresReservees)) as nbPlaces from Hotel h, (select * from ReserveHotel rh where exists (select * from Reservation r where r.numDossier = rh.numDossier) and (dateDepartHotel <= ? and dateArriveeHotel > ?) and rh.nomHotel = ? and rh.ville = ? and rh.pays = ?) rhd where h.nomHotel = ? and h.ville = ? and h.pays = ? group by h.nomHotel, h.ville, h.pays, h.nbChambresTotal";
+				String check = "select (h.nbChambresTotal - sum(rhr.nbChambresReservees)) from (select nomHotel, ville, pays, nbChambresTotal from Hotel) h, (select rh.nomHotel, rh.ville, rh.pays, rh.nbChambresReservees from ReserveHotel rh, Reservation r where rh.numDossier = r.numDossier and rh.nomHotel = ? and rh.ville = ? and rh.pays = ? and (dateDepartHotel <= ? and dateArriveeHotel > ?)) rhr where h.nomHotel = rhr.nomHotel and h.ville = rhr.ville and h.pays = rhr.pays group by h.nomHotel, h.ville, h.pays, h.nbChambresTotal";
 				PreparedStatement cPS = c.prepareStatement(check);
-				cPS.setDate(1, curr);
-				cPS.setDate(2, curr);
-				cPS.setString(3, res.getString(1));
-				cPS.setString(4, res.getString(2));
-				cPS.setString(5, res.getString(3));
-				cPS.setString(6, res.getString(1));
-				cPS.setString(7, res.getString(2));
-				cPS.setString(8, res.getString(3));
+				cPS.setDate(4, curr);
+				cPS.setDate(5, curr);
+				cPS.setString(1, res.getString(1));
+				cPS.setString(2, res.getString(2));
+				cPS.setString(3, res.getString(3));
 				ResultSet cRes = cPS.executeQuery();
 				while(cRes.next())
 					if(res.getInt(4) > cRes.getInt(1))
