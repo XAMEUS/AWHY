@@ -22,7 +22,7 @@ public class PopupClient {
 
 		try {
 		Dialog<ButtonType> dialog = new Dialog<>();
-		dialog.setTitle("Reserve Circuit");
+		dialog.setTitle("Nouveau client");
 		dialog.setHeaderText("Ajouter un client");
 
 		ButtonType confirmButtonType = new ButtonType("Confimer", ButtonData.OK_DONE);
@@ -61,6 +61,7 @@ public class PopupClient {
 		if (result.isPresent() && (nomClient.getText() != null && !nomClient.getText().trim().isEmpty())) {
 			Client c = new Client(Controller.dialog, nomClient.getText(), prenomClient.getText(), typeClient.getValue(), adresseClient.getText(), emailClient.getText(), telClient.getText(), anneeEnregistrement);
 			c.insertSQL(Controller.dialog.getConnection());
+			//TODO: confirmer simulation / ajouter reservation
 		}
 		
 		} catch (SQLException e) {
