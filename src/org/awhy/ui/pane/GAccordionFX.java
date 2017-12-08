@@ -36,6 +36,7 @@ public class GAccordionFX extends VBox {
 
 	private ToolBar top;
 	private ToolBar bot;
+	private Button confirmer;
 
 	public final Simulation s;
 
@@ -46,6 +47,8 @@ public class GAccordionFX extends VBox {
 		StackPane pane = new StackPane();
 		pane.setAlignment(Pos.TOP_CENTER);
 		pane.getChildren().add(new Text("TODO"));
+		this.confirmer = new Button("Confirmer");
+		final Button confirmer = this.confirmer;
 
 		ScrollPane sp = new ScrollPane(new StackPane(ac));
 		sp.setFitToHeight(true);
@@ -69,8 +72,10 @@ public class GAccordionFX extends VBox {
 						row.setOnMouseClicked(e -> {
 							if (e.getClickCount() == 2 && (!row.isEmpty())) {
 								Hotel rowData = row.getItem();
-								if(PopupHotel.show(tp, rowData, s))
+								if(PopupHotel.show(tp, rowData, s)) {
 									ac.getPanes().add(tp);
+									confirmer.setVisible(true);
+								}
 							}
 						});
 						return row;
@@ -94,8 +99,10 @@ public class GAccordionFX extends VBox {
 						row.setOnMouseClicked(e -> {
 							if (e.getClickCount() == 2 && (!row.isEmpty())) {
 								LieuAVisiter rowData = row.getItem();
-								if(PopupVisite.show(tp, rowData, s))
-									ac.getPanes().add(tp);
+								if(PopupVisite.show(tp, rowData, s)) {
+										ac.getPanes().add(tp);
+										confirmer.setVisible(true);
+								}
 							}
 						});
 						return row;
@@ -121,8 +128,10 @@ public class GAccordionFX extends VBox {
 						row.setOnMouseClicked(e -> {
 							if (e.getClickCount() == 2 && (!row.isEmpty())) {
 								Circuit rowData = row.getItem();
-								if(PopupCircuit.show(tp, rowData, s))
+								if(PopupCircuit.show(tp, rowData, s)) {
 									ac.getPanes().add(tp);
+									confirmer.setVisible(true);
+								}
 							}
 						});
 						return row;
@@ -133,8 +142,7 @@ public class GAccordionFX extends VBox {
 			}
 		});
 
-		Button b4 = new Button("Confirmer");
-		b4.setOnAction(new EventHandler<ActionEvent>() {
+		confirmer.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
 				try {
@@ -151,9 +159,9 @@ public class GAccordionFX extends VBox {
 				}
 			}
 		});
+		confirmer.setVisible(false);
 
-		this.bot = new ToolBar(b1, b2, b3, b4);
-
+		this.bot = new ToolBar(b1, b2, b3, this.confirmer);
 		this.getChildren().add(this.bot);
 
 	}
