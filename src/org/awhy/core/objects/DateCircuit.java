@@ -42,6 +42,7 @@ public class DateCircuit implements Object {
 		preparedStatementInsert.setDate(2, this.getDateDepartCircuit());
 		preparedStatementInsert.setInt(3, this.getNbPersonnes());
 		preparedStatementInsert.executeUpdate();
+		preparedStatementInsert.close();
 	}
 
 	@Override
@@ -52,6 +53,7 @@ public class DateCircuit implements Object {
 		preparedStatementInsert.setString(2, this.getIdCircuit());
 		preparedStatementInsert.setDate(3, this.getDateDepartCircuit());
 		preparedStatementInsert.executeUpdate();
+		preparedStatementInsert.close();
 	}
 
 	public String getIdCircuit() {

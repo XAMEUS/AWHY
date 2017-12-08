@@ -65,6 +65,7 @@ public class ReserveHotel implements Object {
 		preparedStatementInsert.setInt(7, this.getNbChambresReservees());
 		preparedStatementInsert.setInt(8, this.getNbPetitDejReserves());
 		preparedStatementInsert.executeUpdate();
+		preparedStatementInsert.close();
 	}
 
 	@Override
@@ -80,6 +81,7 @@ public class ReserveHotel implements Object {
 		preparedStatementInsert.setDate(7, this.getDateDepartHotel());
 		preparedStatementInsert.setDate(8, this.getDateArriveeHotel());
 		preparedStatementInsert.executeUpdate();
+		preparedStatementInsert.close();
 	}
 
 	@Override

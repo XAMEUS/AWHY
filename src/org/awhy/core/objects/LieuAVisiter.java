@@ -48,6 +48,7 @@ public class LieuAVisiter implements Object {
 		preparedStatementInsert.setString(5, this.getDescriptifLieu());
 		preparedStatementInsert.setInt(6, this.getPrix());
 		preparedStatementInsert.executeUpdate();
+		preparedStatementInsert.close();
 	}
 
 	@Override
@@ -61,6 +62,7 @@ public class LieuAVisiter implements Object {
 		preparedStatementInsert.setString(5, this.getVille());
 		preparedStatementInsert.setString(6, this.getPays());
 		preparedStatementInsert.executeUpdate();
+		preparedStatementInsert.close();
 	}
 
 	@Override

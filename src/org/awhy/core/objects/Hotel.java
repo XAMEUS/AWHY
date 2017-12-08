@@ -53,6 +53,7 @@ public class Hotel implements Object {
 		preparedStatementInsert.setInt(6, this.getPrixChambre());
 		preparedStatementInsert.setInt(7, this.getPrixPetitDejeuner());
 		preparedStatementInsert.executeUpdate();
+		preparedStatementInsert.close();
 	}
 
 	@Override
@@ -67,6 +68,8 @@ public class Hotel implements Object {
 		preparedStatementInsert.setString(6, this.getVille());
 		preparedStatementInsert.setString(7, this.getPays());
 		preparedStatementInsert.executeUpdate();
+		preparedStatementInsert.close();
+
 	}
 	
 	@Override

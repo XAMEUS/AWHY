@@ -40,6 +40,7 @@ public class ReserveCircuit implements Object {
 		preparedStatementInsert.setInt(3, this.getNumDossier());
 		preparedStatementInsert.setInt(4, this.getNbPersonnesCircuit());
 		preparedStatementInsert.executeUpdate();
+		preparedStatementInsert.close();
 	}
 
 	@Override
@@ -51,6 +52,7 @@ public class ReserveCircuit implements Object {
 		preparedStatementInsert.setDate(3, this.getDateDepartCircuit());
 		preparedStatementInsert.setInt(4, this.getNumDossier());
 		preparedStatementInsert.executeUpdate();
+		preparedStatementInsert.close();
 	}
 
 	@Override

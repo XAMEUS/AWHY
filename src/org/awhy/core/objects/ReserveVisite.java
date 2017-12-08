@@ -48,6 +48,7 @@ public class ReserveVisite implements Object {
 		preparedStatementInsert.setDate(5, this.getDateVisite());
 		preparedStatementInsert.setInt(6, this.getNbPersonnesVisite());
 		preparedStatementInsert.executeUpdate();
+		preparedStatementInsert.close();
 	}
 
 	@Override
@@ -61,6 +62,7 @@ public class ReserveVisite implements Object {
 		preparedStatementInsert.setInt(5, this.getNumDossier());
 		preparedStatementInsert.setDate(6, this.getDateVisite());
 		preparedStatementInsert.executeUpdate();
+		preparedStatementInsert.close();
 	}
 
 	@Override

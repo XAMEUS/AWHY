@@ -40,6 +40,7 @@ public class Reservation implements Object {
 		preparedStatementInsert.setString(3, this.getInfoPaiement());
 		preparedStatementInsert.setInt(4, this.getIdClient());
 		preparedStatementInsert.executeUpdate();
+		preparedStatementInsert.close();
 	}
 
 	@Override
@@ -51,6 +52,7 @@ public class Reservation implements Object {
 		preparedStatementInsert.setString(3, this.getInfoPaiement());
 		preparedStatementInsert.setInt(4, this.getIdClient());
 		preparedStatementInsert.executeUpdate();
+		preparedStatementInsert.close();
 	}
 	
 	@Override

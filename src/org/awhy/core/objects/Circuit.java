@@ -56,6 +56,7 @@ public class Circuit implements Object {
 		preparedStatementInsert.setInt(6, this.getNbJoursTotal());
 		preparedStatementInsert.setInt(7, this.getPrixCircuit());
 		preparedStatementInsert.executeUpdate();
+		preparedStatementInsert.close();
 	}
 
 	@Override
@@ -71,6 +72,7 @@ public class Circuit implements Object {
 		preparedStatementInsert.setInt(7, this.getPrixCircuit());
 		preparedStatementInsert.setString(8, this.getIdCircuit());
 		preparedStatementInsert.executeUpdate();
+		preparedStatementInsert.close();
 	}
 
 	@Override

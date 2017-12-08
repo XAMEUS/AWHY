@@ -78,6 +78,7 @@ public class Client implements Object {
 		preparedStatementInsert.setString(7, this.getTelClient());
 		preparedStatementInsert.setInt(8, this.getAnneeEnregistrement());
 		preparedStatementInsert.executeUpdate();
+		preparedStatementInsert.close();
 	}
 
 	@Override
@@ -93,6 +94,7 @@ public class Client implements Object {
 		preparedStatementInsert.setInt(7, this.getAnneeEnregistrement());
 		preparedStatementInsert.setInt(8, this.getIdClient());
 		preparedStatementInsert.executeUpdate();
+		preparedStatementInsert.close();
 	}
 
 	public Integer getIdClient() {

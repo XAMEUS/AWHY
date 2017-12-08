@@ -29,6 +29,7 @@ public class Ville implements Object {
 		preparedStatementInsert.setString(1, this.getNomVille());
 		preparedStatementInsert.setString(2, this.getPays());
 		preparedStatementInsert.executeUpdate();
+		preparedStatementInsert.close();
 	}
 	
     public String getNomVille() {
