@@ -68,6 +68,7 @@ public class Client implements Object {
 	@Override
 	public void insertSQL(Connection c) throws SQLException {
 		String insert = "INSERT INTO " + dbName + " VALUES " + "(?, ?, ?, ?, ?, ?, ?, ?)";
+		c.commit();
 		PreparedStatement preparedStatementInsert = c.prepareStatement(insert);
 		preparedStatementInsert.setInt(1, this.getIdClient());
 		preparedStatementInsert.setString(2, this.getNomClient());
@@ -79,11 +80,13 @@ public class Client implements Object {
 		preparedStatementInsert.setInt(8, this.getAnneeEnregistrement());
 		preparedStatementInsert.executeUpdate();
 		preparedStatementInsert.close();
+		c.commit();
 	}
 
 	@Override
 	public void updateSQL(Connection c) throws SQLException {
 		String insert = "UPDATE " + dbName + " SET nomClient=?, prenomClient=?, typeClient=?, adresseClient=?, emailClient=?, telClient=?, anneeEnregistrement=? WHERE idClient=?";
+		c.commit();
 		PreparedStatement preparedStatementInsert = c.prepareStatement(insert);
 		preparedStatementInsert.setString(1, this.getNomClient());
 		preparedStatementInsert.setString(2, this.getPrenomClient());
@@ -95,6 +98,7 @@ public class Client implements Object {
 		preparedStatementInsert.setInt(8, this.getIdClient());
 		preparedStatementInsert.executeUpdate();
 		preparedStatementInsert.close();
+		c.commit();
 	}
 
 	public Integer getIdClient() {

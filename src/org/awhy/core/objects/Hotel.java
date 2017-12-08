@@ -44,6 +44,7 @@ public class Hotel implements Object {
 	@Override
 	public void insertSQL(Connection c) throws SQLException {
 		String insert = "INSERT INTO " + dbName + " VALUES " + "(?, ?, ?, ?, ?, ?, ?)";
+		c.commit();
 		PreparedStatement preparedStatementInsert = c.prepareStatement(insert);
 		preparedStatementInsert.setString(1, this.getNomHotel());
 		preparedStatementInsert.setString(2, this.getVille());
@@ -54,11 +55,13 @@ public class Hotel implements Object {
 		preparedStatementInsert.setInt(7, this.getPrixPetitDejeuner());
 		preparedStatementInsert.executeUpdate();
 		preparedStatementInsert.close();
+		c.commit();
 	}
 
 	@Override
 	public void updateSQL(Connection c) throws SQLException {
 		String insert = "UPDATE " + dbName + " SET adresseHotel=?, nbChambresTotal=?, prixchambre=?, prixPetitDejeuner=? WHERE nomHotel=?, ville=?, pays=?";
+		c.commit();
 		PreparedStatement preparedStatementInsert = c.prepareStatement(insert);
 		preparedStatementInsert.setString(1, this.getAdresseHotel());
 		preparedStatementInsert.setInt(2, this.getNbChambresTotal());
@@ -69,6 +72,7 @@ public class Hotel implements Object {
 		preparedStatementInsert.setString(7, this.getPays());
 		preparedStatementInsert.executeUpdate();
 		preparedStatementInsert.close();
+		c.commit();
 
 	}
 	

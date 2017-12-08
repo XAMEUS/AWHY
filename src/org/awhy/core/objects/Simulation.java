@@ -16,10 +16,12 @@ public class Simulation implements Object {
 	
 	public void insertSQL(Connection c) throws SQLException {
 		String insert = "INSERT INTO " + dbName + " VALUES " + "(?)";
+		c.commit();
 		PreparedStatement preparedStatementInsert = c.prepareStatement(insert);
 		preparedStatementInsert.setInt(1, this.getNumDossier());
 		preparedStatementInsert.executeUpdate();
 		preparedStatementInsert.close();
+		c.commit();
 	}
 
 	public Simulation() {

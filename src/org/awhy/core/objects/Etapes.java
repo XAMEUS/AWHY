@@ -40,6 +40,7 @@ public class Etapes implements Object {
 	@Override
 	public void insertSQL(Connection c) throws SQLException {
 		String insert = "INSERT INTO " + dbName + " VALUES " + "(?, ?, ?, ?, ?, ?)";
+		c.commit();
 		PreparedStatement preparedStatementInsert = c.prepareStatement(insert);
 		preparedStatementInsert.setString(1, this.getIdCircuit());
 		preparedStatementInsert.setInt(2, this.getOrdre());
@@ -49,11 +50,13 @@ public class Etapes implements Object {
 		preparedStatementInsert.setInt(6, this.getNbJours());
 		preparedStatementInsert.executeUpdate();
 		preparedStatementInsert.close();
+		c.commit();
 	}
 
 	@Override
 	public void updateSQL(Connection c) throws SQLException {
 		String insert = "UPDATE " + dbName + " SET nbJours=? WHERE idCircuit=?, ordre=?, nomLieu=?, ville=?, pays=?";
+		c.commit();
 		PreparedStatement preparedStatementInsert = c.prepareStatement(insert);
 		preparedStatementInsert.setInt(1, this.getNbJours());
 		preparedStatementInsert.setString(2, this.getIdCircuit());
@@ -63,6 +66,7 @@ public class Etapes implements Object {
 		preparedStatementInsert.setString(6, this.getPays());
 		preparedStatementInsert.executeUpdate();
 		preparedStatementInsert.close();
+		c.commit();
 	}
 
 	@Override

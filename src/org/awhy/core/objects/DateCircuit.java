@@ -37,23 +37,27 @@ public class DateCircuit implements Object {
 	@Override
 	public void insertSQL(Connection c) throws SQLException {
 		String insert = "INSERT INTO " + dbName	+ " VALUES " + "(?, ?, ?)";
+		c.commit();
 		PreparedStatement preparedStatementInsert = c.prepareStatement(insert);
 		preparedStatementInsert.setString(1, this.getIdCircuit());
 		preparedStatementInsert.setDate(2, this.getDateDepartCircuit());
 		preparedStatementInsert.setInt(3, this.getNbPersonnes());
 		preparedStatementInsert.executeUpdate();
 		preparedStatementInsert.close();
+		c.commit();
 	}
 
 	@Override
 	public void updateSQL(Connection c) throws SQLException {
 		String insert = "UPDATE " + dbName + " SET nbPersonnes=? WHERE idCircuit=?, dateDepartCircuit=?";
+		c.commit();
 		PreparedStatement preparedStatementInsert = c.prepareStatement(insert);
 		preparedStatementInsert.setInt(1, this.getNbPersonnes());
 		preparedStatementInsert.setString(2, this.getIdCircuit());
 		preparedStatementInsert.setDate(3, this.getDateDepartCircuit());
 		preparedStatementInsert.executeUpdate();
 		preparedStatementInsert.close();
+		c.commit();
 	}
 
 	public String getIdCircuit() {

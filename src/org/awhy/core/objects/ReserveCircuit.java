@@ -34,6 +34,7 @@ public class ReserveCircuit implements Object {
 	@Override
 	public void insertSQL(Connection c) throws SQLException {
 		String insert = "INSERT INTO " + dbName + " VALUES " + "(?, ?, ?, ?)";
+		c.commit();
 		PreparedStatement preparedStatementInsert = c.prepareStatement(insert);
 		preparedStatementInsert.setString(1, this.getIdCircuit());
 		preparedStatementInsert.setDate(2, this.getDateDepartCircuit());
@@ -41,11 +42,13 @@ public class ReserveCircuit implements Object {
 		preparedStatementInsert.setInt(4, this.getNbPersonnesCircuit());
 		preparedStatementInsert.executeUpdate();
 		preparedStatementInsert.close();
+		c.commit();
 	}
 
 	@Override
 	public void updateSQL(Connection c) throws SQLException {
 		String insert = "UPDATE " + dbName + " SET nbPersonnesCircuit=? WHERE idCircuit=?, datePaiement=?, numDossier=?";
+		c.commit();
 		PreparedStatement preparedStatementInsert = c.prepareStatement(insert);
 		preparedStatementInsert.setInt(1, this.getNbPersonnesCircuit());
 		preparedStatementInsert.setString(2, this.getIdCircuit());
@@ -53,6 +56,7 @@ public class ReserveCircuit implements Object {
 		preparedStatementInsert.setInt(4, this.getNumDossier());
 		preparedStatementInsert.executeUpdate();
 		preparedStatementInsert.close();
+		c.commit();
 	}
 
 	@Override

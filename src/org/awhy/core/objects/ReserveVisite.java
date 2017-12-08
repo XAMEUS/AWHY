@@ -40,6 +40,7 @@ public class ReserveVisite implements Object {
 	@Override
 	public void insertSQL(Connection c) throws SQLException {
 		String insert = "INSERT INTO " + dbName + " VALUES " + "(?, ?, ?, ?, ?, ?)";
+		c.commit();
 		PreparedStatement preparedStatementInsert = c.prepareStatement(insert);
 		preparedStatementInsert.setString(1, this.getNomLieu());
 		preparedStatementInsert.setString(2, this.getVille());
@@ -49,11 +50,13 @@ public class ReserveVisite implements Object {
 		preparedStatementInsert.setInt(6, this.getNbPersonnesVisite());
 		preparedStatementInsert.executeUpdate();
 		preparedStatementInsert.close();
+		c.commit();
 	}
 
 	@Override
 	public void updateSQL(Connection c) throws SQLException {
 		String insert = "UPDATE " + dbName + " SET nbPersonnesVisite=? WHERE nomLieu=?, ville=?, pays=?, numDossier=?, dateVisite=?";
+		c.commit();
 		PreparedStatement preparedStatementInsert = c.prepareStatement(insert);
 		preparedStatementInsert.setInt(1, this.getNbPersonnesVisite());
 		preparedStatementInsert.setString(2, this.getNomLieu());
@@ -63,6 +66,7 @@ public class ReserveVisite implements Object {
 		preparedStatementInsert.setDate(6, this.getDateVisite());
 		preparedStatementInsert.executeUpdate();
 		preparedStatementInsert.close();
+		c.commit();
 	}
 
 	@Override

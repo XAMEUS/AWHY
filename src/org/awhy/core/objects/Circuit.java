@@ -47,6 +47,7 @@ public class Circuit implements Object {
 	@Override
 	public void insertSQL(Connection c) throws SQLException {
 		String insert = "INSERT INTO " + dbName + " VALUES " + "(idCircuit.nextval, ?, ?, ?, ?, ?, ?, ?)";
+		c.commit();
 		PreparedStatement preparedStatementInsert = c.prepareStatement(insert);
 		preparedStatementInsert.setString(1, this.getDescriptif());
 		preparedStatementInsert.setString(2, this.getVilleDepart());
@@ -57,11 +58,13 @@ public class Circuit implements Object {
 		preparedStatementInsert.setInt(7, this.getPrixCircuit());
 		preparedStatementInsert.executeUpdate();
 		preparedStatementInsert.close();
+		c.commit();
 	}
 
 	@Override
 	public void updateSQL(Connection c) throws SQLException {
 		String insert = "UPDATE " + dbName + " SET descriptif=?, villeDepart=?, paysDepart=?, villeArrivee=?, paysArrivee=?, nbJoursTotal=?, prixCircuit=? WHERE idCircuit=?";
+		c.commit();
 		PreparedStatement preparedStatementInsert = c.prepareStatement(insert);
 		preparedStatementInsert.setString(1, this.getDescriptif());
 		preparedStatementInsert.setString(2, this.getVilleDepart());
@@ -73,6 +76,7 @@ public class Circuit implements Object {
 		preparedStatementInsert.setString(8, this.getIdCircuit());
 		preparedStatementInsert.executeUpdate();
 		preparedStatementInsert.close();
+		c.commit();
 	}
 
 	@Override
