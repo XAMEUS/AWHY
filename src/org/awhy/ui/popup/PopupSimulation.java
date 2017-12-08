@@ -195,7 +195,6 @@ public class PopupSimulation {
 		}
 		pS.close();
 
-		// TODO: recap simulation
 		final ReserveCircuitTable recapCircuit= new ReserveCircuitTable(
 				Controller.executeQuery("select * from reservecircuit where numDossier = '" + numDossier + "'"));
 		grid.add(recapCircuit, 0, 3);
@@ -206,6 +205,7 @@ public class PopupSimulation {
 				Controller.executeQuery("select * from reservevisite where numDossier = '" + numDossier + "'"));
 		grid.add(recapVisite, 2, 3);
 
+		
 		Text placesOK;
 		if (possible) {
 			placesOK = new Text("Réservation possible");
@@ -223,6 +223,7 @@ public class PopupSimulation {
 			System.out.println(resDialog.get());
 			if (resDialog.get() == addButtonType) {
 				// TODO: chercher client, popup reservation
+				PopupSearchClient.show(numDossier);
 
 			} else if (resDialog.get() == confirmButtonType) {
 				// TODO: popupclient
