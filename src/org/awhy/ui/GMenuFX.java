@@ -5,7 +5,11 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 import org.awhy.core.Dialog;
+import org.awhy.core.objects.Hotel;
+import org.awhy.core.objects.Simulation;
 import org.awhy.ui.pane.GAccordionFX;
+import org.awhy.ui.popup.PopupHotel;
+import org.awhy.ui.popup.PopupSimulation;
 import org.awhy.ui.tables.CircuitTable;
 import org.awhy.ui.tables.ClientTable;
 import org.awhy.ui.tables.DateCircuitTable;
@@ -18,6 +22,7 @@ import org.awhy.ui.tables.ReserveVisiteTable;
 import org.awhy.ui.tables.SimulationTable;
 import org.awhy.ui.tables.ReservationTable;
 import org.awhy.ui.tables.VilleTable;
+import org.awhy.utils.Debugger;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -26,6 +31,7 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.stage.FileChooser;
 
@@ -36,6 +42,7 @@ public class GMenuFX extends MenuBar {
 		this.createProfile();
 		this.createDatabase();
 		this.createTools();
+		this.createViewAgence();
 	}
 
 	private void createFile() {
@@ -44,7 +51,11 @@ public class GMenuFX extends MenuBar {
 		newFile.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				Controller.newFile();
+				try {
+					Controller.newFile();
+				} catch (SQLException e) {
+					Controller.alert("ERROR", e);
+				}
 			}
 		});
 		file.getItems().add(newFile);
@@ -60,7 +71,7 @@ public class GMenuFX extends MenuBar {
 		villes.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				Controller.container.rmPane();
+				Controller.container.setPane(null);
 				try {
 					Controller.container
 					.setTableView(new VilleTable(Controller.executeQuery("select * from Ville")));
@@ -68,14 +79,14 @@ public class GMenuFX extends MenuBar {
 					Controller.alert("SQLException", e);
 				}
 			}
-		});
+		}) ;
 		view.getItems().add(villes);
 
 		MenuItem lav = new MenuItem("Lieux à visiter");
 		lav.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				Controller.container.rmPane();
+				Controller.container.setPane(null);
 				try {
 					Controller.container
 					.setTableView(new LieuAVisiterTable(Controller.executeQuery("select * from LieuAvisiter")));
@@ -86,11 +97,12 @@ public class GMenuFX extends MenuBar {
 		});
 		view.getItems().add(lav);
 
+
 		MenuItem hotels = new MenuItem("Hotels");
 		hotels.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				Controller.container.rmPane();
+				Controller.container.setPane(null);
 				try {
 					Controller.container
 					.setTableView(new HotelTable(Controller.executeQuery("select * from Hotel")));
@@ -100,6 +112,35 @@ public class GMenuFX extends MenuBar {
 			}
 		});
 		view.getItems().add(hotels);
+
+		MenuItem circuits = new MenuItem("Circuits");
+		circuits.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				Controller.container.setPane(null);
+				try {
+					Controller.container
+					.setTableView(new CircuitTable(Controller.executeQuery("select * from Circuit")));
+				} catch (SQLException e) {
+					Controller.alert("SQLException", e);
+				}
+			}
+		});
+		view.getItems().add(circuits);
+
+		MenuItem datecircuits = new MenuItem("Date des circuits");
+		datecircuits.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				try {
+					Controller.container
+					.setTableView(new DateCircuitTable(Controller.executeQuery("select * from DateCircuit")));
+				} catch (SQLException e) {
+					Controller.alert("SQLException", e);
+				}
+			}
+		});
+		view.getItems().add(datecircuits);
 		
 		MenuItem etapes = new MenuItem("Etapes");
 		etapes.setOnAction(new EventHandler<ActionEvent>() {
@@ -114,123 +155,6 @@ public class GMenuFX extends MenuBar {
 			}
 		});
 		view.getItems().add(etapes);
-
-		MenuItem circuits = new MenuItem("Circuits");
-		circuits.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent event) {
-				Controller.container.rmPane();
-				try {
-					Controller.container
-					.setTableView(new CircuitTable(Controller.executeQuery("select * from Circuit")));
-				} catch (SQLException e) {
-					Controller.alert("SQLException", e);
-				}
-			}
-		});
-		view.getItems().add(circuits);
-
-		MenuItem datecircuits = new MenuItem("Date Circuits");
-		datecircuits.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent event) {
-				try {
-					Controller.container
-					.setTableView(new DateCircuitTable(Controller.executeQuery("select * from DateCircuit")));
-				} catch (SQLException e) {
-					Controller.alert("SQLException", e);
-				}
-			}
-		});
-		view.getItems().add(datecircuits);
-		MenuItem clients = new MenuItem("Clients");
-		clients.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent event) {
-				Controller.container.rmPane();
-				try {
-					Controller.container
-							.setTableView(new ClientTable(Controller.executeQuery("select * from Client")));
-				} catch (SQLException e) {
-					Controller.alert("SQLException", e);
-				}
-			}
-		});
-		view.getItems().add(clients);
-
-		MenuItem simulations = new MenuItem("Simulations");
-		simulations.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent event) {
-				try {
-					Controller.container
-							.setTableView(new SimulationTable(Controller.executeQuery("select * from Simulation")));
-				} catch (SQLException e) {
-					Controller.alert("SQLException", e);
-				}
-			}
-		});
-		view.getItems().add(simulations);
-
-		MenuItem reservation = new MenuItem("Reservations");
-		reservation.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent event) {
-				try {
-					Controller.container
-					.setTableView(new ReservationTable(Controller.executeQuery("select * from Reservation")));
-				} catch (SQLException e) {
-					Controller.alert("SQLException", e);
-				}
-			}
-		});
-		view.getItems().add(reservation);
-		
-		Menu reservations = new Menu("Reservations");
-		
-		MenuItem lavR = new MenuItem("Lieux à visiter");
-		lavR.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent event) {
-				Controller.container.setPane(new GAccordionFX());
-				try {
-					Controller.container
-							.setTableView(new ReserveVisiteTable(Controller.executeQuery("select * from ReserveVisite")));
-				} catch (SQLException e) {
-					Controller.alert("SQLException", e);
-				}
-			}
-		});
-		reservations.getItems().add(lavR);
-
-		MenuItem HotelsR = new MenuItem("Hotels");
-		lavR.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent event) {
-				try {
-					Controller.container
-							.setTableView(new ReserveHotelTable(Controller.executeQuery("select * from ReserveHotel")));
-				} catch (SQLException e) {
-					Controller.alert("SQLException", e);
-				}
-			}
-		});
-		reservations.getItems().add(HotelsR);
-
-		MenuItem CircuitsR = new MenuItem("Circuits");
-		lavR.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent event) {
-				try {
-					Controller.container
-							.setTableView(new ReserveCircuitTable(Controller.executeQuery("select * from ReserveCircuit")));
-				} catch (SQLException e) {
-					Controller.alert("SQLException", e);
-				}
-			}
-		});
-		reservations.getItems().add(CircuitsR);
-		view.getItems().add(reservations);
 
 		this.getMenus().add(view);
 	}
@@ -300,5 +224,190 @@ public class GMenuFX extends MenuBar {
 		});
 		file.getItems().add(script);
 		this.getMenus().add(file);
+	}
+	
+	private void createViewAgence(){
+		Menu agence = new Menu("Agence");
+		
+		MenuItem clients = new MenuItem("Clients");
+		clients.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				Controller.container.setPane(null);
+				try {
+					Controller.container
+							.setTableView(new ClientTable(Controller.executeQuery("select * from Client")));
+				} catch (SQLException e) {
+					Controller.alert("SQLException", e);
+				}
+			}
+		});
+		agence.getItems().add(clients);
+
+		Menu simu = new Menu("Simulations");
+		MenuItem simuAll = new MenuItem("Toutes");
+		simuAll.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				try {
+					Controller.container
+							.setTableView(new SimulationTable(Controller.executeQuery("select * from Simulation")));
+					TableView<Simulation> v = (TableView<Simulation>) (Controller.tableView);
+					v.setRowFactory(tv -> {
+						TableRow<Simulation> row = new TableRow<>();
+						row.setOnMouseClicked(e -> {
+							if (e.getClickCount() == 2 && (!row.isEmpty())) {
+								Simulation rowData = row.getItem();
+								try {
+									PopupSimulation.show(rowData.getNumDossier(), Controller.dialog.getConnection());
+								} catch (Exception e1) {
+									e1.printStackTrace();
+								}
+							}
+						});
+						return row;
+					});
+				} catch (SQLException e) {
+					Controller.alert("SQLException", e);
+				}
+			}
+		});
+		simu.getItems().add(simuAll);
+		
+		MenuItem simuNotOK = new MenuItem("Non payées");
+		simuNotOK.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				try {
+					Controller.container
+							.setTableView(new SimulationTable(Controller.executeQuery
+									("select * from Simulation minus (select numDossier from Reservation )")));
+					TableView<Simulation> v = (TableView<Simulation>) (Controller.tableView);
+					v.setRowFactory(tv -> {
+						TableRow<Simulation> row = new TableRow<>();
+						row.setOnMouseClicked(e -> {
+							if (e.getClickCount() == 2 && (!row.isEmpty())) {
+								Simulation rowData = row.getItem();
+								try {
+									PopupSimulation.show(rowData.getNumDossier(), Controller.dialog.getConnection());
+								} catch (Exception e1) {
+									e1.printStackTrace();
+								}
+							}
+						});
+						return row;
+					});
+				} catch (SQLException e) {
+					Controller.alert("SQLException", e);
+				}
+			}
+		});
+		simu.getItems().add(simuNotOK);
+		
+		MenuItem lavS = new MenuItem("Lieux à visiter");
+		lavS.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				try {
+					Controller.container
+							.setTableView(new ReserveVisiteTable(Controller.executeQuery("select * from ReserveVisite")));
+				} catch (SQLException e) {
+					Controller.alert("SQLException", e);
+				}
+			}
+		});
+		simu.getItems().add(lavS);
+		
+		MenuItem hotelsS = new MenuItem("Hotels");
+		hotelsS.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				try {
+					Controller.container
+							.setTableView(new ReserveHotelTable(Controller.executeQuery("select * from ReserveHotel")));
+				} catch (SQLException e) {
+					Controller.alert("SQLException", e);
+				}
+			}
+		});
+		simu.getItems().add(hotelsS);
+		
+		MenuItem circuitS = new MenuItem("Circuits");
+		circuitS.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				try {
+					Controller.container
+							.setTableView(new ReserveCircuitTable(Controller.executeQuery("select * from ReserveCircuit")));
+				} catch (SQLException e) {
+					Controller.alert("SQLException", e);
+				}
+			}
+		});
+		simu.getItems().add(circuitS);
+		
+		agence.getItems().add(simu);
+		
+		
+		Menu dispo = new Menu("Réservations");
+		MenuItem reservation = new MenuItem("Dossiers");
+		reservation.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				try {
+					Controller.container
+					.setTableView(new ReservationTable(Controller.executeQuery("select * from Reservation")));
+				} catch (SQLException e) {
+					Controller.alert("SQLException", e);
+				}
+			}
+		});
+		dispo.getItems().add(reservation);
+		
+		MenuItem lavR = new MenuItem("Lieux à visiter");
+		lavR.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				try {
+					Controller.container
+							.setTableView(new ReserveVisiteTable(Controller.executeQuery("select * from ReserveVisite, Reservation")));
+				} catch (SQLException e) {
+					Controller.alert("SQLException", e);
+				}
+			}
+		});
+		dispo.getItems().add(lavR);
+
+		MenuItem hotelsR = new MenuItem("Hotels");
+		hotelsR.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				try {
+					Controller.container
+							.setTableView(new ReserveHotelTable(Controller.executeQuery("select * from ReserveHotel, Reservation")));
+				} catch (SQLException e) {
+					Controller.alert("SQLException", e);
+				}
+			}
+		});
+		dispo.getItems().add(hotelsR);
+
+		MenuItem CircuitsR = new MenuItem("Circuits");
+		CircuitsR.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				try {
+					Controller.container
+							.setTableView(new ReserveCircuitTable(Controller.executeQuery("select * from ReserveCircuit, Reservation")));
+				} catch (SQLException e) {
+					Controller.alert("SQLException", e);
+				}
+			}
+		});
+		dispo.getItems().add(CircuitsR);
+		
+		agence.getItems().add(dispo);
+		
+		this.getMenus().add(agence);
 	}
 }

@@ -14,8 +14,8 @@ public class ReserveVisiteTable extends Table<ReserveVisite> {
 	public ReserveVisiteTable(ResultSet res) throws SQLException {
 		super(new ReserveVisite(), res);
 
-		TableColumn<ReserveVisite, String> nomCol = new TableColumn<ReserveVisite, String>("Nom");
-		nomCol.setCellValueFactory(new PropertyValueFactory<ReserveVisite, String>("nomLieu"));
+		TableColumn<ReserveVisite, String> lieumCol = new TableColumn<ReserveVisite, String>("Lieu");
+		lieumCol.setCellValueFactory(new PropertyValueFactory<ReserveVisite, String>("nomLieu"));
 		
 		TableColumn<ReserveVisite, String> nomVilleCol = new TableColumn<ReserveVisite, String>("Ville");
 		nomVilleCol.setCellValueFactory(new PropertyValueFactory<ReserveVisite, String>("ville"));
@@ -33,7 +33,7 @@ public class ReserveVisiteTable extends Table<ReserveVisite> {
 		nbPersonnesCol.setCellValueFactory(new PropertyValueFactory<ReserveVisite, Integer>("nbPersonnesVisite"));
 
 		this.setItems(this.data);
-		this.getColumns().add(nomCol);
+		this.getColumns().add(lieumCol);
 		this.getColumns().add(nomVilleCol);
 		this.getColumns().add(paysCol);
 		this.getColumns().add(dossierCol);

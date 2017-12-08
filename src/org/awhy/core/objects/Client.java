@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.awhy.core.Dialog;
+
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
@@ -42,6 +44,21 @@ public class Client implements Object {
 		this.telClient = new SimpleStringProperty(telClient);
 		this.anneeEnregistrement = new SimpleIntegerProperty(anneeEnregistrement);
 	}
+	
+	public Client(Dialog d, String nomClient, String prenomClient, String typeClient, String adresseClient, String emailClient, String telClient, int anneeEnregistrement) throws SQLException {
+		ResultSet r = d.executeQuery("select idclient.nextval from client");
+		long id = 0;
+		if (r.next())
+			id = r.getLong(1);
+		this.idClient = new SimpleIntegerProperty((int) id);
+		this.nomClient = new SimpleStringProperty(nomClient);
+		this.prenomClient = new SimpleStringProperty(prenomClient);
+		this.typeClient = new SimpleStringProperty(typeClient);
+		this.adresseClient = new SimpleStringProperty(adresseClient);
+		this.emailClient = new SimpleStringProperty(emailClient);
+		this.telClient = new SimpleStringProperty(telClient);
+		this.anneeEnregistrement = new SimpleIntegerProperty(anneeEnregistrement);
+	}
 
 	@Override
 	public Object createFromSQL(ResultSet res) throws SQLException {
@@ -50,15 +67,16 @@ public class Client implements Object {
 
 	@Override
 	public void insertSQL(Connection c) throws SQLException {
-		String insert = "INSERT INTO " + dbName + " VALUES " + "(idClient.nextval, ?, ?, ?, ?, ?, ?, ?)";
+		String insert = "INSERT INTO " + dbName + " VALUES " + "(?, ?, ?, ?, ?, ?, ?, ?)";
 		PreparedStatement preparedStatementInsert = c.prepareStatement(insert);
-		preparedStatementInsert.setString(1, this.getNomClient());
-		preparedStatementInsert.setString(2, this.getPrenomClient());
-		preparedStatementInsert.setString(3, this.getTypeClient());
-		preparedStatementInsert.setString(4, this.getAdresseClient());
-		preparedStatementInsert.setString(5, this.getEmailClient());
-		preparedStatementInsert.setString(6, this.getTelClient());
-		preparedStatementInsert.setInt(7, this.getAnneeEnregistrement());
+		preparedStatementInsert.setInt(1, this.getIdClient());
+		preparedStatementInsert.setString(2, this.getNomClient());
+		preparedStatementInsert.setString(3, this.getPrenomClient());
+		preparedStatementInsert.setString(4, this.getTypeClient());
+		preparedStatementInsert.setString(5, this.getAdresseClient());
+		preparedStatementInsert.setString(6, this.getEmailClient());
+		preparedStatementInsert.setString(7, this.getTelClient());
+		preparedStatementInsert.setInt(8, this.getAnneeEnregistrement());
 		preparedStatementInsert.executeUpdate();
 	}
 
