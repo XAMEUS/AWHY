@@ -18,7 +18,7 @@ import javafx.scene.layout.GridPane;
 import javafx.util.Pair;
 
 public class PopupVisite {
-	public static void show(VisitePane tp, LieuAVisiter data, Simulation s) {
+	public static boolean show(VisitePane tp, LieuAVisiter data, Simulation s) {
 
 		Dialog<Pair<String, String>> dialog = new Dialog<>();
 		dialog.setTitle("Reserve LAV");
@@ -48,6 +48,7 @@ public class PopupVisite {
 
 		tp.objects.add(new ReserveVisite(data.getNomLieu(), data.getVille(), data.getPays(), s.getNumDossier(), 
 				Date.valueOf(dateVisite.getValue()), Integer.valueOf(nbPersonnes.getText())));
+		return true;
 
 	}
 }

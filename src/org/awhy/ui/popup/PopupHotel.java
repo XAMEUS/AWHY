@@ -18,7 +18,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 
 public class PopupHotel {
-	public static void show(TPane tp, Hotel data, Simulation s) {
+	public static boolean show(TPane tp, Hotel data, Simulation s) {
 
 		Dialog<ButtonType> dialog = new Dialog<>();
 		dialog.setTitle("Reserve Hotel");
@@ -55,6 +55,7 @@ public class PopupHotel {
 			tp.objects.add(new ReserveHotel(data.getNomHotel(), data.getVille(), data.getPays(), s.getNumDossier(), 
 					Date.valueOf(depart.getValue()), Date.valueOf(arrivee.getValue()), Integer.valueOf(nbPersonnes.getText()), Integer.valueOf(nbPDej.getText())));
 		}
+		return true;
 
 	}
 
