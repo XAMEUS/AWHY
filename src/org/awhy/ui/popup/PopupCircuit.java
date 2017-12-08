@@ -116,7 +116,7 @@ public class PopupCircuit {
 		try {
 			final DateCircuitTable dct = new DateCircuitTable(
 					Controller.executeQuery("select * from dateCircuit where idCircuit = " + data.getIdCircuit()));
-			grid.add(dct, 0, 0);
+			grid.add(dct, 0, 1);
 
 			Optional<ButtonType> result = dialog.showAndWait();
 
