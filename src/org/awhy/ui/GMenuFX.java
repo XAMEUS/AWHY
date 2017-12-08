@@ -46,7 +46,6 @@ public class GMenuFX extends MenuBar {
 		newFile.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				PopupReservation.show(297, 1);
 				try {
 					Controller.newFile();
 				} catch (SQLException e) {
