@@ -61,7 +61,8 @@ public class PopupHotel {
 
 			}
 			catch (NumberFormatException e) {
-				Debugger.println(e.toString());
+				Debugger.println("PopupHotel: valeur incorrecte: " + e.toString());
+				PopupError.bang();
 				return false;
 			}			
 		}

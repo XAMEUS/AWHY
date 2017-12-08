@@ -133,7 +133,7 @@ public class GAccordionFX extends VBox {
 			}
 		});
 
-		Button b4 = new Button("Confirm");
+		Button b4 = new Button("Confirmer");
 		b4.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
