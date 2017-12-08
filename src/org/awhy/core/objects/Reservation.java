@@ -15,7 +15,7 @@ public class Reservation implements Object {
 	public Date datePaiement;
 	public final SimpleStringProperty infoPaiement;
 	public final SimpleIntegerProperty idClient;
-	public static String dbName = "Reserve";
+	public static String dbName = "Reservation";
 
 	public Reservation() {
 		this.numDossier = new SimpleIntegerProperty();
@@ -24,9 +24,9 @@ public class Reservation implements Object {
 		this.idClient = new SimpleIntegerProperty();
 	}
 
-	public Reservation(int numDossier, Date datePaiement, String infoPaiement, int idClient) {
+	public Reservation(int numDossier,Date date, String infoPaiement, int idClient) {
 		this.numDossier = new SimpleIntegerProperty(numDossier);
-		this.datePaiement = datePaiement;
+		this.datePaiement = date;
 		this.infoPaiement = new SimpleStringProperty(infoPaiement);
 		this.idClient = new SimpleIntegerProperty(idClient);
 	}
