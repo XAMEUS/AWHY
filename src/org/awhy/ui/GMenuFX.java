@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 import org.awhy.core.objects.Simulation;
+import org.awhy.ui.popup.PopupError;
 import org.awhy.ui.popup.PopupReservation;
 import org.awhy.ui.popup.PopupSimulation;
 import org.awhy.ui.tables.CircuitTable;
@@ -34,15 +35,14 @@ public class GMenuFX extends MenuBar {
 	public GMenuFX() {
 		this.createFile();
 		this.createView();
-		this.createProfile();
 		this.createDatabase();
 		this.createTools();
 		this.createViewAgence();
 	}
 
 	private void createFile() {
-		Menu file = new Menu(" File");
-		MenuItem newFile = new MenuItem("New       ");
+		Menu file = new Menu("Fichier");
+		MenuItem newFile = new MenuItem("Nouvelle Simulation");
 		newFile.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
@@ -60,7 +60,7 @@ public class GMenuFX extends MenuBar {
 	}
 
 	private void createView() {
-		Menu view = new Menu("View");
+		Menu view = new Menu("Vues");
 
 		MenuItem villes = new MenuItem("Villes");
 		villes.setOnAction(new EventHandler<ActionEvent>() {
@@ -154,18 +154,9 @@ public class GMenuFX extends MenuBar {
 		this.getMenus().add(view);
 	}
 
-	private void createProfile() {
-		Menu file = new Menu("Profile");
-		MenuItem customer = new MenuItem("Customer");
-		MenuItem admin = new MenuItem("Admin");
-		file.getItems().add(customer);
-		// file.getItems().add(new SeparatorMenuItem());
-		this.getMenus().add(file);
-	}
-
 	private void createTools() {
-		Menu tools = new Menu("Tools");
-		CheckMenuItem debug = new CheckMenuItem("Debug Mode");
+		Menu tools = new Menu("Outils");
+		CheckMenuItem debug = new CheckMenuItem("Débogage");
 		debug.setSelected(true);
 		debug.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
@@ -173,7 +164,7 @@ public class GMenuFX extends MenuBar {
 				Controller.setDebug(debug.isSelected());
 			}
 		});
-		MenuItem sql = new MenuItem("SQL Console");
+		MenuItem sql = new MenuItem("Console SQL");
 		sql.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
@@ -191,9 +182,9 @@ public class GMenuFX extends MenuBar {
 
 	private void createDatabase() {
 
-		Menu file = new Menu("Database");
+		Menu file = new Menu("BDD");
 
-		MenuItem connect = new MenuItem("Connect ");
+		MenuItem connect = new MenuItem("Connection ");
 		connect.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
@@ -201,7 +192,7 @@ public class GMenuFX extends MenuBar {
 			}
 		});
 		file.getItems().add(connect);
-		MenuItem script = new MenuItem("SQL Script");
+		MenuItem script = new MenuItem("Script SQL");
 		script.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
@@ -213,7 +204,9 @@ public class GMenuFX extends MenuBar {
 				} catch (SQLException e) {
 					Controller.alert("SQLException", e);
 				} catch (IOException e) {
-					Controller.alert("IOException", e);
+				Controller.alert("IOException", e);
+				} catch (NullPointerException e) {
+					PopupError.bang();
 				}
 			}
 		});

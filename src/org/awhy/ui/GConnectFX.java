@@ -27,10 +27,10 @@ public class GConnectFX {
 			Controller.dialog = new org.awhy.core.Dialog();
 		
 		Dialog<Pair<String, String>> dialog = new Dialog<>();
-		dialog.setTitle("Connect Dialog");
-		dialog.setHeaderText("Connect to Database");
+		dialog.setTitle("AWHY: Connection");
+		dialog.setHeaderText("Se connecter à la base de données");
 
-		ButtonType loginButtonType = new ButtonType("Login", ButtonData.OK_DONE);
+		ButtonType loginButtonType = new ButtonType("Connection", ButtonData.OK_DONE);
 		dialog.getDialogPane().getButtonTypes().addAll(loginButtonType);
 
 		GridPane grid = new GridPane();
@@ -49,11 +49,11 @@ public class GConnectFX {
 		password.setText(Controller.dialog.passwd);
 		url.setText(Controller.dialog.url);
 
-		grid.add(new Label("Username:"), 0, 0);
+		grid.add(new Label("Utilisateur"), 0, 0);
 		grid.add(username, 1, 0);
-		grid.add(new Label("Password:"), 0, 1);
+		grid.add(new Label("Mot de passe"), 0, 1);
 		grid.add(password, 1, 1);
-		grid.add(new Label("Url:"), 0, 2);
+		grid.add(new Label("URL"), 0, 2);
 		grid.add(url, 1, 2);
 
 		dialog.getDialogPane().setContent(grid);

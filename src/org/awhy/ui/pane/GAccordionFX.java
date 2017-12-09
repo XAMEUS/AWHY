@@ -17,6 +17,7 @@ import org.awhy.ui.popup.PopupVisite;
 import org.awhy.ui.tables.CircuitTable;
 import org.awhy.ui.tables.HotelTable;
 import org.awhy.ui.tables.LieuAVisiterTable;
+import org.awhy.ui.tables.SimulationTable;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -151,6 +152,9 @@ public class GAccordionFX extends VBox {
 						for (Object o : ((TPane) tp).objects) {
 							System.out.println(o);
 							o.insertSQL(Controller.dialog.getConnection());
+							Controller.container.setPane(null);
+							Controller.container
+							.setTableView(new SimulationTable(Controller.executeQuery("select * from Simulation")));
 						}
 					}
 					Controller.dialog.getConnection().commit();
