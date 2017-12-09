@@ -22,6 +22,8 @@ public class Simulation implements Object {
 		c.commit();
 		PreparedStatement preparedStatementInsert = c.prepareStatement(insert);
 		preparedStatementInsert.setInt(1, this.getNumDossier());
+		preparedStatementInsert.setString(2, this.getNomClient());
+		preparedStatementInsert.setString(3, this.getPrenomClient());
 		preparedStatementInsert.executeUpdate();
 		preparedStatementInsert.close();
 		c.commit();
@@ -71,12 +73,31 @@ public class Simulation implements Object {
 	public Integer getNumDossier() {
 		return numDossier.get();
 	}
-
+	
 	//Attention à l'utilisation de setNumDossier !
 	public void setNumDossier(Integer numDossier) {
 		this.numDossier.set(numDossier);
 	}
+
 	
+	//Attention à l'utilisation de setNumDossier !
+	public void setNomClient(String nomClient) {
+		this.nomClient.set(nomClient);
+	}
+	
+	public String getNomClient() {
+		return nomClient.get();
+	}
+
+	//Attention à l'utilisation de setNumDossier !
+	public void setPrenomClient(String prenomClient) {
+		this.nomClient.set(prenomClient);
+	}
+	
+	public String getPrenomClient() {
+		return nomClient.get();
+	}
+
 	@Override
 	public void updateSQL(Connection c) throws SQLException {
 	}
