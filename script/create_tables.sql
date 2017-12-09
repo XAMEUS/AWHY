@@ -216,7 +216,9 @@ create table Client(
 CREATE SEQUENCE numDossier MINVALUE 0 INCREMENT BY 1 NOCACHE;
 
 create table Simulation(
-    numDossier integer NOT NULL PRIMARY KEY
+    numDossier integer NOT NULL PRIMARY KEY,
+    nomClient char(20) NOT NULL,
+    prenomClient char(20) NOT NULL
 );
 
 create table Reservation(

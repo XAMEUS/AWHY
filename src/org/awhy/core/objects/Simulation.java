@@ -7,11 +7,14 @@ import java.sql.SQLException;
 import org.awhy.core.Dialog;
 
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 
 
 public class Simulation implements Object {
 
 	public final SimpleIntegerProperty numDossier;
+	public SimpleStringProperty nomClient;
+	public SimpleStringProperty prenomClient;
 	public static String dbName = "Simulation";
 	
 	public void insertSQL(Connection c) throws SQLException {
@@ -26,6 +29,8 @@ public class Simulation implements Object {
 
 	public Simulation() {
 		this.numDossier = new SimpleIntegerProperty();
+		this.nomClient = new SimpleStringProperty();
+		this.prenomClient = new SimpleStringProperty();
 	}
 	
 	public Simulation(Dialog d) throws SQLException {
@@ -37,16 +42,29 @@ public class Simulation implements Object {
 		} else {
 			System.out.println("empty : select numdossier.nextval from simulation");
 		}
+		d.getConnection().commit();
+		String insert = "select * from Simulation where numDossier= (?)";
+		PreparedStatement preparedStatementInsert = d.getConnection().prepareStatement(insert);
+		preparedStatementInsert.setLong(1, id);
+		ResultSet nR = preparedStatementInsert.executeQuery();
+		while(nR.next()) {
+			this.nomClient = new SimpleStringProperty(nR.getString(2));
+			this.prenomClient = new SimpleStringProperty(nR.getString(3));
+		}
+		preparedStatementInsert.close();
+
 		this.numDossier = new SimpleIntegerProperty((int) id);
 	}
 
-	public Simulation(int numDossier) {
+	public Simulation(int numDossier, String nomClient, String prenomClient) {
 		this.numDossier = new SimpleIntegerProperty(numDossier);
+		this.nomClient = new SimpleStringProperty(nomClient);
+		this.prenomClient = new SimpleStringProperty(prenomClient);
 	}
 
 	@Override
 	public Object createFromSQL(ResultSet res) throws SQLException {
-		return new Simulation(res.getInt(1));
+		return new Simulation(res.getInt(1), res.getString(2), res.getString(3));
 	}
 
 
