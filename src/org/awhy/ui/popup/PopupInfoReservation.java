@@ -20,10 +20,17 @@ import javafx.scene.text.Text;
 
 public class PopupInfoReservation {
 	public static void show(int numDossier, int idClient, Connection c) throws SQLException {
-
 		Dialog<ButtonType> dialog = new Dialog<>();
-		dialog.setTitle("Récapitulatif de la réservation");
-		dialog.setHeaderText("Réservation n°" + numDossier);
+		
+		String query = "SELECT * FROM Simulation WHERE numDossier=?";
+		PreparedStatement pS = c.prepareStatement(query);
+		pS.setInt(1, numDossier);
+		ResultSet res = pS.executeQuery();
+		while (res.next()) {
+			dialog.setTitle("Récapitulatif de la réservation");
+			dialog.setHeaderText("Réservation n°" + numDossier + " de " + res.getString(2).trim() + " " + res.getString(3).trim());
+		}
+		pS.close();
 
 		ButtonType cancelButtonType = new ButtonType("Retour", ButtonData.CANCEL_CLOSE);
 		dialog.getDialogPane().getButtonTypes().addAll(cancelButtonType);
@@ -39,10 +46,10 @@ public class PopupInfoReservation {
 		Date dateMin = null;
 		Date dateMax = null;
 
-		String query = "SELECT min(dateDepartHotel), max(dateArriveeHotel) FROM ReserveHotel WHERE numDossier=?";
-		PreparedStatement pS = c.prepareStatement(query);
+		query = "SELECT min(dateDepartHotel), max(dateArriveeHotel) FROM ReserveHotel WHERE numDossier=?";
+		pS = c.prepareStatement(query);
 		pS.setInt(1, numDossier);
-		ResultSet res = pS.executeQuery();
+		res = pS.executeQuery();
 		while (res.next()) {
 			if (dateMin == null || (res.getDate(1) != null && dateMin.after(res.getDate(1))))
 				dateMin = res.getDate(1);

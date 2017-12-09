@@ -24,7 +24,7 @@ public class PopupSimulation {
 
 		Dialog<ButtonType> dialog = new Dialog<>();
 		dialog.setTitle("Récapitulatif de la simulation");
-		dialog.setHeaderText("Simulation n°" + numDossier);
+		dialog.setHeaderText("Simulation n°" + numDossier + " de " + nomClient + " " + prenomClient);
 
 		ButtonType cancelButtonType = new ButtonType("Retour", ButtonData.CANCEL_CLOSE);
 		dialog.getDialogPane().getButtonTypes().addAll(cancelButtonType);

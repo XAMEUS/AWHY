@@ -86,16 +86,16 @@ public class Simulation implements Object {
 	}
 	
 	public String getNomClient() {
-		return nomClient.get();
+		return nomClient.get().trim();
 	}
 
 	//Attention à l'utilisation de setNumDossier !
 	public void setPrenomClient(String prenomClient) {
-		this.nomClient = new SimpleStringProperty(prenomClient);
+		this.prenomClient = new SimpleStringProperty(prenomClient);
 	}
 	
 	public String getPrenomClient() {
-		return nomClient.get();
+		return prenomClient.get().trim();
 	}
 
 	@Override
