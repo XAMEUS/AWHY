@@ -17,7 +17,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 
 public class PopupSearchClient {
-	public static void show(int numDossier) {
+	public static void show(int numDossier, String nom, String prenom) {
 
 		Dialog<ButtonType> dialog = new Dialog<>();
 		dialog.setTitle("Client existant");
@@ -32,7 +32,9 @@ public class PopupSearchClient {
 		grid.setPadding(new Insets(20, 20, 10, 10));
 
 		TextField nomClient = new TextField();
+		nomClient.setText(nom);
 		TextField prenomClient = new TextField();
+		prenomClient.setText(prenom);
 
 		grid.add(new Label("Nom:"), 0, 0);
 		grid.add(nomClient, 1, 0);
@@ -63,13 +65,13 @@ public class PopupSearchClient {
 
 			try {
 				ct = new ClientTable(Controller.executeQuery(query));
-				PopupSearchClient.show2(numDossier, ct);
+				PopupSearchClient.show2(numDossier, ct, nom, prenom);
 			} catch (SQLException e) {
 
 				e.printStackTrace();
 				try {
 					ct = new ClientTable(Controller.executeQuery("select * from Client"));
-					PopupSearchClient.show2(numDossier, ct);
+					PopupSearchClient.show2(numDossier, ct, nom, prenom);
 				} catch (SQLException e1) {
 					e1.printStackTrace();
 				}
@@ -77,7 +79,7 @@ public class PopupSearchClient {
 		}
 	}
 
-	private static void show2(int numDossier, ClientTable ct) {
+	private static void show2(int numDossier, ClientTable ct, String nom, String prenom) {
 
 		Dialog<ButtonType> dialog = new Dialog<>();
 		dialog.setTitle("Client existant");
@@ -110,7 +112,7 @@ public class PopupSearchClient {
 		Optional<ButtonType> result = dialog.showAndWait();
 		
 		if (result.isPresent()) {
-			PopupSearchClient.show(numDossier);
+			PopupSearchClient.show(numDossier, nom, prenom);
 		}
 
 	}

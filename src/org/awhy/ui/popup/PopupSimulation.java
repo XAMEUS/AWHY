@@ -20,7 +20,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 
 public class PopupSimulation {
-	public static void show(int numDossier, Connection c) throws SQLException {
+	public static void show(int numDossier, String nomClient, String prenomClient, Connection c) throws SQLException {
 
 		Dialog<ButtonType> dialog = new Dialog<>();
 		dialog.setTitle("Récapitulatif de la simulation");
@@ -223,11 +223,11 @@ public class PopupSimulation {
 			System.out.println(resDialog.get());
 			if (resDialog.get() == addButtonType) {
 				// TODO: chercher client, popup reservation
-				PopupSearchClient.show(numDossier);
+				PopupSearchClient.show(numDossier, nomClient, prenomClient);
 
 			} else if (resDialog.get() == confirmButtonType) {
 				// TODO: popupclient
-				if(PopupClient.show(numDossier) == false)
+				if(PopupClient.show(numDossier, nomClient, prenomClient) == false)
 					PopupError.bang();
 
 			}

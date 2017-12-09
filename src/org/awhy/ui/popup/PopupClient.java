@@ -1,12 +1,10 @@
 package org.awhy.ui.popup;
 
-import java.net.InterfaceAddress;
 import java.sql.SQLException;
 import java.time.Year;
 import java.util.Optional;
 
 import org.awhy.core.objects.Client;
-import org.awhy.core.objects.Simulation;
 import org.awhy.ui.Controller;
 
 import javafx.collections.FXCollections;
@@ -20,7 +18,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 
 public class PopupClient {
-	public static boolean show(int numDossier) {
+	public static boolean show(int numDossier, String nom, String prenom) {
 
 		Dialog<ButtonType> dialog = new Dialog<>();
 		dialog.setTitle("Nouveau client");
@@ -35,7 +33,9 @@ public class PopupClient {
 		grid.setPadding(new Insets(20, 20, 10, 10));
 
 		TextField nomClient = new TextField();
+		nomClient.setText(nom);
 		TextField prenomClient = new TextField();
+		prenomClient.setText(prenom);
 		ChoiceBox<String> typeClient = new ChoiceBox<>(
 				FXCollections.observableArrayList("individuel", "societe", "groupe"));
 		TextField adresseClient = new TextField();
