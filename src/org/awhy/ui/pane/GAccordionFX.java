@@ -13,6 +13,7 @@ import org.awhy.core.objects.Ville;
 import org.awhy.ui.Controller;
 import org.awhy.ui.popup.PopupCircuit;
 import org.awhy.ui.popup.PopupHotel;
+import org.awhy.ui.popup.PopupNom;
 import org.awhy.ui.popup.PopupVisite;
 import org.awhy.ui.tables.CircuitTable;
 import org.awhy.ui.tables.HotelTable;
@@ -147,14 +148,16 @@ public class GAccordionFX extends VBox {
 			@Override
 			public void handle(ActionEvent event) {
 				try {
+					PopupNom nom = new PopupNom();
+					nom.show();
 					s.insertSQL(Controller.dialog.getConnection());
 					for (TitledPane tp : ac.getPanes()) {
 						for (Object o : ((TPane) tp).objects) {
 							System.out.println(o);
-							o.insertSQL(Controller.dialog.getConnection());
+							/* o.insertSQL(Controller.dialog.getConnection());
 							Controller.container.setPane(null);
 							Controller.container
-							.setTableView(new SimulationTable(Controller.executeQuery("select * from Simulation")));
+							.setTableView(new SimulationTable(Controller.executeQuery("select * from Simulation"))); */
 						}
 					}
 					Controller.dialog.getConnection().commit();
