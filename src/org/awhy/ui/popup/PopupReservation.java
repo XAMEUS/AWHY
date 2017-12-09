@@ -51,7 +51,7 @@ public class PopupReservation {
 
 			Reservation r;
 			try {
-				r = new Reservation(numDossier, Date.valueOf(dateDuPaiement.getValue()), informationDePaiement.getText(), 3);
+				r = new Reservation(numDossier, Date.valueOf(dateDuPaiement.getValue()), informationDePaiement.getText(), idClient);
 				r.insertSQL(Controller.dialog.getConnection());
 				Controller.dialog.getConnection().commit();
 			} catch (SQLException e) {
