@@ -227,7 +227,8 @@ public class PopupSimulation {
 
 			} else if (resDialog.get() == confirmButtonType) {
 				// TODO: popupclient
-				PopupClient.show(numDossier);
+				if(PopupClient.show(numDossier) == false)
+					PopupError.bang();
 
 			}
 		}
