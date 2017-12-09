@@ -269,7 +269,7 @@ public class GMenuFX extends MenuBar {
 				try {
 					Controller.container
 							.setTableView(new SimulationTable(Controller.executeQuery
-									("select * from Simulation minus (select numDossier from Reservation )")));
+									("select * from Simulation where numDossier not in (select numDossier from Reservation )")));
 					TableView<Simulation> v = (TableView<Simulation>) (Controller.tableView);
 					v.setRowFactory(tv -> {
 						TableRow<Simulation> row = new TableRow<>();

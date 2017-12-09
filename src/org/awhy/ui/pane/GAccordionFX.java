@@ -12,7 +12,9 @@ import org.awhy.core.objects.Simulation;
 import org.awhy.core.objects.Ville;
 import org.awhy.ui.Controller;
 import org.awhy.ui.popup.PopupCircuit;
+import org.awhy.ui.popup.PopupError;
 import org.awhy.ui.popup.PopupHotel;
+import org.awhy.ui.popup.PopupNom;
 import org.awhy.ui.popup.PopupVisite;
 import org.awhy.ui.tables.CircuitTable;
 import org.awhy.ui.tables.HotelTable;
@@ -146,7 +148,17 @@ public class GAccordionFX extends VBox {
 		confirmer.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
+				PopupNom nom = new PopupNom();
+
+				switch(nom.show()) {
+				case(-1):
+					PopupError.bang();
+				case(0):
+					return;
+				}
 				try {
+					s.setNomClient(nom.nom);
+					s.setPrenomClient(nom.prenom);
 					s.insertSQL(Controller.dialog.getConnection());
 					for (TitledPane tp : ac.getPanes()) {
 						for (Object o : ((TPane) tp).objects) {
