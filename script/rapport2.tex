@@ -1,0 +1,349 @@
+\documentclass[french]{article}
+
+\usepackage{mathtools, bm}
+\usepackage{amssymb, bm}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{babel}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{eso-pic}
+\usepackage{fullpage}
+\usepackage{ulem}
+\usepackage{ntheorem}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{stmaryrd}
+\usepackage{calrsfs}
+\usepackage{textcomp}
+\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
+\theorembodyfont{\upshape}
+\theoremstyle{break}
+
+\definecolor{rougetitre}{RGB}{240, 23, 23}
+\definecolor{dorure}{RGB}{147, 127, 8}
+\definecolor{dorure2}{RGB}{135, 100, 6}
+\definecolor{dorure3}{RGB}{102, 68, 0}
+\definecolor{bleuturquoise}{RGB}{30, 81, 122}
+\definecolor{vertturquoise}{RGB}{15, 127, 110}
+\definecolor{fond}{RGB}{240,240,240}
+
+\titleformat{\section}
+   {}% apparence commune au titre et au numéro
+   {}% apparence du numéro
+   {1em}% espacement numéro/texte
+   {\LARGE}% apparence du titre
+
+\titleformat{\subsection}
+   {}% apparence commune au titre et au numéro
+   {}% apparence du numéro
+   {1em}% espacement numéro/texte
+   {\large}% apparence du titre
+
+\titleformat{\subsubsection}
+   {}% apparence commune au titre et au numéro
+   {}% apparence du numéro
+   {1em}% espacement numéro/texte
+   {\underline}% apparence du titre
+
+\title{Projet base de données}
+\author{Julie SAOULI, Maxime GOURGOULHON, Pierre BOUVIER, Geoffrey TANGUY, Jérôme THÉATE}
+\date{ENSIMAG | Enseignant encadrant : M. Christophe BOBINEAU | 2017 - 2018 }
+\makeatletter 
+\begin{document}
+\renewcommand*\contentsname{\huge{Table des matières\vspace{1cm}}}
+\begin{titlepage}
+\begin{center}
+\text{  }\\
+\text{  }\\
+\text{  }\\
+\text{  }\\
+\textcolor{dorure3}{\textbf{{\fontsize{45}{45}\selectfont Projet Base de Données}}}\\
+\vspace{0.5cm}
+\textcolor{dorure3}{\textbf{\LARGE{COMPTE-RENDU}}}
+\end{center}
+\vspace{3cm}
+\begin{center}
+\makebox[\textwidth]{}
+\end{center}
+
+\vspace{4.0cm}
+\begin{center}
+Julie SAOULI \hspace{1.5cm} Maxime GOURGOULHON  \hspace{1.5cm} Pierre BOUVIER
+\end{center}
+\hspace{4.2cm} Geoffrey TANGUY \hspace{3cm} Jérôme THÉATE
+\vspace{0.2cm}
+\begin{center}
+\large{\@date}
+\end{center}
+\end{titlepage}
+\clearpage
+
+\begin{Large}
+\tableofcontents
+\end{Large}
+\clearpage
+
+
+
+
+
+
+
+\noindent\textsc{\textcolor{dorure2}{\section{Introduction}}}
+
+L'agence de voyage \textsc{AWHY}, forte de son succès, entreprend sa transformation numérique.
+
+Elle tient à numériser ses outils de gestion tout en conservant une étroite collaboration avec ses partenaires. De ce fait, certaines règles d'implémentation devront être respectées afin d'assurer le fonctionnement des outils numériques et la compatibilité des bases de données communes entre tous les partenaires.\\
+
+Dans le cadre du développement de la société \textsc{AWHY}, nous avons été mandaté afin de réaliser la conception et l'implémentation de leur base de données. Ce rapport vous apportera les outils nécessaires à la compréhension de la conception de cette base de données. Et vous permettra en outre de prendre connaissance des enjeux et des difficultés qui ont permis de privilégier certains axes de réflexion.
+Enfin, vous y trouverez certains détails quant à nos choix d'implémentation, nous permettant de mettre en valeur et d'exploiter le potentiel de la base de données.
+
+
+\noindent\textsc{\textcolor{dorure2}{\section{Analyse du problème}}}
+
+L'application doit proposer deux vues :
+\begin{itemize}
+\item une vue \textit{client} permettant au client de créer sa simulation et d'obtenir un numéro de dossier, puis de pouvoir consulter le catalogue de l'agence et ajouter à sa simulation des hôtels, des lieux à visiter et des circuits, et enfin confirmer sa simulation. Il se pourra alors se présenter à l'agence avec son numéro de dossier et effectuer sa réservation.
+\item une vue \textit{agence} permettant de vérifier la simulation d'un client venu à l'agence et de la valider en lui ajoutant un paiement. L'agence sera capable de consulter la liste des simulations, des réservations et des clients.
+\end{itemize}
+
+Il sera également vital de permettre à ce que de multiples utilisateurs se connectent à la base de donnée via l'application et modifie la base de donnée par ajout de simulation, de réservation ou de clients sans conflit.
+
+De plus, afin d'assurer la compatibilité avec les applications partenaires, les relations décrivant les villes, hôtels, circuits et lieux à visiter ne devront pas être modifiées.
+
+L'analyse du problème nous a conduit à l'identification des propriétés élémentaires et à l'élaboration du schéma-entité association correspondant.
+
+
+\noindent\textsc{\textcolor{dorure2}{\section{Conception de la base de données}}}
+
+\textsc{\textcolor{dorure}{\subsection{Propriétés élémentaires}}}
+
+\{ nomVille, pays, nomLieu, adresseLieu, descriptifLieu, prix,
+idCircuit, descriptif, villeDépart, paysDepart, villeArrivee, paysArrivee, nbJoursTotal, prixCircuit, dateDepartCircuit, nbPersonnes, ordre, nbJours, nomHotel, adresseHotel, nbChambresTotal, prixChambre, prixPetitDejeuner, numDossier, idClient, typeClient, anneeEnregistrement, nomClient, prenomClient, adresseClient, emailClient, telClient, datePaiement, infoPaiement, nbChambres, dateDepartHotel, dateArriveeHotel, dateVisite, nbPersonnesVisite, nbChambresReservees, nbPetitDejReserves, numDossierReservation \}
+
+
+\vspace{0.3cm}
+\textsc{\textcolor{dorure}{\subsection{Contraintes de valeur}}}
+\vspace{0.3cm}
+
+\noindent prix $\geq 0$ \\
+nbJours $\geq 0$ \\
+nbJoursTotal $\geq 0$ \\
+prixCircuit $> 0$ \\
+$Ext($ordre$) \subseteq \llbracket 0, ..., Max(Ext($ordre$)\rrbracket$
+nbChambresTotal $> 0$ \\
+prixChambre $> 0$ \\
+prixPetitDejeuner $\geq 0$ \\
+dateDepartHotel $\leqslant$ dateArriveeHotel \\
+nbPersonnesVisite $> 0$ \\
+nbChambresReservees $> 0$ \\
+nbPetitDejReserves $\geq 0$ \\
+$Ext($numDossierReservation$) \subseteq Ext($numDossier$)\rrbracket$
+typeClient $\in$ {individuel, societe, groupe}
+
+
+
+\textsc{\textcolor{dorure}{\subsection{Dépendances fonctionnelles}}}
+
+
+\textsc{Issues du schéma relational fourni :}
+\vspace{0.3cm}
+
+
+\noindent nomLieu, nomVille, pays → adresseLieu, descriptifLieu, prix\\
+\noindent idCircuit → descriptif, villeDepart, paysDepart, villeArrivee, paysArrivee, nbJoursTotal, prixCircuit\\
+idCircuit, dateDepartCircuit → nbPersonnes\\
+idCircuit, ordre → nomLieu, nomVille, pays, nbJours\\
+nomHotel, nomville, pays → adresseHotel, nbChambresTotal, prixChambre, prixPetitDejeuner\\
+
+
+\textsc{Issues de notre SGBD :}
+\vspace{0.3cm}
+
+\noindent idClient → nomClient, prenomClient, typeClient, adresseClient, emailClient, telClient, annéeEnregistrement\\
+villeDepart, paysDepart → nomVille, pays\\
+numDossier, idCircuit, dateDepartCircuit → nbPersonnesCircuit\\
+villeArrivee, paysArrivee → nomVille, pays\\
+numDossier, nomHotel, nomVille, pays, dateDepartHotel, dateArriveeHotel → nbChambresReservees, nbPetitDejReserves\\
+numDossier, nomLieu, nomVille, pays, dateVisite → nbPersonnesVisite\\
+numDossierReservation → datePaiement, infoPaiement\\
+numDossierReservation → idClient
+
+
+\textsc{\textcolor{dorure}{\subsection{Contraintes de multiplicité}}}
+
+\noindent numDossier $-|\twoheadrightarrow$ nomHotel, nomVille, pays\\
+nomHotel, nomVille, pays $-|\twoheadrightarrow$ numDossier\\
+numDossier $-|\twoheadrightarrow$ nomLieu, nomVille, pays\\
+nomLieu, nomVille, pays $-|\twoheadrightarrow$ numDossier\\
+numDossier, dateDepartHotel, dateArriveeHotel $\twoheadrightarrow$ nomHotel, nomVille, pays\\
+nomHotel, nomVille, pays, dateDepartHotel, dateArriveeHotel $\twoheadrightarrow$ numDossier\\
+numDossier, dateVisite $\twoheadrightarrow$ nomLieu, nomVille, pays\\
+nomLieu, nomVille, pays, dateVisite $\twoheadrightarrow$ numDossier\\
+numDossier $-|\twoheadrightarrow$ idCircuit, dateDepartCircuit\\
+idCircuit, dateDepartCircuit $-|\twoheadrightarrow$ numDossier\\
+idClient $\twoheadrightarrow$ numDossierReservation\\
+idCircuit $\twoheadrightarrow$ idCircuit, dateDepartCircuit\\
+nomVille, pays $-|\twoheadrightarrow$ nomLieu, nomVille, pays\\
+nomVille, pays $-|\twoheadrightarrow$ nomHotel, nomVille, pays\\
+nomLieu, nomVille, pays $-|\twoheadrightarrow$ idCircuit, ordre\\
+nomVille, pays $-|\twoheadrightarrow$ villeDepart, paysDepart\\
+nomVille, pays $-|\twoheadrightarrow$ villeArrivee, paysArrivee
+
+
+\textsc{\textcolor{dorure}{\subsection{Autres contraintes}}}
+
+\noindent “Un dossier contient au moins une réservation (hôtel, circuit, lieux).”\\
+“Il ne peut y avoir deux villes de même nom dans le même pays.”\\
+“Un circuit commence par une étape de départ et se termine par une étape d’arrivée. Tout circuit contient au moins deux étapes : le départ et l’arrivée.”\\
+“Un client doit avoir au moins une réservation (simulation payée).”\\
+“Au paiement, et pour permettre la réservation du voyage, il faut vérifier la disponibilité des hôtels et circuits réservés (nombre de places libres compatible avec nombre de places réservées) ainsi que toutes les contraintes.”
+
+
+\textsc{\textcolor{dorure2}{\section{Schéma Entité-Association}}}
+
+
+\newpage
+\textsc{\textcolor{dorure2}{\section{Passage au relationnel}}}
+
+\textsc{\textcolor{dorure}{\subsection{Types d'entité simple}}}
+
+\noindent Ville (\underline{nomVille}, \underline{pays}) \\
+Circuit (\underline{idCircuit}, descriptif, villeDepart, paysDepart, villeArrivee, paysArrivee, nbJoursTotal, prixCircuit) \\
+Client (\underline{idClient}, nomClient, prenomClient, typeClient, adresseClient, emailClient, telClient, anneeEnregistrement) \\
+Simulation (\underline{numDossier})
+
+
+\textsc{\textcolor{dorure}{\subsection{Types d'entité faible}}}
+
+\textsc{Entités faibles de Ville :}
+\vspace{0.3cm}
+
+\noindent Hotel (\underline{nomHotel}, \underline{ville}, \underline{pays}, adresseHotel, nbChambresTotal, prixChambre, prixPetitDejeuner) \\
+LieuxAvisiter (\underline{nomLieu}, \underline{ville}, \underline{pays}, adresseLieu, descriptifLieu, prix) \\
+
+\textsc{Entités faibles de Circuit :}
+\vspace{0.3cm}
+
+\noindent DateCircuit (\underline{idCircuit}, dateDepartCircuit, nbPersonnes) \\
+Etapes (\underline{idCircuit}, \underline{ordre}, nomLieu, ville, pays, nbJours)
+
+
+\textsc{\textcolor{dorure}{\subsection{Sous-types d'entité}}}
+
+\noindent Reservation(\underline{numDossier}, datePaiement, infoPaiement, idClient) \\
+
+L'entité Reservation est un sous-type d'entité de Simulation. Nous avons décidé d'opter pour la duplication de la clé \underline{numDossier} de Simulation dans l'entité Reservation afin de pouvoir facilement différencier les simulations des réservations et afin de pouvoir traduire la relation avec le Client. Ce choix a été renforcé par le faible poids mémoire de l'attribut \underline{numDossier} et par l'absence de modification d'une réservation après son paiement.
+
+
+\textsc{\textcolor{dorure}{\subsection{Associations}}}
+
+Les entités liées à la réservations d'hôtels, de lieux à visiter et de circuits sont issus d'associations entre l'entité Client et les entités Hotel, LieuxAvisiter et Circuit. \\
+
+\noindent ReserveHotel (\underline{nomHotel}, \underline{ville}, \underline{pays}, \underline{numDossier}, \underline{dateDepartHotel}, \underline{dateArriveeHotel}, nbChambresReservees, nbPetitDejReserves) \\
+ReserveCircuit (\underline{idCircuit}, \underline{dateDepartCircuit}, \underline{numDossier}, nbPersonnesCircuit) \\
+ReserveVisite (\underline{nomLieu}, \underline{ville}, \underline{pays}, \underline{numDossier}, \underline{dateVisite}, nbPersonnesVisite)
+
+
+\textsc{\textcolor{dorure}{\subsection{Formes normales}}}
+
+Toutes les relations sont \textit{3FN} car pour chacune tous les attributs non clé sont pleinement dépendant et directement issus des clés de l'entité à laquelle elles appartiennent.
+
+
+\textsc{\textcolor{dorure2}{\section{Analyse des fonctionnalités}}}
+
+Les transactions sont sérialisables afin d'isoler chaque utilisateur et permettre des transactions simultanées sur la base de données sans en perdre la cohérence.
+
+\vspace{0.3cm}
+\textsc{Fonctionnalités liées au client :}
+\vspace{0.3cm}
+\begin{itemize}
+\item consulter le catalogue : sélection de la table demandée ;
+\item créer une simulation : insertion dans la table \textit{Simulation} ;
+\item obtenir un numéro de dossier : faire une requête à la base de donnée pour obtenir ce numéro ;
+\item ajouter des réservations à sa simulation : insertion dans les tables correspondante ; \textit{ReserveHotel}, \textit{ReserveVisite} et \textit{ReserveCircuit}.
+\end{itemize}
+
+\vspace{0.3cm}
+\textsc{Fonctionnalités liées à l'agence :}
+\vspace{0.3cm}
+\begin{itemize}
+\item voir les clients, simulations, réservations : sélection des tables correspondantes ;
+\item ajouter un nouveau client : insertion dans la table \textit{Client} et obtention d'un identifiant client via la base de donnée ;
+\item lier une réservation à un client existant : recherche par sélection dans la table \textit{Client} ;
+\item confirmer une simulation, ajouter un paiement à une réservation : insertion dans la table \textit{Reservation} ;
+\item tester les disponibilités d'une simulation : vérification de la compatibilité entre le nombre de places disponibles et le nombre de places demandées, sur les périodes données pour les hôtels et aux dates données pour les circuits ;
+\item obtenir un récapitulatif d'une simulation : sélectionner les réservations via un numéro de dossier et calculer le nombre de personnes total, les dates de voyage et le prix total.
+\end{itemize}
+
+
+Les détails de l'implémentation de ces transactions sont disponibles dans le script ... //TODO
+
+
+\textsc{\textcolor{dorure2}{\section{Bilan du projet}}}
+
+\textsc{\textcolor{dorure}{\subsection{Organisation}}}
+
+\begin{tabular}{{|l|l|}}
+  \hline
+  \textbf{Semaine 1} & Présentation et analyse du problème \\
+  \hline
+  \textbf{Semaine 2} & Analyse fonctionnelle \\
+  \hline
+  \textbf{Semaine 3} & Schéma entité-association \\
+  & \textbf{Réunion de suivi}\\
+  & Révision des dépendances et du schéma entité-association suite au suivi (version finale) \\
+  \hline
+  \textbf{Semaine 4} & SQL : tables,  transactions\\
+  & Application Java : connexion, dialogue, requêtes, visualisation des tables (catalogue)\\
+  & Script de peuplement \\
+  \hline
+  \textbf{Semaine 5} & Application Java : sérialisation des transactions,  fonctionnalités \\
+  & Documentation \\
+  \hline
+  \textbf{Semaine 6} & Soutenance \\
+  \hline
+\end{tabular}
+\vspace{0.5cm}
+
+Les semaines 1 à 3 ont été dédiées à définir et réfléchir de manière collective aux fondations de notre base de données. Le script de création de la base de donnée a également été réalisé en groupe. A partir de la semaine 4, le développement s'est effectué en parallèle. Chaque personne était dédiée à une tâche entre les scripts de peuplement de la base de donnée, l'implémentation des transactions et le développement de l'application. La base de donnée étant bien en place la semaine 5, toute l'équipe s'est alors concentrée sur l'application afin de réaliser toutes les fonctionnalités identifiées. A l'issue de cette semaine, la documentation a été rédigée et la soutenance préparée.
+
+Afin d'organiser notre travail, nous avons utilisé des outils de travail collaboratif de type \textit{Google Docs} et \textit{draw.io} afin de réaliser l'analyse fonctionnelle et le schéma entité-association. En ce qui concerne le code (script et application), nous avons utilisé le système de tickets de \textit{Github} afin de garder une trace de notre avancement et des problèmes rencontrés et de répartir les tâches de manière efficace entre les membres de notre équipe.
+
+
+\textsc{\textcolor{dorure}{\subsection{Difficultés rencontrées}}}
+
+\textsc{Analyse du sujet, attentes du client :}
+\vspace{0.3cm}
+
+Nous avons rencontrée une difficulté majeure tout au long du projet étant l'analyse du sujet. Malgré de nombreuses questions posées à l'expert technique et au client ainsi qu'aux autres équipes sur le projet, nous avons continué tout au long du projet à nous poser des questions relatives aux attentes de l'agence AWHY vis-à-vis de notre produit.
+Nous avons notamment eu des difficultés à propos des relations entre une simulation, une réservation et un client. Cela a conduit à revenir à plusieurs reprises sur le schéma entité-association et l'analyse fonctionnelle ainsi que de nombreux débats au sein de l'équipe pour arriver à une entente commune. \\
+
+
+\textsc{Génération d'identifiant unique :}
+\vspace{0.3cm}
+
+La génération d'identifiant unique pour les dossiers de simulation et les identifiants client est une difficulté que nous avions rapidement identifiée. Finalement, nous avons laissé la base de donnée la tâche de générer ces identifiants à l'aide de séquences SQL. La création d'un client ou d'un dossier commence donc par une requête à la base de donnée afin de demander un identifiant. \\
+
+
+\textsc{Vérification d'une simulation :}
+\vspace{0.3cm}
+
+La vérification d'une simulation a occupé plusieurs membres de notre équipe. Plus qu'une difficulté, cela a été une tâche conséquente car nous devions effectuer de nombreuses requêtes afin de récupérer diverses informations telles que le prix total, le nombre de places disponibles ou encore les dates de voyage. \\
+
+
+\textsc{Dialogue intuitif avec l'utilisateur :}
+\vspace{0.3cm}
+
+Nous avons rencontré à plusieurs reprises des difficultés à créer une application claire et intuitive pour l'utilisateur. Bien que cela ne soit pas le point principal de ce projet, nous voulions pouvoir présenter à notre client une application attrayante.
+Nous avons opté pour l'utilisation de multiples popup avec peu d'informations. Par exemple en ce qui concerne la réservation de ciruit, nous commençons par montrer au client les étapes dans une popup. Il peut choisir sa date et indiquer le nombres de personnes effectuant le ciruit via une nouvelle popup. Puis, pour chaque étape, nous lui proposons de réserver un hôtel.
+
+
+\textsc{\textcolor{dorure}{\subsection{Ressenti final de l'équipe}}}
+
+Ce projet est le premier concernant la conception d'une base de données. De ce fait, nous nous sommes sentis dans un premier temps un peu perdus quant à l'analyse fonctionnelle et le schéma entité-association. C'est pourquoi nous avons passé beaucoup de temps à discuter ensemble des fondations de notre base de données. Nous pensons qu'il était vital de pouvoir se reposer sur des fondations solides afin de ne pas avoir à revenir sur la conception de la base de données lors du développement de l'application.
+
+Globalement, nous sommes satisfaits de notre rendu. Avec plus du temps, nous souhaiterions mettre au clair certains points avec le client. Cela pourrait potentiellement conduire à l'altération de notre base de données mais permettrait de mieux coller aux attentes de notre client. De plus, nous souhaiterions ajouter de nouvelles fonctionnalités à l'application telles que le filtrage du catalogue ou une meilleure utilisation du système de "panneaux" lors d'une simulation. Enfin, nous souhaiterions augmenter l'ergonomie de notre application, par exemple en pré-remplissant certains champs de dates ou de nombres de personnes.
+
+\end{document}
