@@ -247,7 +247,7 @@ public class GMenuFX extends MenuBar {
 							if (e.getClickCount() == 2 && (!row.isEmpty())) {
 								Simulation rowData = row.getItem();
 								try {
-									PopupSimulation.show(rowData.getNumDossier(), Controller.dialog.getConnection());
+									PopupSimulation.show(rowData.getNumDossier(), rowData.getNomClient(), rowData.getPrenomClient(), Controller.dialog.getConnection());
 								} catch (Exception e1) {
 									e1.printStackTrace();
 								}
@@ -277,7 +277,7 @@ public class GMenuFX extends MenuBar {
 							if (e.getClickCount() == 2 && (!row.isEmpty())) {
 								Simulation rowData = row.getItem();
 								try {
-									PopupSimulation.show(rowData.getNumDossier(), Controller.dialog.getConnection());
+									PopupSimulation.show(rowData.getNumDossier(), rowData.getNomClient(), rowData.getPrenomClient(), Controller.dialog.getConnection());
 								} catch (Exception e1) {
 									e1.printStackTrace();
 								}
