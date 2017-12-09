@@ -13,7 +13,7 @@ import javafx.scene.layout.GridPane;
 public class PopupNom {
 	public String nom;
 	public String prenom;
-	public boolean show() {
+	public int show() {
 		Dialog<ButtonType> dialog = new Dialog<>();
 		dialog.setTitle("Nom Client");
 		dialog.setHeaderText("Nom Client");
@@ -41,14 +41,15 @@ public class PopupNom {
 		if (result.isPresent()) {
 			try {
 				if(nomClient.getText().trim().isEmpty() || prenomClient.getText().trim().isEmpty())
-					return false;
+					return -1;
 				this.nom = nomClient.getText();
 				this.prenom = prenomClient.getText();
-				return true;
+				return 1;
 			} catch (NullPointerException | NumberFormatException e) {
+				return -1;
 			}
 		}
-		return false;
+		return 0;
 	}
 
 }

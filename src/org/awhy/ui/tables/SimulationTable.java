@@ -16,8 +16,17 @@ public class SimulationTable extends Table<Simulation>{
 		TableColumn<Simulation, Integer> numDossierCol = new TableColumn<Simulation, Integer>("N° de dossier");
 		numDossierCol.setCellValueFactory(new PropertyValueFactory<Simulation, Integer>("numDossier"));
 		
+		TableColumn<Simulation, Integer> nomClientCol = new TableColumn<Simulation, Integer>("Nom");
+		nomClientCol.setCellValueFactory(new PropertyValueFactory<Simulation, Integer>("nomClient"));
+		
+		TableColumn<Simulation, Integer> prenomClientCol = new TableColumn<Simulation, Integer>("Prénom");
+		prenomClientCol.setCellValueFactory(new PropertyValueFactory<Simulation, Integer>("prenomClient"));
+		
 		this.setItems(this.data);
 		this.getColumns().add(numDossierCol);
+		this.getColumns().add(nomClientCol);
+		this.getColumns().add(prenomClientCol);
+
 	}
 
 	

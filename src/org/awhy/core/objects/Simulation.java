@@ -18,7 +18,7 @@ public class Simulation implements Object {
 	public static String dbName = "Simulation";
 	
 	public void insertSQL(Connection c) throws SQLException {
-		String insert = "INSERT INTO " + dbName + " VALUES " + "(?)";
+		String insert = "INSERT INTO " + dbName + " VALUES " + "(?, ?, ?)";
 		c.commit();
 		PreparedStatement preparedStatementInsert = c.prepareStatement(insert);
 		preparedStatementInsert.setInt(1, this.getNumDossier());
@@ -82,7 +82,7 @@ public class Simulation implements Object {
 	
 	//Attention à l'utilisation de setNumDossier !
 	public void setNomClient(String nomClient) {
-		this.nomClient.set(nomClient);
+		this.nomClient = new SimpleStringProperty(nomClient);
 	}
 	
 	public String getNomClient() {
@@ -91,7 +91,7 @@ public class Simulation implements Object {
 
 	//Attention à l'utilisation de setNumDossier !
 	public void setPrenomClient(String prenomClient) {
-		this.nomClient.set(prenomClient);
+		this.nomClient = new SimpleStringProperty(prenomClient);
 	}
 	
 	public String getPrenomClient() {
