@@ -4,8 +4,10 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 
+import org.awhy.core.objects.Reservation;
 import org.awhy.core.objects.Simulation;
 import org.awhy.ui.popup.PopupError;
+import org.awhy.ui.popup.PopupInfoReservation;
 import org.awhy.ui.popup.PopupReservation;
 import org.awhy.ui.popup.PopupSimulation;
 import org.awhy.ui.tables.CircuitTable;
@@ -348,6 +350,22 @@ public class GMenuFX extends MenuBar {
 				try {
 					Controller.container
 					.setTableView(new ReservationTable(Controller.executeQuery("SELECT * from Reservation")));
+					TableView<Reservation> v = (TableView<Reservation>) (Controller.tableView);
+					v.setRowFactory(tv -> {
+						TableRow<Reservation> row = new TableRow<>();
+						row.setOnMouseClicked(e -> {
+							if (e.getClickCount() == 2 && (!row.isEmpty())) {
+								Reservation rowData = row.getItem();
+								try {
+									PopupInfoReservation.show(rowData.getNumDossier(), rowData.getIdClient(), Controller.dialog.getConnection());
+								} catch (Exception e1) {
+									e1.printStackTrace();
+								}
+							}
+						});
+						return row;
+					});
+
 				} catch (SQLException e) {
 					Controller.alert("SQLException", e);
 				}
