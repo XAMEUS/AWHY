@@ -278,6 +278,9 @@ public class GMenuFX extends MenuBar {
 								Simulation rowData = row.getItem();
 								try {
 									PopupSimulation.show(rowData.getNumDossier(), rowData.getNomClient(), rowData.getPrenomClient(), Controller.dialog.getConnection());
+									Controller.container
+									.setTableView(new SimulationTable(Controller.executeQuery
+											("select * from Simulation where numDossier not in (select numDossier from Reservation )")));
 								} catch (Exception e1) {
 									e1.printStackTrace();
 								}
