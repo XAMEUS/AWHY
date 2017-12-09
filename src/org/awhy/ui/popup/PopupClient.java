@@ -1,5 +1,6 @@
 package org.awhy.ui.popup;
 
+import java.net.InterfaceAddress;
 import java.sql.SQLException;
 import java.time.Year;
 import java.util.Optional;
@@ -19,7 +20,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 
 public class PopupClient {
-	public static void show(int numDossier) {
+	public static boolean show(int numDossier) {
 
 		Dialog<ButtonType> dialog = new Dialog<>();
 		dialog.setTitle("Nouveau client");
@@ -59,18 +60,23 @@ public class PopupClient {
 
 		Optional<ButtonType> result = dialog.showAndWait();
 
-		if (result.isPresent() && (nomClient.getText() != null && !nomClient.getText().trim().isEmpty())) {
+		if (result.isPresent()) {
 
 			Client c;
 			try {
+				if(nomClient.getText().trim().isEmpty() || prenomClient.getText().trim().isEmpty() || !emailClient.getText().matches("[A-Za-z].*?@[A-Za-z].*\\.[A-Za-z].*"))
+					return false;
+				Integer.parseInt(telClient.getText());
 				c = new Client(Controller.dialog, nomClient.getText(), prenomClient.getText(), typeClient.getValue(),
 						adresseClient.getText(), emailClient.getText(), telClient.getText(), anneeEnregistrement);
 				c.insertSQL(Controller.dialog.getConnection());
 				PopupReservation.show(numDossier, c.getIdClient());
-			} catch (SQLException e) {
-				PopupError.bang();
+				return true;
+			} catch (NullPointerException | SQLException | NumberFormatException e) {
+				return false;
 			}
 		}
+		return true;
 	}
 
 }
