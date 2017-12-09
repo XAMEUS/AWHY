@@ -173,16 +173,19 @@ public class PopupCircuit {
 					tp.objects.add(new ReserveVisite(etape.getNomLieu(), etape.getVille(), etape.getPays(),
 							s.getNumDossier(), new Date(0), nbPersonnes));
 					PopupHotel.show(tp, hotels.getSelectionModel().getSelectedItem(), s);
-					return true;
+					// TODO : why #c06c2ba ?
+					// return true;
 				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+			return false;
 		} catch (NumberFormatException e) {
 			Debugger.println("PopupCircuit: valeur incorrecte: " + e.toString());
 			PopupError.bang();
+			return false;
 		}
-		return false;
+		return true;
 	}
 
 }
