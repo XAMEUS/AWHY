@@ -15,18 +15,9 @@
 \usepackage{titlesec}
 \usepackage{stmaryrd}
 \usepackage{calrsfs}
-\usepackage{textcomp}
 \usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
 \theorembodyfont{\upshape}
 \theoremstyle{break}
-
-\definecolor{rougetitre}{RGB}{240, 23, 23}
-\definecolor{dorure}{RGB}{147, 127, 8}
-\definecolor{dorure2}{RGB}{135, 100, 6}
-\definecolor{dorure3}{RGB}{102, 68, 0}
-\definecolor{bleuturquoise}{RGB}{30, 81, 122}
-\definecolor{vertturquoise}{RGB}{15, 127, 110}
-\definecolor{fond}{RGB}{240,240,240}
 
 \titleformat{\section}
    {}% apparence commune au titre et au numéro
@@ -49,7 +40,7 @@
 \title{Projet base de données}
 \author{Julie SAOULI, Maxime GOURGOULHON, Pierre BOUVIER, Geoffrey TANGUY, Jérôme THÉATE}
 \date{ENSIMAG | Enseignant encadrant : M. Christophe BOBINEAU | 2017 - 2018 }
-\makeatletter 
+\makeatletter
 \begin{document}
 \renewcommand*\contentsname{\huge{Table des matières\vspace{1cm}}}
 \begin{titlepage}
@@ -58,11 +49,11 @@
 \text{  }\\
 \text{  }\\
 \text{  }\\
-\textcolor{dorure3}{\textbf{{\fontsize{45}{45}\selectfont Projet Base de Données}}}\\
+\textbf{{\fontsize{45}{45}\selectfont Projet Base de Données}}\\
 \vspace{0.5cm}
-\textcolor{dorure3}{\textbf{\LARGE{COMPTE-RENDU}}}
+\textbf{\LARGE{COMPTE-RENDU}}
 \end{center}
-\vspace{3cm}
+\vspace{10cm}
 \begin{center}
 \makebox[\textwidth]{}
 \end{center}
@@ -90,7 +81,7 @@ Julie SAOULI \hspace{1.5cm} Maxime GOURGOULHON  \hspace{1.5cm} Pierre BOUVIER
 
 
 
-\noindent\textsc{\textcolor{dorure2}{\section{Introduction}}}
+\noindent\textsc{\section{Introduction}}
 
 L'agence de voyage \textsc{AWHY}, forte de son succès, entreprend sa transformation numérique.
 
@@ -100,7 +91,7 @@ Dans le cadre du développement de la société \textsc{AWHY}, nous avons été 
 Enfin, vous y trouverez certains détails quant à nos choix d'implémentation, nous permettant de mettre en valeur et d'exploiter le potentiel de la base de données.
 
 
-\noindent\textsc{\textcolor{dorure2}{\section{Analyse du problème}}}
+\noindent\textsc{\section{Analyse du problème}}
 
 L'application doit proposer deux vues :
 \begin{itemize}
@@ -115,16 +106,16 @@ De plus, afin d'assurer la compatibilité avec les applications partenaires, les
 L'analyse du problème nous a conduit à l'identification des propriétés élémentaires et à l'élaboration du schéma-entité association correspondant.
 
 
-\noindent\textsc{\textcolor{dorure2}{\section{Conception de la base de données}}}
+\noindent\textsc{\section{Conception de la base de données}}
 
-\textsc{\textcolor{dorure}{\subsection{Propriétés élémentaires}}}
+\textsc{\subsection{Propriétés élémentaires}}
 
 \{ nomVille, pays, nomLieu, adresseLieu, descriptifLieu, prix,
 idCircuit, descriptif, villeDépart, paysDepart, villeArrivee, paysArrivee, nbJoursTotal, prixCircuit, dateDepartCircuit, nbPersonnes, ordre, nbJours, nomHotel, adresseHotel, nbChambresTotal, prixChambre, prixPetitDejeuner, numDossier, idClient, typeClient, anneeEnregistrement, nomClient, prenomClient, adresseClient, emailClient, telClient, datePaiement, infoPaiement, nbChambres, dateDepartHotel, dateArriveeHotel, dateVisite, nbPersonnesVisite, nbChambresReservees, nbPetitDejReserves, numDossierReservation \}
 
 
 \vspace{0.3cm}
-\textsc{\textcolor{dorure}{\subsection{Contraintes de valeur}}}
+\textsc{\subsection{Contraintes de valeur}}
 \vspace{0.3cm}
 
 \noindent prix $\geq 0$ \\
@@ -144,7 +135,7 @@ typeClient $\in$ {individuel, societe, groupe}
 
 
 
-\textsc{\textcolor{dorure}{\subsection{Dépendances fonctionnelles}}}
+\textsc{\subsection{Dépendances fonctionnelles}}
 
 
 \textsc{Issues du schéma relational fourni :}
@@ -171,7 +162,7 @@ numDossierReservation → datePaiement, infoPaiement\\
 numDossierReservation → idClient
 
 
-\textsc{\textcolor{dorure}{\subsection{Contraintes de multiplicité}}}
+\textsc{\subsection{Contraintes de multiplicité}}
 
 \noindent numDossier $-|\twoheadrightarrow$ nomHotel, nomVille, pays\\
 nomHotel, nomVille, pays $-|\twoheadrightarrow$ numDossier\\
@@ -192,7 +183,7 @@ nomVille, pays $-|\twoheadrightarrow$ villeDepart, paysDepart\\
 nomVille, pays $-|\twoheadrightarrow$ villeArrivee, paysArrivee
 
 
-\textsc{\textcolor{dorure}{\subsection{Autres contraintes}}}
+\textsc{\subsection{Autres contraintes}}
 
 \noindent “Un dossier contient au moins une réservation (hôtel, circuit, lieux).”\\
 “Il ne peut y avoir deux villes de même nom dans le même pays.”\\
@@ -201,13 +192,13 @@ nomVille, pays $-|\twoheadrightarrow$ villeArrivee, paysArrivee
 “Au paiement, et pour permettre la réservation du voyage, il faut vérifier la disponibilité des hôtels et circuits réservés (nombre de places libres compatible avec nombre de places réservées) ainsi que toutes les contraintes.”
 
 
-\textsc{\textcolor{dorure2}{\section{Schéma Entité-Association}}}
+\textsc{\section{Schéma Entité-Association}}
 
 
 \newpage
-\textsc{\textcolor{dorure2}{\section{Passage au relationnel}}}
+\textsc{\section{Passage au relationnel}}
 
-\textsc{\textcolor{dorure}{\subsection{Types d'entité simple}}}
+\textsc{\subsection{Types d'entité simple}}
 
 \noindent Ville (\underline{nomVille}, \underline{pays}) \\
 Circuit (\underline{idCircuit}, descriptif, villeDepart, paysDepart, villeArrivee, paysArrivee, nbJoursTotal, prixCircuit) \\
@@ -215,7 +206,7 @@ Client (\underline{idClient}, nomClient, prenomClient, typeClient, adresseClient
 Simulation (\underline{numDossier})
 
 
-\textsc{\textcolor{dorure}{\subsection{Types d'entité faible}}}
+\textsc{\subsection{Types d'entité faible}}
 
 \textsc{Entités faibles de Ville :}
 \vspace{0.3cm}
@@ -230,14 +221,14 @@ LieuxAvisiter (\underline{nomLieu}, \underline{ville}, \underline{pays}, adresse
 Etapes (\underline{idCircuit}, \underline{ordre}, nomLieu, ville, pays, nbJours)
 
 
-\textsc{\textcolor{dorure}{\subsection{Sous-types d'entité}}}
+\textsc{\subsection{Sous-types d'entité}}
 
 \noindent Reservation(\underline{numDossier}, datePaiement, infoPaiement, idClient) \\
 
 L'entité Reservation est un sous-type d'entité de Simulation. Nous avons décidé d'opter pour la duplication de la clé \underline{numDossier} de Simulation dans l'entité Reservation afin de pouvoir facilement différencier les simulations des réservations et afin de pouvoir traduire la relation avec le Client. Ce choix a été renforcé par le faible poids mémoire de l'attribut \underline{numDossier} et par l'absence de modification d'une réservation après son paiement.
 
 
-\textsc{\textcolor{dorure}{\subsection{Associations}}}
+\textsc{\subsection{Associations}}
 
 Les entités liées à la réservations d'hôtels, de lieux à visiter et de circuits sont issus d'associations entre l'entité Client et les entités Hotel, LieuxAvisiter et Circuit. \\
 
@@ -246,12 +237,12 @@ ReserveCircuit (\underline{idCircuit}, \underline{dateDepartCircuit}, \underline
 ReserveVisite (\underline{nomLieu}, \underline{ville}, \underline{pays}, \underline{numDossier}, \underline{dateVisite}, nbPersonnesVisite)
 
 
-\textsc{\textcolor{dorure}{\subsection{Formes normales}}}
+\textsc{\subsection{Formes normales}}
 
 Toutes les relations sont \textit{3FN} car pour chacune tous les attributs non clé sont pleinement dépendant et directement issus des clés de l'entité à laquelle elles appartiennent.
+//TODO 3FNBCK il me semble plutôt
 
-
-\textsc{\textcolor{dorure2}{\section{Analyse des fonctionnalités}}}
+\textsc{\section{Analyse des fonctionnalités}}
 
 Les transactions sont sérialisables afin d'isoler chaque utilisateur et permettre des transactions simultanées sur la base de données sans en perdre la cohérence.
 
@@ -281,9 +272,9 @@ Les transactions sont sérialisables afin d'isoler chaque utilisateur et permett
 Les détails de l'implémentation de ces transactions sont disponibles dans le script ... //TODO
 
 
-\textsc{\textcolor{dorure2}{\section{Bilan du projet}}}
+\textsc{\section{Bilan du projet}}
 
-\textsc{\textcolor{dorure}{\subsection{Organisation}}}
+\textsc{\subsection{Organisation}}
 
 \begin{tabular}{{|l|l|}}
   \hline
@@ -312,7 +303,7 @@ Les semaines 1 à 3 ont été dédiées à définir et réfléchir de manière c
 Afin d'organiser notre travail, nous avons utilisé des outils de travail collaboratif de type \textit{Google Docs} et \textit{draw.io} afin de réaliser l'analyse fonctionnelle et le schéma entité-association. En ce qui concerne le code (script et application), nous avons utilisé le système de tickets de \textit{Github} afin de garder une trace de notre avancement et des problèmes rencontrés et de répartir les tâches de manière efficace entre les membres de notre équipe.
 
 
-\textsc{\textcolor{dorure}{\subsection{Difficultés rencontrées}}}
+\textsc{\subsection{Difficultés rencontrées}}
 
 \textsc{Analyse du sujet, attentes du client :}
 \vspace{0.3cm}
@@ -340,7 +331,7 @@ Nous avons rencontré à plusieurs reprises des difficultés à créer une appli
 Nous avons opté pour l'utilisation de multiples popup avec peu d'informations. Par exemple en ce qui concerne la réservation de ciruit, nous commençons par montrer au client les étapes dans une popup. Il peut choisir sa date et indiquer le nombres de personnes effectuant le ciruit via une nouvelle popup. Puis, pour chaque étape, nous lui proposons de réserver un hôtel.
 
 
-\textsc{\textcolor{dorure}{\subsection{Ressenti final de l'équipe}}}
+\textsc{\subsection{Ressenti final de l'équipe}}
 
 Ce projet est le premier concernant la conception d'une base de données. De ce fait, nous nous sommes sentis dans un premier temps un peu perdus quant à l'analyse fonctionnelle et le schéma entité-association. C'est pourquoi nous avons passé beaucoup de temps à discuter ensemble des fondations de notre base de données. Nous pensons qu'il était vital de pouvoir se reposer sur des fondations solides afin de ne pas avoir à revenir sur la conception de la base de données lors du développement de l'application.
 
