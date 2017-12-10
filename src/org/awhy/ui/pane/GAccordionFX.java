@@ -1,8 +1,11 @@
 package org.awhy.ui.pane;
 
 import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.awhy.core.Dialog;
 import org.awhy.core.objects.Circuit;
 import org.awhy.core.objects.Hotel;
 import org.awhy.core.objects.LieuAVisiter;
@@ -12,6 +15,7 @@ import org.awhy.core.objects.Simulation;
 import org.awhy.core.objects.Ville;
 import org.awhy.ui.Controller;
 import org.awhy.ui.popup.PopupCircuit;
+import org.awhy.ui.popup.PopupEndroit;
 import org.awhy.ui.popup.PopupError;
 import org.awhy.ui.popup.PopupHotel;
 import org.awhy.ui.popup.PopupNom;
@@ -20,6 +24,7 @@ import org.awhy.ui.tables.CircuitTable;
 import org.awhy.ui.tables.HotelTable;
 import org.awhy.ui.tables.LieuAVisiterTable;
 import org.awhy.ui.tables.SimulationTable;
+import org.awhy.utils.Debugger;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -67,8 +72,25 @@ public class GAccordionFX extends VBox {
 			public void handle(ActionEvent event) {
 				HotelPane tp = new HotelPane();
 				try {
-					// TODO : filter ?
-					Controller.container.setTableView(new HotelTable(Controller.executeQuery("select * from hotel")));
+					PopupEndroit endroit = new PopupEndroit();
+					endroit.show();
+					String query = "select * from hotel";
+					if(!endroit.ville.isEmpty() || !endroit.pays.isEmpty())
+						query += " where ";
+					if(!endroit.ville.isEmpty())
+						query += "ville LIKE ?";
+					if(!endroit.ville.isEmpty() && !endroit.pays.isEmpty())
+						query += " and ";
+					if(!endroit.pays.isEmpty())
+						query += "pays LIKE ?";
+					PreparedStatement pS = Controller.dialog.getConnection().prepareStatement(query);
+					if(!endroit.ville.isEmpty())
+						pS.setString(1, "%" + endroit.ville + "%");
+					if(!endroit.pays.isEmpty())
+						pS.setString((endroit.ville.isEmpty()) ? 1 : 2, "%" + endroit.pays + "%");
+					ResultSet res = pS.executeQuery();
+					Controller.container.setTableView(new HotelTable(res));
+					pS.close();
 					TableView<Hotel> v = (TableView<Hotel>) (Controller.tableView);
 					v.setRowFactory(tv -> {
 						TableRow<Hotel> row = new TableRow<>();
@@ -95,7 +117,25 @@ public class GAccordionFX extends VBox {
 			public void handle(ActionEvent event) {
 				VisitePane tp = new VisitePane();
 				try {
-					Controller.container.setTableView(new LieuAVisiterTable(Controller.executeQuery("select * from lieuavisiter")));
+					PopupEndroit endroit = new PopupEndroit();
+					endroit.show();
+					String query = "select * from lieuavisiter";
+					if(!endroit.ville.isEmpty() || !endroit.pays.isEmpty())
+						query += " where ";
+					if(!endroit.ville.isEmpty())
+						query += "ville LIKE ?";
+					if(!endroit.ville.isEmpty() && !endroit.pays.isEmpty())
+						query += " and ";
+					if(!endroit.pays.isEmpty())
+						query += "pays LIKE ?";
+					PreparedStatement pS = Controller.dialog.getConnection().prepareStatement(query);
+					if(!endroit.ville.isEmpty())
+						pS.setString(1, "%" + endroit.ville + "%");
+					if(!endroit.pays.isEmpty())
+						pS.setString((endroit.ville.isEmpty()) ? 1 : 2, "%" + endroit.pays + "%");
+					ResultSet res = pS.executeQuery();
+					Controller.container.setTableView(new LieuAVisiterTable(res));
+					pS.close();
 					TableView<LieuAVisiter> v = (TableView<LieuAVisiter>) (Controller.tableView);
 					v.setRowFactory(tv -> {
 						TableRow<LieuAVisiter> row = new TableRow<>();
@@ -122,8 +162,25 @@ public class GAccordionFX extends VBox {
 			public void handle(ActionEvent event) {
 				CircuitPane tp = new CircuitPane();
 				try {
-					Controller.container
-							.setTableView(new CircuitTable(Controller.executeQuery("select * from circuit")));
+					PopupEndroit endroit = new PopupEndroit();
+					endroit.show();
+					String query = "select * from circuit";
+					if(!endroit.ville.isEmpty() || !endroit.pays.isEmpty())
+						query += " where ";
+					if(!endroit.ville.isEmpty())
+						query += "villeDepart LIKE ?";
+					if(!endroit.ville.isEmpty() && !endroit.pays.isEmpty())
+						query += " and ";
+					if(!endroit.pays.isEmpty())
+						query += "paysDepart LIKE ?";
+					PreparedStatement pS = Controller.dialog.getConnection().prepareStatement(query);
+					if(!endroit.ville.isEmpty())
+						pS.setString(1, "%" + endroit.ville + "%");
+					if(!endroit.pays.isEmpty())
+						pS.setString((endroit.ville.isEmpty()) ? 1 : 2, "%" + endroit.pays + "%");
+					ResultSet res = pS.executeQuery();
+					Controller.container.setTableView(new CircuitTable(res));
+					pS.close();
 					// TODO : on click, reservation.
 					TableView<Circuit> v = (TableView<Circuit>) (Controller.tableView);
 					v.setRowFactory(tv -> {
