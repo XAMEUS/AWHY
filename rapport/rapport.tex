@@ -31,11 +31,7 @@
    {1em}% espacement numéro/texte
    {\large}% apparence du titre
 
-\titleformat{\subsubsection}
-   {}% apparence commune au titre et au numéro
-   {}% apparence du numéro
-   {1em}% espacement numéro/texte
-   {\underline}% apparence du titre
+\definecolor{bleuturquoise}{RGB}{30, 81, 122}
 
 \title{Projet base de données}
 \author{Julie SAOULI, Maxime GOURGOULHON, Pierre BOUVIER, Geoffrey TANGUY, Jérôme THÉATE}
@@ -81,32 +77,34 @@ Julie SAOULI \hspace{1.5cm} Maxime GOURGOULHON  \hspace{1.5cm} Pierre BOUVIER
 
 
 
-\noindent\textsc{\section{Introduction}}
+\noindent\textsc{\textcolor{bleuturquoise}{\section{Introduction}}}
 
 L'agence de voyage \textsc{AWHY}, forte de son succès, entreprend sa transformation numérique.
 
-Elle tient à numériser ses outils de gestion tout en conservant une étroite collaboration avec ses partenaires. De ce fait, certaines règles d'implémentation devront être respectées afin d'assurer le fonctionnement des outils numériques et la compatibilité des bases de données communes entre tous les partenaires.\\
+Elle tient à numériser ses outils de gestion tout en conservant une étroite collaboration avec ses partenaires.
+
+De ce fait, certaines règles d'implémentation devront être respectées afin d'assurer le fonctionnement des outils numériques et la compatibilité des bases de données communes entre tous les partenaires.\\
 
 Dans le cadre du développement de la société \textsc{AWHY}, nous avons été mandaté afin de réaliser la conception et l'implémentation de leur base de données. Ce rapport vous apportera les outils nécessaires à la compréhension de la conception de cette base de données. Et vous permettra en outre de prendre connaissance des enjeux et des difficultés qui ont permis de privilégier certains axes de réflexion.
 Enfin, vous y trouverez certains détails quant à nos choix d'implémentation, nous permettant de mettre en valeur et d'exploiter le potentiel de la base de données.
 
-
-\noindent\textsc{\section{Analyse du problème}}
+\vspace{0.3cm}
+\noindent\textsc{\textcolor{bleuturquoise}{\section{Analyse du problème}}}
 
 L'application doit proposer deux vues :
 \begin{itemize}
-\item une vue \textit{client} permettant au client de créer sa simulation et d'obtenir un numéro de dossier, puis de pouvoir consulter le catalogue de l'agence et ajouter à sa simulation des hôtels, des lieux à visiter et des circuits, et enfin confirmer sa simulation. Il se pourra alors se présenter à l'agence avec son numéro de dossier et effectuer sa réservation.
+\item une vue \textit{client} permettant à l'utilisateur de créer sa simulation et d'obtenir un numéro de dossier, puis de pouvoir consulter le catalogue de l'agence et ajouter à sa simulation des hôtels, des lieux à visiter et des circuits, et enfin confirmer sa simulation. Il pourra alors se présenter à l'agence avec son numéro de dossier et effectuer sa réservation.
 \item une vue \textit{agence} permettant de vérifier la simulation d'un client venu à l'agence et de la valider en lui ajoutant un paiement. L'agence sera capable de consulter la liste des simulations, des réservations et des clients.
 \end{itemize}
 
-Il sera également vital de permettre à ce que de multiples utilisateurs se connectent à la base de donnée via l'application et modifie la base de donnée par ajout de simulation, de réservation ou de clients sans conflit.
+Il sera également vital que de multiples utilisateurs puissent se connecter à la base de données via l'application et modifient la base de données par ajout de simulations, de réservations ou de clients sans conflit.
 
 De plus, afin d'assurer la compatibilité avec les applications partenaires, les relations décrivant les villes, hôtels, circuits et lieux à visiter ne devront pas être modifiées.
 
 L'analyse du problème nous a conduit à l'identification des propriétés élémentaires et à l'élaboration du schéma-entité association correspondant.
 
 
-\noindent\textsc{\section{Conception de la base de données}}
+\noindent\textsc{\textcolor{bleuturquoise}{\section{Conception de la base de données}}}
 
 \textsc{\subsection{Propriétés élémentaires}}
 
@@ -138,29 +136,30 @@ typeClient $\in$ {individuel, societe, groupe}
 \textsc{\subsection{Dépendances fonctionnelles}}
 
 
-\textsc{Issues du schéma relational fourni :}
+\textsc{Issues du schéma relationel fourni :}
 \vspace{0.3cm}
 
 
-\noindent nomLieu, nomVille, pays → adresseLieu, descriptifLieu, prix\\
-\noindent idCircuit → descriptif, villeDepart, paysDepart, villeArrivee, paysArrivee, nbJoursTotal, prixCircuit\\
-idCircuit, dateDepartCircuit → nbPersonnes\\
-idCircuit, ordre → nomLieu, nomVille, pays, nbJours\\
-nomHotel, nomville, pays → adresseHotel, nbChambresTotal, prixChambre, prixPetitDejeuner\\
+\noindent nomLieu, nomVille, pays $\rightarrow$ adresseLieu, descriptifLieu, prix\\
+\noindent idCircuit $\rightarrow$ descriptif, villeDepart, paysDepart, villeArrivee, paysArrivee, nbJoursTotal, prixCircuit\\
+idCircuit, dateDepartCircuit $\rightarrow$ nbPersonnes\\
+idCircuit, ordre $\rightarrow$ nomLieu, nomVille, pays, nbJours\\
+nomHotel, nomville, pays $\rightarrow$ adresseHotel, nbChambresTotal, prixChambre, prixPetitDejeuner\\
 
 
 \textsc{Issues de notre SGBD :}
 \vspace{0.3cm}
 
-\noindent idClient → nomClient, prenomClient, typeClient, adresseClient, emailClient, telClient, annéeEnregistrement\\
-villeDepart, paysDepart → nomVille, pays\\
-numDossier, idCircuit, dateDepartCircuit → nbPersonnesCircuit\\
-villeArrivee, paysArrivee → nomVille, pays\\
-numDossier, nomHotel, nomVille, pays, dateDepartHotel, dateArriveeHotel → nbChambresReservees, nbPetitDejReserves\\
-numDossier, nomLieu, nomVille, pays, dateVisite → nbPersonnesVisite\\
-numDossierReservation → datePaiement, infoPaiement\\
-numDossierReservation → idClient
-
+\begin{small}
+\noindent idClient $\rightarrow$ nomClient, prenomClient, typeClient, adresseClient, emailClient, telClient, annéeEnregistrement\\
+villeDepart, paysDepart $\rightarrow$ nomVille, pays\\
+numDossier, idCircuit, dateDepartCircuit $\rightarrow$ nbPersonnesCircuit\\
+villeArrivee, paysArrivee $\rightarrow$ nomVille, pays\\
+numDossier, nomHotel, nomVille, pays, dateDepartHotel, dateArriveeHotel $\rightarrow$ nbChambresReservees, nbPetitDejReserves\\
+numDossier, nomLieu, nomVille, pays, dateVisite $\rightarrow$ nbPersonnesVisite\\
+numDossierReservation $\rightarrow$ datePaiement, infoPaiement\\
+numDossierReservation $\rightarrow$ idClient
+\end{small}
 
 \textsc{\subsection{Contraintes de multiplicité}}
 
@@ -192,11 +191,11 @@ nomVille, pays $-|\twoheadrightarrow$ villeArrivee, paysArrivee
 “Au paiement, et pour permettre la réservation du voyage, il faut vérifier la disponibilité des hôtels et circuits réservés (nombre de places libres compatible avec nombre de places réservées) ainsi que toutes les contraintes.”
 
 
-\textsc{\section{Schéma Entité-Association}}
+\textsc{\textcolor{bleuturquoise}{\section{Schéma Entité-Association}}}
 
 
 \newpage
-\textsc{\section{Passage au relationnel}}
+\textsc{\textcolor{bleuturquoise}{\section{Passage au relationnel}}}
 
 \textsc{\subsection{Types d'entité simple}}
 
@@ -242,7 +241,7 @@ ReserveVisite (\underline{nomLieu}, \underline{ville}, \underline{pays}, \underl
 Toutes les relations sont \textit{3FN} car pour chacune tous les attributs non clé sont pleinement dépendant et directement issus des clés de l'entité à laquelle elles appartiennent.
 //TODO 3FNBCK il me semble plutôt
 
-\textsc{\section{Analyse des fonctionnalités}}
+\textsc{\textcolor{bleuturquoise}{\section{Analyse des fonctionnalités}}}
 
 Les transactions sont sérialisables afin d'isoler chaque utilisateur et permettre des transactions simultanées sur la base de données sans en perdre la cohérence.
 
@@ -272,7 +271,7 @@ Les transactions sont sérialisables afin d'isoler chaque utilisateur et permett
 Les détails de l'implémentation de ces transactions sont disponibles dans le script ... //TODO
 
 
-\textsc{\section{Bilan du projet}}
+\textsc{\textcolor{bleuturquoise}{\section{Bilan du projet}}}
 
 \textsc{\subsection{Organisation}}
 
@@ -298,7 +297,7 @@ Les détails de l'implémentation de ces transactions sont disponibles dans le s
 \end{tabular}
 \vspace{0.5cm}
 
-Les semaines 1 à 3 ont été dédiées à définir et réfléchir de manière collective aux fondations de notre base de données. Le script de création de la base de donnée a également été réalisé en groupe. A partir de la semaine 4, le développement s'est effectué en parallèle. Chaque personne était dédiée à une tâche entre les scripts de peuplement de la base de donnée, l'implémentation des transactions et le développement de l'application. La base de donnée étant bien en place la semaine 5, toute l'équipe s'est alors concentrée sur l'application afin de réaliser toutes les fonctionnalités identifiées. A l'issue de cette semaine, la documentation a été rédigée et la soutenance préparée.
+Les semaines 1 à 3 ont été dédiées à définir et réfléchir de manière collective aux fondations de notre base de données. Le script de création de la base de données a également été réalisé en groupe. A partir de la semaine 4, le développement s'est effectué en parallèle. Chaque personne était dédiée à une tâche entre les scripts de peuplement de la base de donnée, l'implémentation des transactions et le développement de l'application. La base de données étant bien en place la semaine 5, toute l'équipe s'est alors concentrée sur l'application afin de réaliser toutes les fonctionnalités identifiées. A l'issue de cette semaine, la documentation a été rédigée et la soutenance préparée.
 
 Afin d'organiser notre travail, nous avons utilisé des outils de travail collaboratif de type \textit{Google Docs} et \textit{draw.io} afin de réaliser l'analyse fonctionnelle et le schéma entité-association. En ce qui concerne le code (script et application), nous avons utilisé le système de tickets de \textit{Github} afin de garder une trace de notre avancement et des problèmes rencontrés et de répartir les tâches de manière efficace entre les membres de notre équipe.
 
@@ -308,7 +307,7 @@ Afin d'organiser notre travail, nous avons utilisé des outils de travail collab
 \textsc{Analyse du sujet, attentes du client :}
 \vspace{0.3cm}
 
-Nous avons rencontrée une difficulté majeure tout au long du projet étant l'analyse du sujet. Malgré de nombreuses questions posées à l'expert technique et au client ainsi qu'aux autres équipes sur le projet, nous avons continué tout au long du projet à nous poser des questions relatives aux attentes de l'agence AWHY vis-à-vis de notre produit.
+La difficulté majeure à laquelle nous avons fait face est l'analyse du sujet. Malgré de nombreuses questions posées à l'expert technique et au client ainsi qu'aux autres équipes sur le projet, nous avons continué tout au long du projet à nous poser des questions relatives aux attentes de l'agence AWHY vis-à-vis de notre produit.
 Nous avons notamment eu des difficultés à propos des relations entre une simulation, une réservation et un client. Cela a conduit à revenir à plusieurs reprises sur le schéma entité-association et l'analyse fonctionnelle ainsi que de nombreux débats au sein de l'équipe pour arriver à une entente commune. \\
 
 
@@ -335,6 +334,6 @@ Nous avons opté pour l'utilisation de multiples popup avec peu d'informations. 
 
 Ce projet est le premier concernant la conception d'une base de données. De ce fait, nous nous sommes sentis dans un premier temps un peu perdus quant à l'analyse fonctionnelle et le schéma entité-association. C'est pourquoi nous avons passé beaucoup de temps à discuter ensemble des fondations de notre base de données. Nous pensons qu'il était vital de pouvoir se reposer sur des fondations solides afin de ne pas avoir à revenir sur la conception de la base de données lors du développement de l'application.
 
-Globalement, nous sommes satisfaits de notre rendu. Avec plus du temps, nous souhaiterions mettre au clair certains points avec le client. Cela pourrait potentiellement conduire à l'altération de notre base de données mais permettrait de mieux coller aux attentes de notre client. De plus, nous souhaiterions ajouter de nouvelles fonctionnalités à l'application telles que le filtrage du catalogue ou une meilleure utilisation du système de "panneaux" lors d'une simulation. Enfin, nous souhaiterions augmenter l'ergonomie de notre application, par exemple en pré-remplissant certains champs de dates ou de nombres de personnes.
+Globalement, nous sommes satisfaits de notre rendu. Avec plus de temps, nous souhaiterions mettre au clair certains points avec le client. Cela pourrait potentiellement conduire à l'altération de notre base de données mais permettrait de mieux coller aux attentes de notre client. De plus, nous souhaiterions ajouter de nouvelles fonctionnalités à l'application telles que le filtrage du catalogue ou une meilleure utilisation du système de "panneaux" lors d'une simulation. Enfin, nous souhaiterions augmenter l'ergonomie de notre application, par exemple en pré-remplissant certains champs de dates ou de nombres de personnes.
 
 \end{document}
