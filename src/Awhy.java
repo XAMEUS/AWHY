@@ -34,7 +34,7 @@ public class Awhy extends Application {
 	}
 
 	public static void main(String args[]) {
-		Locale.setDefault(Locale.ENGLISH);
+		// Locale.setDefault(Locale.ENGLISH);
 		launch(args);
 	}
 }

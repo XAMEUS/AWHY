@@ -172,9 +172,9 @@ public class PopupCircuit {
 				Optional<ButtonType> result = dialog.showAndWait();
 
 				if (result.isPresent()) {
-					// TODO : la date ?
-					tp.objects.add(new ReserveVisite(etape.getNomLieu(), etape.getVille(), etape.getPays(),
-							s.getNumDossier(), new Date(0), nbPersonnes));
+					for (int i = 0; i < etape.getNbJours(); i++)
+						tp.objects.add(new ReserveVisite(etape.getNomLieu(), etape.getVille(), etape.getPays(),
+							s.getNumDossier(), new Date(dateDepart.getTime() + (jours + i) * 24*60*60*1000), nbPersonnes));
 					System.out.println("jours: " + jours);
 					Date arrivee = new Date(dateDepart.getTime() + jours * 24*60*60*1000);
 					Date depart = new Date(dateDepart.getTime() + (jours + etape.getNbJours()) * 24*60*60*1000);
