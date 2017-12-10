@@ -19,7 +19,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 
 public class PopupHotel {
-	public static boolean show(TPane tp, Hotel data, Simulation s) {
+	public static boolean show(TPane tp, Hotel data, Simulation s, Date dateArrivee, Date dateDepart, int n) {
 
 		Dialog<ButtonType> dialog = new Dialog<>();
 		dialog.setTitle("Reserve Hotel");
@@ -33,14 +33,21 @@ public class PopupHotel {
 		grid.setVgap(10);
 		grid.setPadding(new Insets(20, 20, 10, 10));
 
-		DatePicker depart = new DatePicker();
 		DatePicker arrivee = new DatePicker();
+		if (dateArrivee != null)
+			arrivee.setValue(dateArrivee.toLocalDate());
+		DatePicker depart = new DatePicker();
+		if (dateDepart != null)
+			depart.setValue(dateDepart.toLocalDate());
+		System.out.println("dates : " + dateArrivee + " -> " + dateDepart);
 		TextField nbPersonnes = new TextField();
+		if (nbPersonnes != null)
+			nbPersonnes.setText(String.valueOf(n));
 		TextField nbPDej = new TextField();
-		grid.add(new Label("Départ:"), 0, 0);
-		grid.add(depart, 1, 0);
-		grid.add(new Label("Arrivée:"), 0, 1);
-		grid.add(arrivee, 1, 1);
+		grid.add(new Label("Arrivée:"), 0, 0);
+		grid.add(arrivee, 1, 0);
+		grid.add(new Label("Départ:"), 0, 1);
+		grid.add(depart, 1, 1);
 		grid.add(new Label("Nombre de chambres:"), 0, 2);
 		grid.add(nbPersonnes, 1, 2);
 		grid.add(new Label("Nombre de petits déjeuners:"), 0, 3);

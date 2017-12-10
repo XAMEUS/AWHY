@@ -123,12 +123,13 @@ public class PopupCircuit {
 			if (result.isPresent()) {
 				// TODO: reserver date, new popup ?
 				DateCircuit dc = dct.getSelectionModel().getSelectedItem();
-				tp.objects.add(new ReserveCircuit(data.getIdCircuit(), dc.getDateDepartCircuit(), s.getNumDossier(),
+				Date dateDepart = dc.getDateDepartCircuit();
+				tp.objects.add(new ReserveCircuit(data.getIdCircuit(), dateDepart, s.getNumDossier(),
 						Integer.valueOf(nbPersonnes.getText())));
 
 				ResultSet res = Controller
-						.executeQuery("select * from etapes where idCircuit = " + data.getIdCircuit());
-				return PopupCircuit.show3(tp, data, s, res, Integer.valueOf(nbPersonnes.getText()));
+						.executeQuery("select * from etapes where idCircuit = " + data.getIdCircuit() + " order by ordre");
+				return PopupCircuit.show3(tp, data, s, res, Integer.valueOf(nbPersonnes.getText()), dateDepart);
 
 			}
 		} catch (SQLException e) {
@@ -140,8 +141,10 @@ public class PopupCircuit {
 		return false;
 	}
 
-	public static boolean show3(CircuitPane tp, Circuit data, Simulation s, ResultSet res, int nbPersonnes) {
+	public static boolean show3(CircuitPane tp, Circuit data, Simulation s, ResultSet res, int nbPersonnes, Date dateDepart) {
 
+		int jours = 0;
+		System.out.println("depart: "+ dateDepart);
 		try {
 			ArrayList<Etapes> etapes = new ArrayList<>();
 			while (res.next())
@@ -172,7 +175,11 @@ public class PopupCircuit {
 					// TODO : la date ?
 					tp.objects.add(new ReserveVisite(etape.getNomLieu(), etape.getVille(), etape.getPays(),
 							s.getNumDossier(), new Date(0), nbPersonnes));
-					PopupHotel.show(tp, hotels.getSelectionModel().getSelectedItem(), s);
+					System.out.println("jours: " + jours);
+					Date arrivee = new Date(dateDepart.getTime() + jours * 24*60*60*1000);
+					Date depart = new Date(dateDepart.getTime() + (jours + etape.getNbJours()) * 24*60*60*1000);
+					PopupHotel.show(tp, hotels.getSelectionModel().getSelectedItem(), s, arrivee, depart, nbPersonnes);
+					jours += etape.getNbJours();
 					// TODO : why #c06c2ba ?
 					// return true;
 				}
