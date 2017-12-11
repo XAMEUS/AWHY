@@ -126,7 +126,7 @@ public class PopupSimulation {
 			cout += res.getInt(1);
 		pS.close();
 
-		query = "SELECT sum(prixChambre * nbChambresReservees + prixPetitDejeuner * nbPetitDejReserves) FROM ReserveHotel R, Hotel H WHERE numDossier=? and R.nomHotel = H.nomHotel and R.ville = H.ville and R.pays = H.pays";
+		query = "select (sum(prixChambre * nbChambresReservees + prixPetitDejeuner * nbPetitDejReserves) * (R.dateArriveeHotel - R.dateDepartHotel)) FROM ReserveHotel R, Hotel H WHERE numDossier=? and R.nomHotel = H.nomHotel and R.ville = H.ville and R.pays = H.pays group by R.nomHotel, R.ville, R.pays, R.dateDepartHotel, R.dateArriveeHotel";
 		pS = c.prepareStatement(query);
 		pS.setInt(1, numDossier);
 		res = pS.executeQuery();
