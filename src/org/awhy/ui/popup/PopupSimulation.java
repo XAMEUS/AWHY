@@ -40,6 +40,8 @@ public class PopupSimulation {
 		
 		List<ReserveCircuit> circuits = new ArrayList<ReserveCircuit>();
 		List<ReserveHotel> hotels = new ArrayList<ReserveHotel>();
+		List<ReserveCircuit> circuitsPasOk = new ArrayList<ReserveCircuit>();
+		List<ReserveHotel> hotelsPasOk = new ArrayList<ReserveHotel>();
 		List<ReserveVisite> visites = new ArrayList<ReserveVisite>();
 
 		GridPane grid = new GridPane();
@@ -174,6 +176,7 @@ public class PopupSimulation {
 				if (cRes.getInt(4) < res.getInt(1)) {
 					possible = false;
 					circuit.deleteSQL(c);
+					circuitsPasOk.add(circuit);
 					circuit = null;
 					break;
 				}
@@ -205,9 +208,11 @@ public class PopupSimulation {
 					if (res.getInt(7) > cRes.getInt(1)) {
 						possible = false;
 						hotel.deleteSQL(c);
+						hotelsPasOk.add(hotel);
 						hotel = null;
 						break;
 					}
+				
 				if(hotel != null)
 					hotels.add(hotel);
 				cPS.close();
