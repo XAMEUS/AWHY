@@ -340,6 +340,7 @@ public class PopupSimulation {
 									Controller.container.setPane(null);
 									Controller.container.setTableView(
 											new SimulationTable(Controller.executeQuery("select * from Simulation")));
+									PopupSimulation.show(numDossier, nomClient, prenomClient, c);;
 								}
 							}
 							Controller.dialog.getConnection().commit();
