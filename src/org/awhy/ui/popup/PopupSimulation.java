@@ -12,7 +12,9 @@ import java.util.Optional;
 import org.awhy.core.objects.ReserveCircuit;
 import org.awhy.core.objects.ReserveHotel;
 import org.awhy.core.objects.ReserveVisite;
+import org.awhy.core.objects.Simulation;
 import org.awhy.ui.Controller;
+import org.awhy.ui.pane.GAccordionFX;
 import org.awhy.ui.tables.ReserveCircuitTable;
 import org.awhy.ui.tables.ReserveHotelTable;
 import org.awhy.ui.tables.ReserveVisiteTable;
@@ -143,7 +145,7 @@ public class PopupSimulation {
 		pS.setInt(1, numDossier);
 		res = pS.executeQuery();
 		while (res.next())
-			cout += res.getInt(1);
+			cout += res.getLong(1);
 		pS.close();
 
 		query = "SELECT sum(prix) FROM ReserveVisite R, LieuAVisiter L WHERE numDossier=? and R.nomLieu = L.nomLieu and R.ville = L.ville and R.pays = L.pays";
@@ -245,7 +247,6 @@ public class PopupSimulation {
 		dialog.getDialogPane().setContent(grid);
 
 		Optional<ButtonType> resDialog = dialog.showAndWait();
-
 		if (resDialog.isPresent()) {
 			System.out.println(resDialog.get());
 			if(possible) {
@@ -268,7 +269,10 @@ public class PopupSimulation {
 					visites.add(visite);
 				}
 				pS.close();
-				//TODO: finish that
+				
+				GAccordionFX accordion = new GAccordionFX(new Simulation(numDossier, nomClient, prenomClient));
+				Controller.container.setPane(accordion);
+
 			}
 		}
 	}
