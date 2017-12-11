@@ -17,6 +17,7 @@ import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.scene.text.Text;
 
 public class PopupHotel {
 	public static boolean show(TPane tp, Hotel data, Simulation s, Date dateArrivee, Date dateDepart, int n) {
@@ -59,10 +60,11 @@ public class PopupHotel {
 				if (Integer.valueOf(nbPersonnes.getText()) <= 0 || Integer.valueOf(nbPDej.getText()) < 0
 						|| Date.valueOf(depart.getValue()).after(Date.valueOf(arrivee.getValue())))
 					return false;
-				tp.setText(data.getNomHotel());
-				tp.objects.add(new ReserveHotel(data.getNomHotel(), data.getVille(), data.getPays(), s.getNumDossier(),
+				ReserveHotel rh = new ReserveHotel(data.getNomHotel(), data.getVille(), data.getPays(), s.getNumDossier(),
 						Date.valueOf(depart.getValue()), Date.valueOf(arrivee.getValue()),
-						Integer.valueOf(nbPersonnes.getText()), Integer.valueOf(nbPDej.getText())));
+						Integer.valueOf(nbPersonnes.getText()), Integer.valueOf(nbPDej.getText()));
+				tp.add(new Text(rh.toString()));
+				tp.objects.add(rh);
 				return true;
 
 			} catch (NumberFormatException e) {

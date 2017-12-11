@@ -17,6 +17,7 @@ import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.scene.text.Text;
 import javafx.util.Pair;
 
 public class PopupVisite {
@@ -48,9 +49,10 @@ public class PopupVisite {
 			try {
 				if (Integer.valueOf(nbPersonnes.getText()) <= 0)
 					return false;
-				tp.setText(data.getNomLieu() + data.getVille());
-				tp.objects.add(new ReserveVisite(data.getNomLieu(), data.getVille(), data.getPays(), s.getNumDossier(),
-						Date.valueOf(dateVisite.getValue()), Integer.valueOf(nbPersonnes.getText())));
+				ReserveVisite rv = new ReserveVisite(data.getNomLieu(), data.getVille(), data.getPays(), s.getNumDossier(),
+						Date.valueOf(dateVisite.getValue()), Integer.valueOf(nbPersonnes.getText()));
+				tp.objects.add(rv);
+				tp.add(new Text(rv.toString()));
 				return true;
 			} catch (NumberFormatException e) {
 				Debugger.println("PopupVisite: valeur incorrecte: " + e.toString());
