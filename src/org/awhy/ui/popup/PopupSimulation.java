@@ -166,15 +166,8 @@ public class PopupSimulation {
 		pS.setInt(1, numDossier);
 		res = pS.executeQuery();
 		while (res.next()) {
-<<<<<<< HEAD
-			ReserveCircuit circuit = new ReserveCircuit();
-			circuit.createFromSQL(res);
-			
-			String check = "select sum(nbPersonnesCircuit) from ReserveCircuit rc, Reservation r where rc.numDossier = r.numDossier and idCircuit=? and dateDepartCircuit=?";
-=======
 			ReserveCircuit circuit = (ReserveCircuit) new ReserveCircuit().createFromSQL(res);
 			String check = "select (dc.nbPersonnes - sum(rcd.nbPersonnesCircuit)) as nbPlaces from DateCircuit dc, (select idCircuit, dateDepartCircuit, nbPersonnesCircuit from ReserveCircuit rc, Reservation r where r.numDossier = rc.numDossier and rc.idCircuit = ? and rc.dateDepartCircuit = ?) rcd where dc.idCircuit = rcd.idCircuit and dc.dateDepartCircuit = rcd.dateDepartCircuit group by dc.idCircuit, dc.dateDepartCircuit, dc.nbPersonnes";
->>>>>>> 713bc7f1e4f2fe63450e601e8f6067cca1dad33f
 			PreparedStatement cPS = c.prepareStatement(check);
 			cPS.setString(1, res.getString(1));
 			cPS.setDate(2, res.getDate(2));
@@ -242,11 +235,7 @@ public class PopupSimulation {
 						hotel = null;
 						break;
 					}
-<<<<<<< HEAD
 				}
-=======
-				
->>>>>>> 713bc7f1e4f2fe63450e601e8f6067cca1dad33f
 				if(hotel != null)
 					hotels.add(hotel);
 				cPS.close();
