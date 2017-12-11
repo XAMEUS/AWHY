@@ -116,7 +116,7 @@ public class PopupSimulation {
 		Text nbPersonnesText = new Text(nbPersonnes + " personne.s");
 		grid.add(nbPersonnesText, 0, 1);
 
-		// Le pognon
+		// Les sous
 		int cout = 0;
 		query = "SELECT sum(prixCircuit) FROM ReserveCircuit R, Circuit C WHERE numDossier=? and R.idCircuit = C.idCircuit";
 		pS = c.prepareStatement(query);
