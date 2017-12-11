@@ -137,4 +137,10 @@ public class Hotel implements Object {
 	public void setPrixPetitDejeuner(Integer prixPetitDejeuner) {
   		this.prixPetitDejeuner.set(prixPetitDejeuner);
 	}
+
+	@Override
+	public void deleteSQL(Connection c) throws SQLException {
+		// TODO Auto-generated method stub
+		
+	}
 }

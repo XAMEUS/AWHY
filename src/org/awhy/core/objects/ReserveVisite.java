@@ -122,4 +122,10 @@ public class ReserveVisite implements Object {
 	public void setNbPersonnesVisite(Integer nbPersonnesVisite) {
 		this.nbPersonnesVisite.set(nbPersonnesVisite);
 	}
+
+	@Override
+	public void deleteSQL(Connection c) throws SQLException {
+		// TODO Auto-generated method stub
+		
+	}
 }

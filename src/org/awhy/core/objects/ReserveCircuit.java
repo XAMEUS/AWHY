@@ -98,4 +98,10 @@ public class ReserveCircuit implements Object {
 		this.nbPersonnesCircuit.set(nbPersonnesCircuit);
 	}
 
+	@Override
+	public void deleteSQL(Connection c) throws SQLException {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

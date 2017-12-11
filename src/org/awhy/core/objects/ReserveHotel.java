@@ -158,5 +158,11 @@ public class ReserveHotel implements Object {
 	public void setNbPetitDejReserves(Integer nbPetitDejReserves) {
 		this.nbPetitDejReserves.set(nbPetitDejReserves);
 	}
+
+	@Override
+	public void deleteSQL(Connection c) throws SQLException {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }

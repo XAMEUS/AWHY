@@ -96,4 +96,10 @@ public class Reservation implements Object {
 	public void setIdClient(Integer idClient) {
 		this.idClient.set(idClient);
 	}
+
+	@Override
+	public void deleteSQL(Connection c) throws SQLException {
+		// TODO Auto-generated method stub
+		
+	}
 }

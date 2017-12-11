@@ -9,5 +9,6 @@ public interface Object {
 	public Object createFromSQL(ResultSet res) throws SQLException;
 	public void insertSQL(Connection c) throws SQLException;
 	public void updateSQL(Connection c) throws SQLException;
+	public void deleteSQL(Connection c) throws SQLException;
 
 }
