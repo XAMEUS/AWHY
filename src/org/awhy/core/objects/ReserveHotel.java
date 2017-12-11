@@ -161,7 +161,18 @@ public class ReserveHotel implements Object {
 
 	@Override
 	public void deleteSQL(Connection c) throws SQLException {
-		// TODO Auto-generated method stub
-		
+		String insert = "DELETE FROM " + dbName
+				+ " WHERE nomHotel=?, ville=?, pays=?, numDossier=?, dateDepartHotel=?, dateArriveeHotel=?";
+		c.commit();
+		PreparedStatement preparedStatementInsert = c.prepareStatement(insert);
+		preparedStatementInsert.setString(1, this.getNomHotel());
+		preparedStatementInsert.setString(2, this.getVille());
+		preparedStatementInsert.setString(3, this.getPays());
+		preparedStatementInsert.setInt(4, this.getNumDossier());
+		preparedStatementInsert.setDate(5, this.getDateDepartHotel());
+		preparedStatementInsert.setDate(6, this.getDateArriveeHotel());
+		preparedStatementInsert.executeUpdate();
+		preparedStatementInsert.close();
+		c.commit();
 	}
 }
