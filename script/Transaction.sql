@@ -9,6 +9,8 @@ Liste des requetes SQL utilisées dans le code JAVA.
 --Affiche la simulation du dossier numero <numDossier>. (création de la simulation)
 "select * from Simulation where numDossier= (?)"
 
+
+
 --Affiche la liste des hotels dans la ville sélectionnée. (Démarrer une simulation)
 "select * from hotel where ville LIKE ? and pays LIKE ?"
 
@@ -20,6 +22,8 @@ Liste des requetes SQL utilisées dans le code JAVA.
 
 --Affiche toutes les simulations, payées ou non. (Démarrer une simulation)
 "select * from Simulation"
+
+
 
 --Affiche la liste des étapes d'un circuit. (Faire une simulation pour un circuit)
 "select * from etapes where idCircuit = " + idCircuit
@@ -34,24 +38,6 @@ Liste des requetes SQL utilisées dans le code JAVA.
 --(pour chaque étape d'un circuit)
 "select * from hotel where ville='" + ville + "' AND pays='" + pays +"'"
 
---
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 --Affiche les details d'une simulation. (Recapitulatif d'une reservation)
@@ -60,7 +46,7 @@ Liste des requetes SQL utilisées dans le code JAVA.
 --Recupère les dates de début et de fin de la simulation. (Recapitulatif d'une reservation)
 --(Comparaison des dates extremales en JAVA)
 "SELECT min(dateDepartHotel), max(dateArriveeHotel) FROM ReserveHotel WHERE numDossier=?"
-"SELECT min(dateDepartCircuit), max(nbJoursTotal + dateDepartCircuit) FROM ReserveCircuit R, Circuit C WHERE numDossier=? and R.idCircuit=C.idCircuit"
+"SELECT min(dateDepartCircuit), max(enbJoursTotal + dateDepartCircuit) FROM ReserveCircuit R, Circuit C WHERE numDossier=? and R.idCircuit=C.idCircuit"
 "SELECT min(dateVisite), max(dateVisite) FROM ReserveVisite R WHERE numDossier=?"
 
 --Récupère le nombre de personnes maximales de la simulation.(Recapitulatif d'une reservation)
@@ -97,7 +83,24 @@ from (select nomHotel, ville, pays, nbChambresTotal from Hotel) h, (
 where h.nomHotel = rhr.nomHotel and h.ville = rhr.ville and h.pays = rhr.pays
 group by h.nomHotel, h.ville, h.pays, h.nbChambresTotal"
 
---Affiche les circuits de la reservation.
+--Affiche les circuits de la reservation. (Recapitulatif d'une reservation)
 "select * from reservecircuit where numDossier = '" + numDossier + "'"
+
+--Affiche les hotels de la reservation. (Recapitulatif d'une reservation)
 "select * from reservehotel where numDossier = '" + numDossier + "'"
+
+--Affiche les lieux à visiter de la reservation. (Recapitulatif d'une reservation)
 "select * from reservevisite where numDossier = '" + numDossier + "'"
+
+--Affiche les informations de paiement et la date de paiement d'une Reservation. (Recapitulatif d'une reservation)
+"SELECT * FROM Reservation WHERE numDossier=?"
+
+
+
+--Affiche tout les éléments d'une table.
+"select * from "+<nomTable>
+
+--Affiche tout les éléments d'une reservation.
+"SELECT rv.* FROM ReserveVisite rv, Reservation r WHERE rv.numDossier = r.numDossier"
+"SELECT rh.* FROM ReserveHotel rh, Reservation r WHERE rh.numDossier = r.numDossier"
+"SELECT rc.* FROM ReserveCircuit rc, Reservation r WHERE rc.numDossier = r.numDossier"

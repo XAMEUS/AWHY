@@ -102,7 +102,13 @@ public class Simulation implements Object {
 
 	@Override
 	public void deleteSQL(Connection c) throws SQLException {
-		// TODO Auto-generated method stub
-		
+		String insert = "DELETE from " + dbName
+				+ " WHERE numDossier=?";
+		c.commit();
+		PreparedStatement preparedStatementInsert = c.prepareStatement(insert);
+		preparedStatementInsert.setInt(1, this.getNumDossier());
+		preparedStatementInsert.executeUpdate();
+		preparedStatementInsert.close();
+		c.commit();
 	}
 }
