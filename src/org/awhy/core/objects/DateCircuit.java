@@ -83,4 +83,10 @@ public class DateCircuit implements Object {
 	public void setNbPersonnes(Integer nbPersonnes) {
 		this.nbPersonnes.set(nbPersonnes);
 	}
+
+	@Override
+	public void deleteSQL(Connection c) throws SQLException {
+		// TODO Auto-generated method stub
+		
+	}
 }

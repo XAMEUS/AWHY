@@ -121,4 +121,10 @@ public class Etapes implements Object {
 	public void setNbJours(Integer nbJours) {
 		this.nbJours.set(nbJours);
 	}
+
+	@Override
+	public void deleteSQL(Connection c) throws SQLException {
+		// TODO Auto-generated method stub
+		
+	}
 }

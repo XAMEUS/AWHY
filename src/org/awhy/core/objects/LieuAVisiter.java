@@ -125,4 +125,10 @@ public class LieuAVisiter implements Object {
 		this.prix.set(prix);
 	}
 
+	@Override
+	public void deleteSQL(Connection c) throws SQLException {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
