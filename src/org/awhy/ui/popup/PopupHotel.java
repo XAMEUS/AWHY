@@ -40,8 +40,7 @@ public class PopupHotel {
 		if (dateDepart != null)
 			depart.setValue(dateDepart.toLocalDate());
 		TextField nbPersonnes = new TextField();
-		if (nbPersonnes != null)
-			nbPersonnes.setText(String.valueOf(n));
+		nbPersonnes.setText(String.valueOf(n));
 		TextField nbPDej = new TextField();
 		grid.add(new Label("Départ:"), 0, 0);
 		grid.add(depart, 1, 0);

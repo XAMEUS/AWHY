@@ -97,7 +97,7 @@ public class GAccordionFX extends VBox {
 						row.setOnMouseClicked(e -> {
 							if (e.getClickCount() == 2 && (!row.isEmpty())) {
 								Hotel rowData = row.getItem();
-								if(PopupHotel.show(tp, rowData, s, null, null, null)) {
+								if(PopupHotel.show(tp, rowData, s, null, null, 0)) {
 									ac.getPanes().add(tp);
 									confirmer.setVisible(true);
 								}
