@@ -85,7 +85,7 @@ Elle tient à numériser ses outils de gestion tout en conservant une étroite c
 
 De ce fait, certaines règles d'implémentation devront être respectées afin d'assurer le fonctionnement des outils numériques et la compatibilité des bases de données communes entre tous les partenaires.\\
 
-Dans le cadre du développement de la société \textsc{AWHY}, nous avons été mandaté afin de réaliser la conception et l'implémentation de leur base de données. Ce rapport vous apportera les outils nécessaires à la compréhension de la conception de cette base de données. Et vous permettra en outre de prendre connaissance des enjeux et des difficultés qui ont permis de privilégier certains axes de réflexion.
+Dans le cadre du développement de la société \textsc{AWHY}, nous avons été mandaté afin de réaliser la conception et l'implémentation de leur base de données. Ce rapport vous apportera les outils nécessaires à la compréhension de la conception de cette base de données et vous permettra en outre de prendre connaissance des enjeux et des difficultés qui ont permis de privilégier certains axes de réflexion.
 Enfin, vous y trouverez certains détails quant à nos choix d'implémentation, nous permettant de mettre en valeur et d'exploiter le potentiel de la base de données.
 
 \vspace{0.3cm}
@@ -197,7 +197,7 @@ nomVille, pays $-|\twoheadrightarrow$ villeArrivee, paysArrivee
 \newpage
 \textsc{\textcolor{bleuturquoise}{\section{Passage au relationnel}}}
 
-\textsc{\subsection{Types d'entité simple}}
+\textsc{\subsection{Types d'entités simples}}
 
 \noindent Ville (\underline{nomVille}, \underline{pays}) \\
 Circuit (\underline{idCircuit}, descriptif, villeDepart, paysDepart, villeArrivee, paysArrivee, nbJoursTotal, prixCircuit) \\
@@ -205,13 +205,13 @@ Client (\underline{idClient}, nomClient, prenomClient, typeClient, adresseClient
 Simulation (\underline{numDossier})
 
 
-\textsc{\subsection{Types d'entité faible}}
+\textsc{\subsection{Types d'entités faibles}}
 
 \textsc{Entités faibles de Ville :}
 \vspace{0.3cm}
 
 \noindent Hotel (\underline{nomHotel}, \underline{ville}, \underline{pays}, adresseHotel, nbChambresTotal, prixChambre, prixPetitDejeuner) \\
-LieuxAvisiter (\underline{nomLieu}, \underline{ville}, \underline{pays}, adresseLieu, descriptifLieu, prix) \\
+LieuAvisiter (\underline{nomLieu}, \underline{ville}, \underline{pays}, adresseLieu, descriptifLieu, prix) \\
 
 \textsc{Entités faibles de Circuit :}
 \vspace{0.3cm}
@@ -220,7 +220,7 @@ LieuxAvisiter (\underline{nomLieu}, \underline{ville}, \underline{pays}, adresse
 Etapes (\underline{idCircuit}, \underline{ordre}, nomLieu, ville, pays, nbJours)
 
 
-\textsc{\subsection{Sous-types d'entité}}
+\textsc{\subsection{Sous-types d'entités}}
 
 \noindent Reservation(\underline{numDossier}, datePaiement, infoPaiement, idClient) \\
 
@@ -229,7 +229,7 @@ L'entité Reservation est un sous-type d'entité de Simulation. Nous avons déci
 
 \textsc{\subsection{Associations}}
 
-Les entités liées à la réservations d'hôtels, de lieux à visiter et de circuits sont issus d'associations entre l'entité Client et les entités Hotel, LieuxAvisiter et Circuit. \\
+Les entités liées à la réservations d'hôtels, de lieux à visiter et de circuits sont issus d'associations entre l'entité Client et les entités Hotel, LieuAvisiter et Circuit. \\
 
 \noindent ReserveHotel (\underline{nomHotel}, \underline{ville}, \underline{pays}, \underline{numDossier}, \underline{dateDepartHotel}, \underline{dateArriveeHotel}, nbChambresReservees, nbPetitDejReserves) \\
 ReserveCircuit (\underline{idCircuit}, \underline{dateDepartCircuit}, \underline{numDossier}, nbPersonnesCircuit) \\
@@ -239,7 +239,7 @@ ReserveVisite (\underline{nomLieu}, \underline{ville}, \underline{pays}, \underl
 \textsc{\subsection{Formes normales}}
 
 Toutes les relations sont \textit{3FN} car pour chacune tous les attributs non clé sont pleinement dépendant et directement issus des clés de l'entité à laquelle elles appartiennent.
-//TODO 3FNBCK il me semble plutôt
+\noindent Toutes les relations sont \textit{3FN BCK} car elles sont toutes 3FN et toutes les dépendances fonctionnelles élémentaires se déduisent de la connaissance des clés.
 
 \textsc{\textcolor{bleuturquoise}{\section{Analyse des fonctionnalités}}}
 
