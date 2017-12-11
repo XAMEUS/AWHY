@@ -128,7 +128,7 @@ public class ReserveVisite implements Object {
 	@Override
 	public void deleteSQL(Connection c) throws SQLException {
 		String insert = "DELETE from " + dbName
-				+ " WHERE nomLieu=?, ville=?, pays=?, numDossier=?, dateVisite=?";
+				+ " WHERE nomLieu=? and ville=? and pays=? and numDossier=? and dateVisite=?";
 		c.commit();
 		PreparedStatement preparedStatementInsert = c.prepareStatement(insert);
 		preparedStatementInsert.setString(1, this.getNomLieu());
@@ -139,5 +139,10 @@ public class ReserveVisite implements Object {
 		preparedStatementInsert.executeUpdate();
 		preparedStatementInsert.close();
 		c.commit();
+	}
+	
+	@Override
+	public String toString() {
+		return "Visite " + this.getNomLieu().trim() + " à "+ this.getVille().trim() + ", " + this.getPays().trim() + " pour le " + this.getDateVisite();
 	}
 }

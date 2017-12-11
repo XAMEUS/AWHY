@@ -2,9 +2,12 @@ package org.awhy.ui;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import org.awhy.core.objects.Reservation;
+import org.awhy.core.objects.ReserveCircuit;
 import org.awhy.core.objects.Simulation;
 import org.awhy.ui.popup.PopupInfoReservation;
 import org.awhy.ui.popup.PopupSimulation;
@@ -233,8 +236,21 @@ public class GMenuFX extends MenuBar {
 							if (e.getClickCount() == 2 && (!row.isEmpty())) {
 								Simulation rowData = row.getItem();
 								try {
-									PopupSimulation.show(rowData.getNumDossier(), rowData.getNomClient(),
+									String check = "select * from Simulation where numDossier = ? and numDossier in (select numDossier from Reservation )";
+									PreparedStatement cPS = Controller.dialog.getConnection().prepareStatement(check);
+									cPS.setInt(1, rowData.getNumDossier());
+									ResultSet cRes = cPS.executeQuery();
+									boolean reser = false;
+									while (cRes.next())
+										reser = true;
+									if(reser)
+										PopupInfoReservation.show(rowData.getNumDossier(), 0,
+											Controller.dialog.getConnection());
+									else
+										PopupSimulation.show(rowData.getNumDossier(), rowData.getNomClient(),
 											rowData.getPrenomClient(), Controller.dialog.getConnection());
+									cPS.close();
+									
 								} catch (Exception e1) {
 									e1.printStackTrace();
 								}

@@ -65,7 +65,7 @@ public class GAccordionFX extends VBox {
 		b1.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				HotelPane tp = new HotelPane();
+				HotelPane tp = new HotelPane(ac);
 				try {
 					PopupEndroit endroit = new PopupEndroit();
 					endroit.show();
@@ -111,7 +111,7 @@ public class GAccordionFX extends VBox {
 		b2.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				VisitePane tp = new VisitePane();
+				VisitePane tp = new VisitePane(ac);
 				try {
 					PopupEndroit endroit = new PopupEndroit();
 					endroit.show();
@@ -156,7 +156,7 @@ public class GAccordionFX extends VBox {
 		b3.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				CircuitPane tp = new CircuitPane();
+				CircuitPane tp = new CircuitPane(ac);
 				try {
 					PopupEndroit endroit = new PopupEndroit();
 					endroit.show();
