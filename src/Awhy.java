@@ -1,6 +1,4 @@
 
-import java.util.Locale;
-
 import org.awhy.ui.Controller;
 import org.awhy.ui.GContainerFX;
 

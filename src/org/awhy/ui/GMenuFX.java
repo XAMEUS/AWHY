@@ -6,9 +6,7 @@ import java.sql.SQLException;
 
 import org.awhy.core.objects.Reservation;
 import org.awhy.core.objects.Simulation;
-import org.awhy.ui.popup.PopupError;
 import org.awhy.ui.popup.PopupInfoReservation;
-import org.awhy.ui.popup.PopupReservation;
 import org.awhy.ui.popup.PopupSimulation;
 import org.awhy.ui.tables.CircuitTable;
 import org.awhy.ui.tables.ClientTable;
@@ -36,15 +34,14 @@ import javafx.stage.FileChooser;
 public class GMenuFX extends MenuBar {
 	public GMenuFX() {
 		this.createFile();
-		this.createView();
-		this.createDatabase();
-		this.createTools();
 		this.createViewAgence();
+		this.createView();
+		this.createTools();
 	}
 
 	private void createFile() {
-		Menu file = new Menu("Simulation");
-		MenuItem newFile = new MenuItem("Nouveau");
+		Menu file = new Menu("Client");
+		MenuItem newFile = new MenuItem("Nouvelle Simulation");
 		newFile.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
@@ -57,7 +54,6 @@ public class GMenuFX extends MenuBar {
 		});
 		file.getItems().add(newFile);
 
-		// file.getItems().add(new SeparatorMenuItem());
 		this.getMenus().add(file);
 	}
 
@@ -177,45 +173,38 @@ public class GMenuFX extends MenuBar {
 				}
 			}
 		});
-		tools.getItems().add(debug);
-		tools.getItems().add(sql);
-		this.getMenus().add(tools);
-	}
-
-	private void createDatabase() {
-
-		Menu file = new Menu("BDD");
-
-		MenuItem connect = new MenuItem("Connection ");
+		MenuItem connect = new MenuItem("Connection BDD");
 		connect.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
 				Controller.connect();
 			}
 		});
-		file.getItems().add(connect);
 		MenuItem script = new MenuItem("Script SQL");
 		script.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
 				FileChooser fileChooser = new FileChooser();
-				fileChooser.setTitle("Open SQL file");
+				fileChooser.setTitle("Ouvrir fichier SQL");
 				File file = fileChooser.showOpenDialog(Controller.mainWindow);
 				try {
 					Controller.executeSQLFile(file);
 				} catch (SQLException e) {
 					Controller.alert("SQLException", e);
 				} catch (IOException e) {
-				Controller.alert("IOException", e);
+					Controller.alert("IOException", e);
 				} catch (NullPointerException e) {
-					PopupError.bang();
+					;
 				}
 			}
 		});
-		file.getItems().add(script);
-		this.getMenus().add(file);
+		tools.getItems().add(debug);
+		tools.getItems().add(connect);
+		tools.getItems().add(script);
+		tools.getItems().add(sql);
+		this.getMenus().add(tools);
 	}
-	
+
 	private void createViewAgence(){
 		Menu agence = new Menu("Agence");
 		

@@ -1,6 +1,7 @@
 package org.awhy.ui.popup;
 
 import java.sql.Date;
+import java.util.Optional;
 
 import org.awhy.core.objects.LieuAVisiter;
 import org.awhy.core.objects.ReserveVisite;
@@ -42,20 +43,22 @@ public class PopupVisite {
 		
 		dialog.getDialogPane().setContent(grid);
 
-		dialog.showAndWait();
-				
-		try {
-			if(Integer.valueOf(nbPersonnes.getText()) <= 0)
+		Optional<Pair<String, String>> result = dialog.showAndWait();
+		if (result.isPresent()) {
+			try {
+				if(Integer.valueOf(nbPersonnes.getText()) <= 0)
+					return false;
+				tp.setText(data.getNomLieu() + data.getVille());
+				tp.objects.add(new ReserveVisite(data.getNomLieu(), data.getVille(), data.getPays(), s.getNumDossier(), 
+						Date.valueOf(dateVisite.getValue()), Integer.valueOf(nbPersonnes.getText())));
+				return true;
+			}
+			catch (NumberFormatException e) {
+				Debugger.println("PopupVisite: valeur incorrecte: " + e.toString());
+				PopupError.bang();
 				return false;
-			tp.setText(data.getNomLieu() + data.getVille());
-			tp.objects.add(new ReserveVisite(data.getNomLieu(), data.getVille(), data.getPays(), s.getNumDossier(), 
-					Date.valueOf(dateVisite.getValue()), Integer.valueOf(nbPersonnes.getText())));
-			return true;
+			}
 		}
-		catch (NumberFormatException e) {
-			Debugger.println("PopupVisite: valeur incorrecte: " + e.toString());
-			PopupError.bang();
-			return false;
-		}
+		return false;
 	}
 }

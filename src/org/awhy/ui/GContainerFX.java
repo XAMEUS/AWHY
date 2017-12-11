@@ -2,22 +2,15 @@ package org.awhy.ui;
 
 import java.sql.SQLException;
 
-import org.awhy.core.Dialog;
 import org.awhy.core.objects.Object;
-import org.awhy.core.objects.Ville;
 import org.awhy.ui.pane.GAccordionFX;
 import org.awhy.ui.tables.Table;
-import org.awhy.ui.tables.VilleTable;
-
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.SplitPane;
-import javafx.scene.control.TableRow;
-import javafx.scene.control.TableView;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.util.Callback;
 
 public class GContainerFX extends VBox {
 
