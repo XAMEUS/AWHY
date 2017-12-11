@@ -5,8 +5,13 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
+import org.awhy.core.objects.ReserveCircuit;
+import org.awhy.core.objects.ReserveHotel;
+import org.awhy.core.objects.ReserveVisite;
 import org.awhy.ui.Controller;
 import org.awhy.ui.tables.ReserveCircuitTable;
 import org.awhy.ui.tables.ReserveHotelTable;
@@ -29,8 +34,13 @@ public class PopupSimulation {
 		ButtonType cancelButtonType = new ButtonType("Retour", ButtonData.CANCEL_CLOSE);
 		dialog.getDialogPane().getButtonTypes().addAll(cancelButtonType);
 
+		ButtonType editSimulation = new ButtonType("Changer simulation", ButtonData.OK_DONE);
 		ButtonType addButtonType = new ButtonType("Client\nexistant", ButtonData.OK_DONE);
 		ButtonType confirmButtonType = new ButtonType("Nouveau\n client", ButtonData.NEXT_FORWARD);
+		
+		List<ReserveCircuit> circuits = new ArrayList<ReserveCircuit>();
+		List<ReserveHotel> hotels = new ArrayList<ReserveHotel>();
+		List<ReserveVisite> visites = new ArrayList<ReserveVisite>();
 
 		GridPane grid = new GridPane();
 		grid.setHgap(10);
@@ -147,48 +157,59 @@ public class PopupSimulation {
 
 		// vérifier (nombre places circuits, nombre places hotels, dates)
 		boolean possible = true;
-		query = "SELECT nbPersonnesCircuit, idCircuit, dateDepartCircuit FROM ReserveCircuit WHERE numDossier=?";
+		query = "SELECT * FROM ReserveCircuit WHERE numDossier=?";
 		pS = c.prepareStatement(query);
 		pS.setInt(1, numDossier);
 		res = pS.executeQuery();
 		while (res.next()) {
-			if (!possible)
-				break;
+			ReserveCircuit circuit = new ReserveCircuit();
+			circuit.createFromSQL(res);
 			String check = "select (dc.nbPersonnes - sum(rcd.nbPersonnesCircuit)) as nbPlaces from DateCircuit dc, (select idCircuit, dateDepartCircuit, nbPersonnesCircuit from ReserveCircuit rc, Reservation r where r.numDossier = rc.numDossier and rc.idCircuit = ? and rc.dateDepartCircuit = ?) rcd where dc.idCircuit = rcd.idCircuit and dc.dateDepartCircuit = rcd.dateDepartCircuit group by dc.idCircuit, dc.dateDepartCircuit, dc.nbPersonnes";
 			PreparedStatement cPS = c.prepareStatement(check);
-			cPS.setString(1, res.getString(2));
-			cPS.setDate(2, res.getDate(3));
+			cPS.setString(1, res.getString(1));
+			cPS.setDate(2, res.getDate(2));
 			System.out.println(check);
 			ResultSet cRes = cPS.executeQuery();
-			while (cRes.next())
-				if (cRes.getInt(1) < res.getInt(1))
+			while (cRes.next()) {
+				if (cRes.getInt(4) < res.getInt(1)) {
 					possible = false;
+					circuit.deleteSQL(c);
+					circuit = null;
+					break;
+				}
+			}
+			if(circuit != null)
+				circuits.add(circuit);
 			cPS.close();
 		}
 		pS.close();
 
-		query = "SELECT nomHotel, ville, pays, nbChambresReservees, dateDepartHotel, dateArriveeHotel FROM ReserveHotel WHERE numDossier=?";
+		query = "SELECT * FROM ReserveHotel WHERE numDossier=?";
 		pS = c.prepareStatement(query);
 		pS.setInt(1, numDossier);
 		res = pS.executeQuery();
 		while (res.next()) {
-			if (!possible)
-				break;
+			ReserveHotel hotel = new ReserveHotel();
+			hotel.createFromSQL(res);
 			Date curr = new Date(res.getDate(5).getTime());
 			while (res.getDate(6).after(curr)) {
-				if (!possible)
-					break;
 				String check = "select (h.nbChambresTotal - sum(rhr.nbChambresReservees)) from (select nomHotel, ville, pays, nbChambresTotal from Hotel) h, (select rh.nomHotel, rh.ville, rh.pays, rh.nbChambresReservees from ReserveHotel rh, Reservation r where rh.numDossier = r.numDossier and rh.nomHotel = ? and rh.ville = ? and rh.pays = ? and (dateDepartHotel <= ? and dateArriveeHotel > ?)) rhr where h.nomHotel = rhr.nomHotel and h.ville = rhr.ville and h.pays = rhr.pays group by h.nomHotel, h.ville, h.pays, h.nbChambresTotal";
 				PreparedStatement cPS = c.prepareStatement(check);
-				cPS.setDate(4, curr);
-				cPS.setDate(5, curr);
 				cPS.setString(1, res.getString(1));
 				cPS.setString(2, res.getString(2));
 				cPS.setString(3, res.getString(3));
+				cPS.setDate(4, curr);
+				cPS.setDate(5, curr);
 				ResultSet cRes = cPS.executeQuery();
 				while (cRes.next())
-					if (res.getInt(4) > cRes.getInt(1))
+					if (res.getInt(7) > cRes.getInt(1)) {
 						possible = false;
+						hotel.deleteSQL(c);
+						hotel = null;
+						break;
+					}
+				if(hotel != null)
+					hotels.add(hotel);
 				cPS.close();
 				curr = new Date(curr.getTime() + ((long) 1000) * 60 * 60 * 24);
 			}
@@ -210,8 +231,10 @@ public class PopupSimulation {
 			placesOK = new Text("Réservation possible");
 			dialog.getDialogPane().getButtonTypes().addAll(confirmButtonType);
 			dialog.getDialogPane().getButtonTypes().addAll(addButtonType);
-		} else
+		} else {
 			placesOK = new Text("Réservation impossible");
+			dialog.getDialogPane().getButtonTypes().addAll(editSimulation);
+		}
 		grid.add(placesOK, 0, 2);
 
 		dialog.getDialogPane().setContent(grid);
@@ -220,13 +243,28 @@ public class PopupSimulation {
 
 		if (resDialog.isPresent()) {
 			System.out.println(resDialog.get());
-			if (resDialog.get() == addButtonType) {
-				PopupSearchClient.show(numDossier, nomClient, prenomClient);
+			if(possible) {
+				if (resDialog.get() == addButtonType) {
+					PopupSearchClient.show(numDossier, nomClient, prenomClient);
 
-			} else if (resDialog.get() == confirmButtonType) {
-				if (PopupClient.show(numDossier, nomClient, prenomClient) == false)
-					PopupError.bang();
+				} else if (resDialog.get() == confirmButtonType) {
+					if (PopupClient.show(numDossier, nomClient, prenomClient) == false)
+						PopupError.bang();
 
+				}
+			}
+			else if(resDialog.get() == editSimulation) {
+				query = "SELECT * FROM ReserveVisite WHERE numDossier=?";
+				pS = c.prepareStatement(query);
+				pS.setInt(1, numDossier);
+				res = pS.executeQuery();
+				while (res.next()) {
+					ReserveVisite visite = new ReserveVisite();
+					visite.createFromSQL(res);
+					visites.add(visite);
+				}
+				pS.close();
+				//TODO: finish that
 			}
 		}
 	}
