@@ -52,9 +52,9 @@ public class PopupSearchClient {
 			ClientTable ct;
 
 			if (nomClient.getText() != null && !nomClient.getText().trim().isEmpty())
-				condNom += "nomClient = '" + nomClient.getText().trim() + "'";
+				condNom += "nomClient like '%" + nomClient.getText().trim() + "%'";
 			else if (nomClient.getText() != null && !prenomClient.getText().trim().isEmpty())
-				condPrenom += "prenomClient = '" + prenomClient.getText().trim() + "'";
+				condPrenom += "prenomClient like '%" + prenomClient.getText().trim() + "%'";
 
 			if (!condNom.isEmpty() && !condPrenom.isEmpty())
 				query += " where " + condNom + " and " + condPrenom;

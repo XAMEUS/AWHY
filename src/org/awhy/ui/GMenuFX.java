@@ -43,8 +43,8 @@ public class GMenuFX extends MenuBar {
 	}
 
 	private void createFile() {
-		Menu file = new Menu("Fichier");
-		MenuItem newFile = new MenuItem("Nouvelle Simulation");
+		Menu file = new Menu("Simulation");
+		MenuItem newFile = new MenuItem("Nouveau");
 		newFile.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {

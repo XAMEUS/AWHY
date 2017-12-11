@@ -32,24 +32,8 @@ public class GContainerFX extends VBox {
 		children.add(new GMenuFX());
 		container = new SplitPane();
 		children.add(container);
-
 		Controller.connect();
-//		this.setTableView(new VilleTable(Controller.dialog.executeQuery("select * from ville")));
 		
-//		TableView<Ville> v = (TableView<Ville>)(Controller.tableView);
-//		v.setRowFactory( tv -> {
-//		    TableRow<Ville> row = new TableRow<>();
-//		    row.setOnMouseClicked(event -> {
-//		        if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
-//		           Ville rowData = row.getItem();
-//		            System.out.println(rowData.getNomVille());
-//		            System.out.println(rowData.getPays());
-//		        }
-//		    });
-//		    return row ;
-//		});
-		
-
 		container.setDividerPositions(0.3);
 		// container.getChildren().add(box);
 		// container.getChildren().add(gt);

@@ -62,11 +62,11 @@ public class GAccordionFX extends VBox {
 		sp.setFitToHeight(true);
 		sp.setFitToWidth(true);
 
-		this.top = new ToolBar(new Text("Sim: " + s.getNumDossier()));
+		this.top = new ToolBar(new Text("Simulation n°: " + s.getNumDossier()));
 		this.getChildren().add(this.top);
 		this.getChildren().add(sp);
 
-		Button b1 = new Button("Add Hotel");
+		Button b1 = new Button("Ajouter Hotel");
 		b1.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
@@ -111,7 +111,7 @@ public class GAccordionFX extends VBox {
 			}
 		});
 
-		Button b2 = new Button("Add LAV");
+		Button b2 = new Button("Ajouter LAV");
 		b2.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
@@ -156,7 +156,7 @@ public class GAccordionFX extends VBox {
 			}
 		});
 
-		Button b3 = new Button("Add Circuit");
+		Button b3 = new Button("Ajouter Circuit");
 		b3.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
@@ -181,7 +181,6 @@ public class GAccordionFX extends VBox {
 					ResultSet res = pS.executeQuery();
 					Controller.container.setTableView(new CircuitTable(res));
 					pS.close();
-					// TODO : on click, reservation.
 					TableView<Circuit> v = (TableView<Circuit>) (Controller.tableView);
 					v.setRowFactory(tv -> {
 						TableRow<Circuit> row = new TableRow<>();

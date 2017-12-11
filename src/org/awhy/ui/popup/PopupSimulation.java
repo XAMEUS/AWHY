@@ -222,11 +222,9 @@ public class PopupSimulation {
 		if (resDialog.isPresent()) {
 			System.out.println(resDialog.get());
 			if (resDialog.get() == addButtonType) {
-				// TODO: chercher client, popup reservation
 				PopupSearchClient.show(numDossier, nomClient, prenomClient);
 
 			} else if (resDialog.get() == confirmButtonType) {
-				// TODO: popupclient
 				if(PopupClient.show(numDossier, nomClient, prenomClient) == false)
 					PopupError.bang();
 
