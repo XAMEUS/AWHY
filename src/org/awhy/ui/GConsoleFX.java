@@ -115,9 +115,9 @@ public class GConsoleFX extends StackPane {
 				input.requestFocus();
 			}
 		});
-		
+
 		StackPane.setAlignment(input, Pos.BOTTOM_CENTER);
-		
+
 		if (Controller.dialog == null)
 			Controller.connect();
 	}

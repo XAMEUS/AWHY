@@ -13,12 +13,12 @@ public class DateCircuit implements Object {
 
 	public final SimpleStringProperty idCircuit;
 	public Date dateDepartCircuit;
-  	public final SimpleIntegerProperty nbPersonnes;
+	public final SimpleIntegerProperty nbPersonnes;
 
-	public static String dbName = "DateCircuit";  	
-  	
+	public static String dbName = "DateCircuit";
+
 	public DateCircuit() {
-	    this.idCircuit = new SimpleStringProperty();
+		this.idCircuit = new SimpleStringProperty();
 		this.dateDepartCircuit = new Date(0);
 		this.nbPersonnes = new SimpleIntegerProperty();
 	}
@@ -36,7 +36,7 @@ public class DateCircuit implements Object {
 
 	@Override
 	public void insertSQL(Connection c) throws SQLException {
-		String insert = "INSERT INTO " + dbName	+ " VALUES " + "(?, ?, ?)";
+		String insert = "INSERT INTO " + dbName + " VALUES " + "(?, ?, ?)";
 		c.commit();
 		PreparedStatement preparedStatementInsert = c.prepareStatement(insert);
 		preparedStatementInsert.setString(1, this.getIdCircuit());
@@ -71,7 +71,7 @@ public class DateCircuit implements Object {
 	public Integer getNbPersonnes() {
 		return nbPersonnes.get();
 	}
-	
+
 	public void setIdCircuit(String idCircuit) {
 		this.idCircuit.set(idCircuit);
 	}

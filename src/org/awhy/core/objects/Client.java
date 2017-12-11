@@ -34,7 +34,8 @@ public class Client implements Object {
 		this.anneeEnregistrement = new SimpleIntegerProperty();
 	}
 
-	public Client(int idClient, String nomClient, String prenomClient, String typeClient, String adresseClient, String emailClient, String telClient, int anneeEnregistrement) {
+	public Client(int idClient, String nomClient, String prenomClient, String typeClient, String adresseClient,
+			String emailClient, String telClient, int anneeEnregistrement) {
 		this.idClient = new SimpleIntegerProperty(idClient);
 		this.nomClient = new SimpleStringProperty(nomClient);
 		this.prenomClient = new SimpleStringProperty(prenomClient);
@@ -44,8 +45,9 @@ public class Client implements Object {
 		this.telClient = new SimpleStringProperty(telClient);
 		this.anneeEnregistrement = new SimpleIntegerProperty(anneeEnregistrement);
 	}
-	
-	public Client(Dialog d, String nomClient, String prenomClient, String typeClient, String adresseClient, String emailClient, String telClient, int anneeEnregistrement) throws SQLException {
+
+	public Client(Dialog d, String nomClient, String prenomClient, String typeClient, String adresseClient,
+			String emailClient, String telClient, int anneeEnregistrement) throws SQLException {
 		ResultSet r = d.executeQuery("select idclient.nextval from client");
 		long id = 0;
 		if (r.next())
@@ -62,7 +64,8 @@ public class Client implements Object {
 
 	@Override
 	public Object createFromSQL(ResultSet res) throws SQLException {
-		return new Client(res.getInt(1), res.getString(2), res.getString(3), res.getString(4), res.getString(5), res.getString(6), res.getString(7), res.getInt(8));
+		return new Client(res.getInt(1), res.getString(2), res.getString(3), res.getString(4), res.getString(5),
+				res.getString(6), res.getString(7), res.getInt(8));
 	}
 
 	@Override
@@ -85,7 +88,8 @@ public class Client implements Object {
 
 	@Override
 	public void updateSQL(Connection c) throws SQLException {
-		String insert = "UPDATE " + dbName + " SET nomClient=?, prenomClient=?, typeClient=?, adresseClient=?, emailClient=?, telClient=?, anneeEnregistrement=? WHERE idClient=?";
+		String insert = "UPDATE " + dbName
+				+ " SET nomClient=?, prenomClient=?, typeClient=?, adresseClient=?, emailClient=?, telClient=?, anneeEnregistrement=? WHERE idClient=?";
 		c.commit();
 		PreparedStatement preparedStatementInsert = c.prepareStatement(insert);
 		preparedStatementInsert.setString(1, this.getNomClient());
@@ -132,7 +136,6 @@ public class Client implements Object {
 	public Integer getAnneeEnregistrement() {
 		return anneeEnregistrement.get();
 	}
-
 
 	public void setIdClient(Integer idClient) {
 		this.idClient.set(idClient);

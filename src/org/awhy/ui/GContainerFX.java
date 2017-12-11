@@ -26,7 +26,7 @@ public class GContainerFX extends VBox {
 		container = new SplitPane();
 		children.add(container);
 		Controller.connect();
-		
+
 		container.setDividerPositions(0.3);
 		// container.getChildren().add(box);
 		// container.getChildren().add(gt);
@@ -38,7 +38,7 @@ public class GContainerFX extends VBox {
 		this.bottom.left.setText(" AWHY v0.1");
 		children.add(this.bottom);
 	}
-	
+
 	public void setTableView(Table<? extends Object> tableView) throws SQLException {
 		this.container.getItems().remove(Controller.tableView);
 		Controller.tableView = tableView;
@@ -46,11 +46,11 @@ public class GContainerFX extends VBox {
 	}
 
 	public void setPane(GAccordionFX pane) {
-		if(this.paneLeft != null) {
+		if (this.paneLeft != null) {
 			this.container.getItems().remove(this.paneLeft);
 			this.paneLeft = null;
 		}
-		if(pane != null) {
+		if (pane != null) {
 			this.container.getItems().addAll(pane);
 			this.paneLeft = pane;
 		}

@@ -53,7 +53,7 @@ public class Controller {
 		s.setScene(scene);
 		s.show();
 	}
-	
+
 	public static void alert(String title, Exception e) {
 		Alert alert = new Alert(AlertType.ERROR);
 		alert.setTitle("Exception Dialog");
@@ -86,7 +86,7 @@ public class Controller {
 		alert.showAndWait();
 
 	}
-	
+
 	public static void connect() {
 		try {
 			GConnectFX.connnect();
@@ -94,7 +94,7 @@ public class Controller {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public static ResultSet executeQuery(String sql) throws SQLException {
 		if (Controller.dialog == null)
 			Controller.connect();
@@ -106,6 +106,5 @@ public class Controller {
 			Controller.connect();
 		Controller.dialog.executeFile(file.getPath(), true);
 	}
-	
 
 }

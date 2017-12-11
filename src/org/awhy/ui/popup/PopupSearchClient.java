@@ -110,7 +110,7 @@ public class PopupSearchClient {
 		dialog.getDialogPane().setContent(grid);
 
 		Optional<ButtonType> result = dialog.showAndWait();
-		
+
 		if (result.isPresent()) {
 			PopupSearchClient.show(numDossier, nom, prenom);
 		}

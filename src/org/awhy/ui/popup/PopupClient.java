@@ -64,7 +64,8 @@ public class PopupClient {
 
 			Client c;
 			try {
-				if(nomClient.getText().trim().isEmpty() || prenomClient.getText().trim().isEmpty() || !emailClient.getText().matches("[A-Za-z].*?@[A-Za-z].*\\.[A-Za-z].*"))
+				if (nomClient.getText().trim().isEmpty() || prenomClient.getText().trim().isEmpty()
+						|| !emailClient.getText().matches("[A-Za-z].*?@[A-Za-z].*\\.[A-Za-z].*"))
 					return false;
 				Integer.parseInt(telClient.getText());
 				c = new Client(Controller.dialog, nomClient.getText(), prenomClient.getText(), typeClient.getValue(),
