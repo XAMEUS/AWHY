@@ -59,3 +59,70 @@ create table Hotel(
     PRIMARY KEY (nomHotel, ville, pays),
     FOREIGN KEY (ville, pays) references Ville(nomVille, pays)
 );
+
+CREATE SEQUENCE idClient MINVALUE 0 INCREMENT BY 1 NOCACHE;
+
+create table Client(
+    idClient integer NOT NULL PRIMARY KEY,
+    nomClient char(20) NOT NULL,
+    prenomClient char(20) NOT NULL,
+    typeClient char(10) NOT NULL check(typeClient in ('societe', 'groupe', 'individuel')),
+    adresseClient varchar(100) NOT NULL,
+    emailClient char(50) NOT NULL,
+    telClient char(20) NOT NULL,
+    anneeEnregistrement integer NOT NULL
+);
+
+CREATE SEQUENCE numDossier MINVALUE 0 INCREMENT BY 1 NOCACHE;
+
+create table Simulation(
+    numDossier integer NOT NULL PRIMARY KEY,
+    nomClient char(20) NOT NULL,
+    prenomClient char(20) NOT NULL
+);
+
+create table Reservation(
+    numDossier integer NOT NULL PRIMARY KEY,
+    datePaiement date NOT NULL,
+    infoPaiement varchar(1000),
+    idClient integer NOT NULL,
+    FOREIGN KEY (numDossier) references Simulation(numDossier),
+    FOREIGN KEY (idClient) references Client(idClient)
+);
+
+create table ReserveCircuit(
+    idCircuit char(5) NOT NULL,
+    dateDepartCircuit date NOT NULL,
+    numDossier integer NOT NULL,
+    nbPersonnesCircuit integer NOT NULL check(nbPersonnesCircuit > 0),
+    PRIMARY KEY (idCircuit, dateDepartCircuit, numDossier),
+    FOREIGN KEY (idCircuit, dateDepartCircuit) references DateCircuit(idCircuit, dateDepartCircuit),
+    FOREIGN KEY (numDossier) references Simulation(numDossier)
+);
+
+create table ReserveHotel(
+    nomHotel char(20) NOT NULL,
+    ville char(20) NOT NULL,
+    pays char(20) NOT NULL,
+    numDossier integer NOT NULL,
+    dateDepartHotel date NOT NULL,
+    dateArriveeHotel date NOT NULL,
+    nbChambresReservees integer NOT NULL check(nbChambresReservees > 0),
+    nbPetitDejReserves integer NOT NULL check(nbPetitDejReserves >= 0),
+    PRIMARY KEY (numDossier, nomHotel, ville, pays, dateDepartHotel, dateArriveeHotel),
+    FOREIGN KEY (nomHotel, ville, pays) references Hotel(nomHotel, ville, pays),
+    FOREIGN KEY (numDossier) references Simulation(numDossier),
+    check(dateDepartHotel <= dateArriveeHotel)
+);
+
+create table ReserveVisite(
+    nomLieu char(20) NOT NULL,
+    ville char(20) NOT NULL,
+    pays char(20) NOT NULL,
+    numDossier integer NOT NULL,
+    dateVisite date NOT NULL,
+    nbPersonnesVisite integer NOT NULL check(nbPersonnesVisite > 0),
+    PRIMARY KEY (nomLieu, ville, pays, numDossier, dateVisite),
+    FOREIGN KEY (nomLieu, ville, pays) references LieuAvisiter(nomLieu, ville, pays),
+    FOREIGN KEY (numDossier) references Simulation(numDossier)
+);
