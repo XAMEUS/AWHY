@@ -43,7 +43,7 @@ public class GMenuFX extends MenuBar {
 	}
 
 	private void createFile() {
-		Menu file = new Menu("Fichier");
+		Menu file = new Menu("Créer");
 		MenuItem newFile = new MenuItem("Nouvelle Simulation");
 		newFile.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
@@ -57,7 +57,6 @@ public class GMenuFX extends MenuBar {
 		});
 		file.getItems().add(newFile);
 
-		// file.getItems().add(new SeparatorMenuItem());
 		this.getMenus().add(file);
 	}
 
