@@ -169,4 +169,10 @@ public class Client implements Object {
 		this.anneeEnregistrement.set(anneeEnregistrement);
 	}
 
+	@Override
+	public void deleteSQL(Connection c) throws SQLException {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

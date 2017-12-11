@@ -159,4 +159,9 @@ public class ReserveHotel implements Object {
 		this.nbPetitDejReserves.set(nbPetitDejReserves);
 	}
 
+	@Override
+	public void deleteSQL(Connection c) throws SQLException {
+		// TODO Auto-generated method stub
+		
+	}
 }
