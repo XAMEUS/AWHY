@@ -250,7 +250,6 @@ public class PopupSimulation {
 				} else if (resDialog.get() == confirmButtonType) {
 					if (PopupClient.show(numDossier, nomClient, prenomClient) == false)
 						PopupError.bang();
-
 				}
 			}
 			else if(resDialog.get() == editSimulation) {
