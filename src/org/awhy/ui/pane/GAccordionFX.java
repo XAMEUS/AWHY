@@ -39,7 +39,7 @@ public class GAccordionFX extends VBox {
 
 	private ToolBar top;
 	private ToolBar bot;
-	private Button confirmer;
+	public Button confirmer;
 	
 	public Accordion ac;
 

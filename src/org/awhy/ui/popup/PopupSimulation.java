@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.awhy.core.objects.Object;
 import org.awhy.core.objects.ReserveCircuit;
 import org.awhy.core.objects.ReserveHotel;
 import org.awhy.core.objects.ReserveVisite;
@@ -17,15 +18,20 @@ import org.awhy.ui.Controller;
 import org.awhy.ui.pane.CircuitPane;
 import org.awhy.ui.pane.GAccordionFX;
 import org.awhy.ui.pane.HotelPane;
+import org.awhy.ui.pane.TPane;
 import org.awhy.ui.pane.VisitePane;
 import org.awhy.ui.tables.ReserveCircuitTable;
 import org.awhy.ui.tables.ReserveHotelTable;
 import org.awhy.ui.tables.ReserveVisiteTable;
+import org.awhy.ui.tables.SimulationTable;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
+import javafx.scene.control.TitledPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 
@@ -301,6 +307,25 @@ public class PopupSimulation {
 					hp.setInvalid();
 					accordion.ac.getPanes().add(hp);
 				}
+				accordion.confirmer.setOnAction(new EventHandler<ActionEvent>() {
+					@Override
+					public void handle(ActionEvent event) {
+						try {
+							for (TitledPane tp : accordion.ac.getPanes()) {
+								for (Object o : ((TPane) tp).objects) {
+									System.out.println(o);
+									o.insertSQL(Controller.dialog.getConnection());
+									Controller.container.setPane(null);
+									Controller.container.setTableView(
+											new SimulationTable(Controller.executeQuery("select * from Simulation")));
+								}
+							}
+							Controller.dialog.getConnection().commit();
+						} catch (SQLException e) {
+							e.printStackTrace();
+						}
+					}
+				});
 			}
 		}
 	}
