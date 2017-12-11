@@ -42,7 +42,8 @@ public class GContainerFX extends VBox {
 	public void setTableView(Table<? extends Object> tableView) throws SQLException {
 		this.container.getItems().remove(Controller.tableView);
 		Controller.tableView = tableView;
-		this.container.getItems().add(tableView);
+		if (tableView != null)
+			this.container.getItems().add(tableView);
 	}
 
 	public void setPane(GAccordionFX pane) {
