@@ -1,11 +1,13 @@
 package org.awhy.ui.popup;
 
 import java.sql.Date;
+import java.sql.SQLException;
 import java.util.Optional;
 
 import org.awhy.core.objects.Hotel;
 import org.awhy.core.objects.ReserveHotel;
 import org.awhy.core.objects.Simulation;
+import org.awhy.ui.Controller;
 import org.awhy.ui.pane.TPane;
 import org.awhy.utils.Debugger;
 
@@ -43,6 +45,7 @@ public class PopupHotel {
 		TextField nbPersonnes = new TextField();
 		nbPersonnes.setText(String.valueOf(n));
 		TextField nbPDej = new TextField();
+		nbPDej.setText(String.valueOf(n));
 		grid.add(new Label("Arrivée à l'hôtel:"), 0, 0);
 		grid.add(depart, 1, 0);
 		grid.add(new Label("Départ de l'hôtel:"), 0, 1);
@@ -65,6 +68,13 @@ public class PopupHotel {
 						Integer.valueOf(nbPersonnes.getText()), Integer.valueOf(nbPDej.getText()));
 				tp.add(new Text(rh.toString()));
 				tp.objects.add(rh);
+
+				try {
+					Controller.container.setTableView(null);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				return true;
 
 			} catch (NumberFormatException e) {
