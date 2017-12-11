@@ -36,8 +36,6 @@ public class GConsoleFX extends StackPane {
 		this.table = new GTableFX();
 		this.history.add("");
 
-		// this.setBackground(new Background(new BackgroundFill(Color.ROYALBLUE,
-		// null, null)));
 		this.getChildren().add(table);
 		StackPane.setMargin(table, new Insets(0, 0, 30, 0));
 		TextField input = new TextField();
@@ -117,9 +115,9 @@ public class GConsoleFX extends StackPane {
 				input.requestFocus();
 			}
 		});
-		
+
 		StackPane.setAlignment(input, Pos.BOTTOM_CENTER);
-		
+
 		if (Controller.dialog == null)
 			Controller.connect();
 	}

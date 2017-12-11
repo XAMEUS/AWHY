@@ -8,21 +8,21 @@ import java.sql.SQLException;
 import javafx.beans.property.SimpleStringProperty;
 
 public class Ville implements Object {
-	
-    private final SimpleStringProperty nomVille;
+
+	private final SimpleStringProperty nomVille;
 	private final SimpleStringProperty pays;
 	public static String dbName = "Ville";
-	
+
 	public Ville() {
 		this.nomVille = new SimpleStringProperty();
 		this.pays = new SimpleStringProperty();
 	}
-	
+
 	public Ville(String nomVille, String pays) {
 		this.nomVille = new SimpleStringProperty(nomVille);
 		this.pays = new SimpleStringProperty(pays);
 	}
-	
+
 	public void insertSQL(Connection c) throws SQLException {
 		String insert = "INSERT INTO " + dbName + " VALUES " + "(?, ?)";
 		c.commit();
@@ -33,19 +33,19 @@ public class Ville implements Object {
 		preparedStatementInsert.close();
 		c.commit();
 	}
-	
-    public String getNomVille() {
+
+	public String getNomVille() {
 		return nomVille.get();
 	}
-    
+
 	public String getPays() {
 		return pays.get();
 	}
-	
+
 	public void setNomVille(String nomVille) {
 		this.nomVille.set(nomVille);
 	}
-	
+
 	public void setPays(String pays) {
 		this.pays.set(pays);
 	}
@@ -54,8 +54,14 @@ public class Ville implements Object {
 	public Object createFromSQL(ResultSet res) throws SQLException {
 		return new Ville(res.getString(1), res.getString(2));
 	}
-	
+
 	@Override
 	public void updateSQL(Connection c) throws SQLException {
+	}
+
+	@Override
+	public void deleteSQL(Connection c) throws SQLException {
+		// TODO Auto-generated method stub
+		
 	}
 }

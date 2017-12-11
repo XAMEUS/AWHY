@@ -1,13 +1,9 @@
 package org.awhy.ui.popup;
 
-import java.sql.Connection;
 import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Optional;
 
-import org.awhy.core.objects.Client;
 import org.awhy.core.objects.Reservation;
 import org.awhy.ui.Controller;
 
@@ -24,7 +20,6 @@ public class PopupReservation {
 	public static void show(int numDossier, int idClient) {
 
 		Dialog<ButtonType> dialog = new Dialog<>();
-		String query = "SELECT min(dateDepartHotel), max(dateArriveeHotel) FROM ReserveHotel WHERE numDossier=?";
 
 		dialog.setTitle("Reservation");
 		dialog.setHeaderText("Ajouter un paiement");
@@ -38,9 +33,8 @@ public class PopupReservation {
 		grid.setPadding(new Insets(20, 20, 10, 10));
 
 		TextField informationDePaiement = new TextField();
-		DatePicker dateDuPaiement = new DatePicker();	
-		
-		
+		DatePicker dateDuPaiement = new DatePicker();
+
 		grid.add(new Label("Numero de dossier : " + Integer.toString(numDossier)), 0, 0);
 		grid.add(new Label("	Numéro client : " + Integer.toString(idClient)), 1, 0);
 		grid.add(new Label(" "), 0, 1);
@@ -48,7 +42,7 @@ public class PopupReservation {
 		grid.add(dateDuPaiement, 1, 2);
 		grid.add(new Label("Information de paiement :"), 0, 3);
 		grid.add(informationDePaiement, 1, 3);
-		
+
 		dialog.getDialogPane().setContent(grid);
 		Optional<ButtonType> result = dialog.showAndWait();
 
@@ -56,13 +50,13 @@ public class PopupReservation {
 
 			Reservation r;
 			try {
-				r = new Reservation(numDossier, Date.valueOf(dateDuPaiement.getValue()), informationDePaiement.getText(), idClient);
+				r = new Reservation(numDossier, Date.valueOf(dateDuPaiement.getValue()),
+						informationDePaiement.getText(), idClient);
 				r.insertSQL(Controller.dialog.getConnection());
 				Controller.dialog.getConnection().commit();
 			} catch (SQLException e) {
 				e.printStackTrace();
-			}
-			catch (NumberFormatException | NullPointerException e) {
+			} catch (NumberFormatException | NullPointerException e) {
 				PopupError.bang();
 			}
 		}

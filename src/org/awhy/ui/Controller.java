@@ -6,8 +6,6 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.concurrent.locks.AbstractQueuedLongSynchronizer.ConditionObject;
-
 import org.awhy.core.Dialog;
 import org.awhy.core.objects.Object;
 import org.awhy.core.objects.Simulation;
@@ -22,7 +20,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
 import javafx.scene.control.SplitPane;
-import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
@@ -56,7 +53,7 @@ public class Controller {
 		s.setScene(scene);
 		s.show();
 	}
-	
+
 	public static void alert(String title, Exception e) {
 		Alert alert = new Alert(AlertType.ERROR);
 		alert.setTitle("Exception Dialog");
@@ -89,7 +86,7 @@ public class Controller {
 		alert.showAndWait();
 
 	}
-	
+
 	public static void connect() {
 		try {
 			GConnectFX.connnect();
@@ -97,7 +94,7 @@ public class Controller {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public static ResultSet executeQuery(String sql) throws SQLException {
 		if (Controller.dialog == null)
 			Controller.connect();
@@ -109,6 +106,5 @@ public class Controller {
 			Controller.connect();
 		Controller.dialog.executeFile(file.getPath(), true);
 	}
-	
 
 }

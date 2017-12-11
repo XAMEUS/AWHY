@@ -14,31 +14,31 @@ public class Hotel implements Object {
 	public final SimpleStringProperty ville;
 	public final SimpleStringProperty pays;
 	public final SimpleStringProperty adresseHotel;
-  	public final SimpleIntegerProperty nbChambresTotal;
-  	public final SimpleIntegerProperty prixChambre;
-  	public final SimpleIntegerProperty prixPetitDejeuner;
-  	
+	public final SimpleIntegerProperty nbChambresTotal;
+	public final SimpleIntegerProperty prixChambre;
+	public final SimpleIntegerProperty prixPetitDejeuner;
+
 	public static String dbName = "Hotel";
 
 	public Hotel() {
-	    this.nomHotel = new SimpleStringProperty();
-	    this.ville = new SimpleStringProperty();
-	    this.pays = new SimpleStringProperty();
-	    this.adresseHotel = new SimpleStringProperty();
-	    this.nbChambresTotal = new SimpleIntegerProperty();
-	    this.prixChambre = new SimpleIntegerProperty();
+		this.nomHotel = new SimpleStringProperty();
+		this.ville = new SimpleStringProperty();
+		this.pays = new SimpleStringProperty();
+		this.adresseHotel = new SimpleStringProperty();
+		this.nbChambresTotal = new SimpleIntegerProperty();
+		this.prixChambre = new SimpleIntegerProperty();
 		this.prixPetitDejeuner = new SimpleIntegerProperty();
 	}
 
-	public Hotel(String nomHotel, String ville, String pays, String adresseHotel,
-                 int nbChambresTotal, int prixChambre, int prixPetitDejeuner){
-	    this.nomHotel = new SimpleStringProperty(nomHotel);
-	    this.ville = new SimpleStringProperty(ville);
-	    this.pays = new SimpleStringProperty(pays);
-	    this.adresseHotel = new SimpleStringProperty(adresseHotel);
-	    this.nbChambresTotal = new SimpleIntegerProperty(nbChambresTotal);
-	    this.prixPetitDejeuner = new SimpleIntegerProperty(prixPetitDejeuner);
-	    this.prixChambre = new SimpleIntegerProperty(prixChambre);
+	public Hotel(String nomHotel, String ville, String pays, String adresseHotel, int nbChambresTotal, int prixChambre,
+			int prixPetitDejeuner) {
+		this.nomHotel = new SimpleStringProperty(nomHotel);
+		this.ville = new SimpleStringProperty(ville);
+		this.pays = new SimpleStringProperty(pays);
+		this.adresseHotel = new SimpleStringProperty(adresseHotel);
+		this.nbChambresTotal = new SimpleIntegerProperty(nbChambresTotal);
+		this.prixPetitDejeuner = new SimpleIntegerProperty(prixPetitDejeuner);
+		this.prixChambre = new SimpleIntegerProperty(prixChambre);
 	}
 
 	@Override
@@ -60,7 +60,8 @@ public class Hotel implements Object {
 
 	@Override
 	public void updateSQL(Connection c) throws SQLException {
-		String insert = "UPDATE " + dbName + " SET adresseHotel=?, nbChambresTotal=?, prixchambre=?, prixPetitDejeuner=? WHERE nomHotel=?, ville=?, pays=?";
+		String insert = "UPDATE " + dbName
+				+ " SET adresseHotel=?, nbChambresTotal=?, prixchambre=?, prixPetitDejeuner=? WHERE nomHotel=?, ville=?, pays=?";
 		c.commit();
 		PreparedStatement preparedStatementInsert = c.prepareStatement(insert);
 		preparedStatementInsert.setString(1, this.getAdresseHotel());
@@ -75,13 +76,14 @@ public class Hotel implements Object {
 		c.commit();
 
 	}
-	
+
 	@Override
 	public Object createFromSQL(ResultSet res) throws SQLException {
-		return new Hotel(res.getString(1), res.getString(2), res.getString(3), res.getString(4), res.getInt(5), res.getInt(6), res.getInt(7));
+		return new Hotel(res.getString(1), res.getString(2), res.getString(3), res.getString(4), res.getInt(5),
+				res.getInt(6), res.getInt(7));
 	}
 
-  	public String getNomHotel() {
+	public String getNomHotel() {
 		return nomHotel.get();
 	}
 
@@ -101,16 +103,15 @@ public class Hotel implements Object {
 		return nbChambresTotal.get();
 	}
 
-  	public Integer getPrixChambre() {
+	public Integer getPrixChambre() {
 		return prixChambre.get();
 	}
 
 	public Integer getPrixPetitDejeuner() {
-  		return prixPetitDejeuner.get();
+		return prixPetitDejeuner.get();
 	}
-	
-	
-  	public void setNomHotel(String nomHotel) {
+
+	public void setNomHotel(String nomHotel) {
 		this.nomHotel.set(nomHotel);
 	}
 
@@ -130,11 +131,17 @@ public class Hotel implements Object {
 		this.nbChambresTotal.set(nbChambresTotal);
 	}
 
-  	public void setPrixChambre(Integer prixChambre) {
+	public void setPrixChambre(Integer prixChambre) {
 		this.prixChambre.set(prixChambre);
 	}
 
 	public void setPrixPetitDejeuner(Integer prixPetitDejeuner) {
-  		this.prixPetitDejeuner.set(prixPetitDejeuner);
+		this.prixPetitDejeuner.set(prixPetitDejeuner);
+	}
+
+	@Override
+	public void deleteSQL(Connection c) throws SQLException {
+		// TODO Auto-generated method stub
+		
 	}
 }

@@ -15,19 +15,19 @@ public class LieuAVisiterTable extends Table<LieuAVisiter> {
 
 		TableColumn<LieuAVisiter, String> nomCol = new TableColumn<LieuAVisiter, String>("Nom");
 		nomCol.setCellValueFactory(new PropertyValueFactory<LieuAVisiter, String>("nomLieu"));
-		
+
 		TableColumn<LieuAVisiter, String> nomVilleCol = new TableColumn<LieuAVisiter, String>("Ville");
 		nomVilleCol.setCellValueFactory(new PropertyValueFactory<LieuAVisiter, String>("ville"));
 
 		TableColumn<LieuAVisiter, String> paysCol = new TableColumn<LieuAVisiter, String>("Pays");
 		paysCol.setCellValueFactory(new PropertyValueFactory<LieuAVisiter, String>("pays"));
-		
+
 		TableColumn<LieuAVisiter, String> adresseCol = new TableColumn<LieuAVisiter, String>("Adresse");
 		adresseCol.setCellValueFactory(new PropertyValueFactory<LieuAVisiter, String>("adresseLieu"));
 
 		TableColumn<LieuAVisiter, String> descriptionCol = new TableColumn<LieuAVisiter, String>("Description");
 		descriptionCol.setCellValueFactory(new PropertyValueFactory<LieuAVisiter, String>("descriptifLieu"));
-		
+
 		TableColumn<LieuAVisiter, Integer> prixCol = new TableColumn<LieuAVisiter, Integer>("Prix");
 		prixCol.setCellValueFactory(new PropertyValueFactory<LieuAVisiter, Integer>("prix"));
 

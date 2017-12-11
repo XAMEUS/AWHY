@@ -195,17 +195,16 @@ public class PopupSimulation {
 		}
 		pS.close();
 
-		final ReserveCircuitTable recapCircuit= new ReserveCircuitTable(
+		final ReserveCircuitTable recapCircuit = new ReserveCircuitTable(
 				Controller.executeQuery("select * from reservecircuit where numDossier = '" + numDossier + "'"));
 		grid.add(recapCircuit, 0, 3);
 		final ReserveHotelTable recapHotel = new ReserveHotelTable(
 				Controller.executeQuery("select * from reservehotel where numDossier = '" + numDossier + "'"));
 		grid.add(recapHotel, 1, 3);
-		final ReserveVisiteTable recapVisite= new ReserveVisiteTable(
+		final ReserveVisiteTable recapVisite = new ReserveVisiteTable(
 				Controller.executeQuery("select * from reservevisite where numDossier = '" + numDossier + "'"));
 		grid.add(recapVisite, 2, 3);
 
-		
 		Text placesOK;
 		if (possible) {
 			placesOK = new Text("Réservation possible");
@@ -214,7 +213,7 @@ public class PopupSimulation {
 		} else
 			placesOK = new Text("Réservation impossible");
 		grid.add(placesOK, 0, 2);
-		
+
 		dialog.getDialogPane().setContent(grid);
 
 		Optional<ButtonType> resDialog = dialog.showAndWait();
@@ -222,12 +221,10 @@ public class PopupSimulation {
 		if (resDialog.isPresent()) {
 			System.out.println(resDialog.get());
 			if (resDialog.get() == addButtonType) {
-				// TODO: chercher client, popup reservation
 				PopupSearchClient.show(numDossier, nomClient, prenomClient);
 
 			} else if (resDialog.get() == confirmButtonType) {
-				// TODO: popupclient
-				if(PopupClient.show(numDossier, nomClient, prenomClient) == false)
+				if (PopupClient.show(numDossier, nomClient, prenomClient) == false)
 					PopupError.bang();
 
 			}

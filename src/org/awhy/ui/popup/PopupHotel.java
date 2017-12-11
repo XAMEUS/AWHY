@@ -39,39 +39,37 @@ public class PopupHotel {
 		DatePicker depart = new DatePicker();
 		if (dateDepart != null)
 			depart.setValue(dateDepart.toLocalDate());
-		System.out.println("dates : " + dateArrivee + " -> " + dateDepart);
 		TextField nbPersonnes = new TextField();
-		if (nbPersonnes != null)
-			nbPersonnes.setText(String.valueOf(n));
+		nbPersonnes.setText(String.valueOf(n));
 		TextField nbPDej = new TextField();
-		grid.add(new Label("Arrivée:"), 0, 0);
-		grid.add(arrivee, 1, 0);
-		grid.add(new Label("Départ:"), 0, 1);
-		grid.add(depart, 1, 1);
+		grid.add(new Label("Départ:"), 0, 0);
+		grid.add(depart, 1, 0);
+		grid.add(new Label("Arrivée:"), 0, 1);
+		grid.add(arrivee, 1, 1);
 		grid.add(new Label("Nombre de chambres:"), 0, 2);
 		grid.add(nbPersonnes, 1, 2);
 		grid.add(new Label("Nombre de petits déjeuners:"), 0, 3);
 		grid.add(nbPDej, 1, 3);
 
 		dialog.getDialogPane().setContent(grid);
-		
-		Optional<ButtonType> result = dialog.showAndWait();
 
+		Optional<ButtonType> result = dialog.showAndWait();
 		if (result.isPresent()) {
 			try {
-				if(Integer.valueOf(nbPersonnes.getText()) <= 0 || Integer.valueOf(nbPDej.getText()) < 0 || Date.valueOf(depart.getValue()).after(Date.valueOf(arrivee.getValue())))
+				if (Integer.valueOf(nbPersonnes.getText()) <= 0 || Integer.valueOf(nbPDej.getText()) < 0
+						|| Date.valueOf(depart.getValue()).after(Date.valueOf(arrivee.getValue())))
 					return false;
 				tp.setText(data.getNomHotel());
-				tp.objects.add(new ReserveHotel(data.getNomHotel(), data.getVille(), data.getPays(), s.getNumDossier(), 
-						Date.valueOf(depart.getValue()), Date.valueOf(arrivee.getValue()), Integer.valueOf(nbPersonnes.getText()), Integer.valueOf(nbPDej.getText())));
+				tp.objects.add(new ReserveHotel(data.getNomHotel(), data.getVille(), data.getPays(), s.getNumDossier(),
+						Date.valueOf(depart.getValue()), Date.valueOf(arrivee.getValue()),
+						Integer.valueOf(nbPersonnes.getText()), Integer.valueOf(nbPDej.getText())));
 				return true;
 
-			}
-			catch (NumberFormatException e) {
+			} catch (NumberFormatException e) {
 				Debugger.println("PopupHotel: valeur incorrecte: " + e.toString());
 				PopupError.bang();
 				return false;
-			}			
+			}
 		}
 		return false;
 	}

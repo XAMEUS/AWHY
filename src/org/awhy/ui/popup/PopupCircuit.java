@@ -3,7 +3,6 @@ package org.awhy.ui.popup;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -127,8 +126,8 @@ public class PopupCircuit {
 				tp.objects.add(new ReserveCircuit(data.getIdCircuit(), dateDepart, s.getNumDossier(),
 						Integer.valueOf(nbPersonnes.getText())));
 
-				ResultSet res = Controller
-						.executeQuery("select * from etapes where idCircuit = " + data.getIdCircuit() + " order by ordre");
+				ResultSet res = Controller.executeQuery(
+						"select * from etapes where idCircuit = " + data.getIdCircuit() + " order by ordre");
 				return PopupCircuit.show3(tp, data, s, res, Integer.valueOf(nbPersonnes.getText()), dateDepart);
 
 			}
@@ -141,16 +140,17 @@ public class PopupCircuit {
 		return false;
 	}
 
-	public static boolean show3(CircuitPane tp, Circuit data, Simulation s, ResultSet res, int nbPersonnes, Date dateDepart) {
+	public static boolean show3(CircuitPane tp, Circuit data, Simulation s, ResultSet res, int nbPersonnes,
+			Date dateDepart) {
 
 		int jours = 0;
-		System.out.println("depart: "+ dateDepart);
+		System.out.println("depart: " + dateDepart);
 		try {
 			ArrayList<Etapes> etapes = new ArrayList<>();
 			while (res.next())
 				etapes.add((Etapes) (new Etapes()).createFromSQL(res));
 			for (Etapes etape : etapes) {
-				
+
 				Dialog<ButtonType> dialog = new Dialog<>();
 				dialog.setTitle("Reserve Etape" + etape.getOrdre());
 				dialog.setHeaderText("Réservez un hotel à " + etape.getVille());
@@ -165,8 +165,8 @@ public class PopupCircuit {
 
 				dialog.getDialogPane().setContent(grid);
 
-				final HotelTable hotels = new HotelTable(Controller.executeQuery(
-						"select * from hotel where ville='" + etape.getVille() + "' AND pays='" + etape.getPays()+"'"));
+				final HotelTable hotels = new HotelTable(Controller.executeQuery("select * from hotel where ville='"
+						+ etape.getVille() + "' AND pays='" + etape.getPays() + "'"));
 				grid.add(hotels, 0, 0);
 
 				Optional<ButtonType> result = dialog.showAndWait();
@@ -174,10 +174,11 @@ public class PopupCircuit {
 				if (result.isPresent()) {
 					for (int i = 0; i < etape.getNbJours(); i++)
 						tp.objects.add(new ReserveVisite(etape.getNomLieu(), etape.getVille(), etape.getPays(),
-							s.getNumDossier(), new Date(dateDepart.getTime() + (jours + i) * 24*60*60*1000), nbPersonnes));
+								s.getNumDossier(), new Date(dateDepart.getTime() + (jours + i) * 24 * 60 * 60 * 1000),
+								nbPersonnes));
 					System.out.println("jours: " + jours);
-					Date arrivee = new Date(dateDepart.getTime() + jours * 24*60*60*1000);
-					Date depart = new Date(dateDepart.getTime() + (jours + etape.getNbJours()) * 24*60*60*1000);
+					Date arrivee = new Date(dateDepart.getTime() + jours * 24 * 60 * 60 * 1000);
+					Date depart = new Date(dateDepart.getTime() + (jours + etape.getNbJours()) * 24 * 60 * 60 * 1000);
 					PopupHotel.show(tp, hotels.getSelectionModel().getSelectedItem(), s, arrivee, depart, nbPersonnes);
 					jours += etape.getNbJours();
 					// TODO : why #c06c2ba ?

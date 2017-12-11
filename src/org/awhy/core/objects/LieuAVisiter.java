@@ -18,7 +18,7 @@ public class LieuAVisiter implements Object {
 	public final SimpleIntegerProperty prix;
 
 	public static String dbName = "LieuAVisiter";
-	
+
 	public LieuAVisiter() {
 		this.nomLieu = new SimpleStringProperty();
 		this.ville = new SimpleStringProperty();
@@ -28,7 +28,8 @@ public class LieuAVisiter implements Object {
 		this.prix = new SimpleIntegerProperty();
 	}
 
-	public LieuAVisiter(String nomLieu, String ville, String pays, String adresseLieu, String descriptifLieu, int prix) {
+	public LieuAVisiter(String nomLieu, String ville, String pays, String adresseLieu, String descriptifLieu,
+			int prix) {
 		this.nomLieu = new SimpleStringProperty(nomLieu);
 		this.ville = new SimpleStringProperty(ville);
 		this.pays = new SimpleStringProperty(pays);
@@ -36,7 +37,7 @@ public class LieuAVisiter implements Object {
 		this.descriptifLieu = new SimpleStringProperty(descriptifLieu);
 		this.prix = new SimpleIntegerProperty(prix);
 	}
-	
+
 	@Override
 	public void insertSQL(Connection c) throws SQLException {
 		String insert = "INSERT INTO " + dbName + " VALUES " + "(?, ?, ?, ?, ?, ?)";
@@ -55,7 +56,8 @@ public class LieuAVisiter implements Object {
 
 	@Override
 	public void updateSQL(Connection c) throws SQLException {
-		String insert = "UPDATE " + dbName + " SET adresseLieu=?, descriptifLieu=?, prix=? WHERE nomLieu=?, ville=?, pays=?";
+		String insert = "UPDATE " + dbName
+				+ " SET adresseLieu=?, descriptifLieu=?, prix=? WHERE nomLieu=?, ville=?, pays=?";
 		c.commit();
 		PreparedStatement preparedStatementInsert = c.prepareStatement(insert);
 		preparedStatementInsert.setString(1, this.getAdresseLieu());
@@ -71,9 +73,10 @@ public class LieuAVisiter implements Object {
 
 	@Override
 	public Object createFromSQL(ResultSet res) throws SQLException {
-		return new LieuAVisiter(res.getString(1), res.getString(2), res.getString(3), res.getString(4), res.getString(5), res.getInt(6));
+		return new LieuAVisiter(res.getString(1), res.getString(2), res.getString(3), res.getString(4),
+				res.getString(5), res.getInt(6));
 	}
-	
+
 	public String getNomLieu() {
 		return nomLieu.get();
 	}
@@ -97,8 +100,7 @@ public class LieuAVisiter implements Object {
 	public Integer getPrix() {
 		return prix.get();
 	}
-	
-	
+
 	public void setNomLieu(String nomLieu) {
 		this.nomLieu.set(nomLieu);
 	}
@@ -121,6 +123,12 @@ public class LieuAVisiter implements Object {
 
 	public void setPrix(Integer prix) {
 		this.prix.set(prix);
+	}
+
+	@Override
+	public void deleteSQL(Connection c) throws SQLException {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

@@ -2,22 +2,15 @@ package org.awhy.ui;
 
 import java.sql.SQLException;
 
-import org.awhy.core.Dialog;
 import org.awhy.core.objects.Object;
-import org.awhy.core.objects.Ville;
 import org.awhy.ui.pane.GAccordionFX;
 import org.awhy.ui.tables.Table;
-import org.awhy.ui.tables.VilleTable;
-
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.SplitPane;
-import javafx.scene.control.TableRow;
-import javafx.scene.control.TableView;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.util.Callback;
 
 public class GContainerFX extends VBox {
 
@@ -32,23 +25,7 @@ public class GContainerFX extends VBox {
 		children.add(new GMenuFX());
 		container = new SplitPane();
 		children.add(container);
-
 		Controller.connect();
-//		this.setTableView(new VilleTable(Controller.dialog.executeQuery("select * from ville")));
-		
-//		TableView<Ville> v = (TableView<Ville>)(Controller.tableView);
-//		v.setRowFactory( tv -> {
-//		    TableRow<Ville> row = new TableRow<>();
-//		    row.setOnMouseClicked(event -> {
-//		        if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
-//		           Ville rowData = row.getItem();
-//		            System.out.println(rowData.getNomVille());
-//		            System.out.println(rowData.getPays());
-//		        }
-//		    });
-//		    return row ;
-//		});
-		
 
 		container.setDividerPositions(0.3);
 		// container.getChildren().add(box);
@@ -61,7 +38,7 @@ public class GContainerFX extends VBox {
 		this.bottom.left.setText(" AWHY v0.1");
 		children.add(this.bottom);
 	}
-	
+
 	public void setTableView(Table<? extends Object> tableView) throws SQLException {
 		this.container.getItems().remove(Controller.tableView);
 		Controller.tableView = tableView;
@@ -69,11 +46,11 @@ public class GContainerFX extends VBox {
 	}
 
 	public void setPane(GAccordionFX pane) {
-		if(this.paneLeft != null) {
+		if (this.paneLeft != null) {
 			this.container.getItems().remove(this.paneLeft);
 			this.paneLeft = null;
 		}
-		if(pane != null) {
+		if (pane != null) {
 			this.container.getItems().addAll(pane);
 			this.paneLeft = pane;
 		}

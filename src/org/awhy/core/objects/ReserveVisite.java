@@ -18,7 +18,7 @@ public class ReserveVisite implements Object {
 	public Date dateVisite;
 	public final SimpleIntegerProperty nbPersonnesVisite;
 	public static String dbName = "ReserveVisite";
-	
+
 	public ReserveVisite() {
 		this.nomLieu = new SimpleStringProperty();
 		this.ville = new SimpleStringProperty();
@@ -28,7 +28,8 @@ public class ReserveVisite implements Object {
 		this.nbPersonnesVisite = new SimpleIntegerProperty();
 	}
 
-	public ReserveVisite(String nomLieu, String ville, String pays, int numDossier, Date dateVisite, int nbPersonnesVisite) {
+	public ReserveVisite(String nomLieu, String ville, String pays, int numDossier, Date dateVisite,
+			int nbPersonnesVisite) {
 		this.nomLieu = new SimpleStringProperty(nomLieu);
 		this.ville = new SimpleStringProperty(ville);
 		this.pays = new SimpleStringProperty(pays);
@@ -55,7 +56,8 @@ public class ReserveVisite implements Object {
 
 	@Override
 	public void updateSQL(Connection c) throws SQLException {
-		String insert = "UPDATE " + dbName + " SET nbPersonnesVisite=? WHERE nomLieu=?, ville=?, pays=?, numDossier=?, dateVisite=?";
+		String insert = "UPDATE " + dbName
+				+ " SET nbPersonnesVisite=? WHERE nomLieu=?, ville=?, pays=?, numDossier=?, dateVisite=?";
 		c.commit();
 		PreparedStatement preparedStatementInsert = c.prepareStatement(insert);
 		preparedStatementInsert.setInt(1, this.getNbPersonnesVisite());
@@ -71,9 +73,9 @@ public class ReserveVisite implements Object {
 
 	@Override
 	public Object createFromSQL(ResultSet res) throws SQLException {
-		return new ReserveVisite(res.getString(1), res.getString(2), res.getString(3), res.getInt(4), res.getDate(5), res.getInt(6));
+		return new ReserveVisite(res.getString(1), res.getString(2), res.getString(3), res.getInt(4), res.getDate(5),
+				res.getInt(6));
 	}
-
 
 	public String getNomLieu() {
 		return nomLieu.get();
@@ -121,5 +123,11 @@ public class ReserveVisite implements Object {
 
 	public void setNbPersonnesVisite(Integer nbPersonnesVisite) {
 		this.nbPersonnesVisite.set(nbPersonnesVisite);
+	}
+
+	@Override
+	public void deleteSQL(Connection c) throws SQLException {
+		// TODO Auto-generated method stub
+		
 	}
 }

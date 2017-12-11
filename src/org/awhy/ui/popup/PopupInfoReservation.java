@@ -21,14 +21,15 @@ import javafx.scene.text.Text;
 public class PopupInfoReservation {
 	public static void show(int numDossier, int idClient, Connection c) throws SQLException {
 		Dialog<ButtonType> dialog = new Dialog<>();
-		
+
 		String query = "SELECT * FROM Simulation WHERE numDossier=?";
 		PreparedStatement pS = c.prepareStatement(query);
 		pS.setInt(1, numDossier);
 		ResultSet res = pS.executeQuery();
 		while (res.next()) {
 			dialog.setTitle("Récapitulatif de la réservation");
-			dialog.setHeaderText("Réservation n°" + numDossier + " de " + res.getString(2).trim() + " " + res.getString(3).trim());
+			dialog.setHeaderText(
+					"Réservation n°" + numDossier + " de " + res.getString(2).trim() + " " + res.getString(3).trim());
 		}
 		pS.close();
 
@@ -198,16 +199,16 @@ public class PopupInfoReservation {
 		}
 		pS.close();
 
-		final ReserveCircuitTable recapCircuit= new ReserveCircuitTable(
+		final ReserveCircuitTable recapCircuit = new ReserveCircuitTable(
 				Controller.executeQuery("select * from reservecircuit where numDossier = '" + numDossier + "'"));
 		grid.add(recapCircuit, 0, 3);
 		final ReserveHotelTable recapHotel = new ReserveHotelTable(
 				Controller.executeQuery("select * from reservehotel where numDossier = '" + numDossier + "'"));
 		grid.add(recapHotel, 1, 3);
-		final ReserveVisiteTable recapVisite= new ReserveVisiteTable(
+		final ReserveVisiteTable recapVisite = new ReserveVisiteTable(
 				Controller.executeQuery("select * from reservevisite where numDossier = '" + numDossier + "'"));
 		grid.add(recapVisite, 2, 3);
-		
+
 		query = "SELECT * FROM Reservation WHERE numDossier=?";
 		pS = c.prepareStatement(query);
 		pS.setInt(1, numDossier);
@@ -215,15 +216,14 @@ public class PopupInfoReservation {
 		while (res.next()) {
 			Text payele = new Text("Payé le " + res.getDate(2).toString());
 			grid.add(payele, 0, 4);
-			
+
 			Text payecom = new Text("Info paiement " + res.getString(3).toString());
 			grid.add(payecom, 1, 4, 2, 1);
 
 		}
-			
+
 		pS.close();
 
-		
 		dialog.getDialogPane().setContent(grid);
 
 		dialog.showAndWait();

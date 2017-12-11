@@ -34,13 +34,12 @@ public class ReserveHotel implements Object {
 		this.nbPetitDejReserves = new SimpleIntegerProperty();
 	}
 
-	public ReserveHotel(String nomHotel, String ville, String pays, int numDossier,
-                        Date dateDepartHotel, Date dateArriveeHotel, int nbChambresReservees, int nbPetitDejReserves) {
+	public ReserveHotel(String nomHotel, String ville, String pays, int numDossier, Date dateDepartHotel,
+			Date dateArriveeHotel, int nbChambresReservees, int nbPetitDejReserves) {
 		if (Debugger.isEnabled()) {
-			Debugger.println("ReservHotel : " + nomHotel + ", "
-					+ ville + ", " + pays + ", " + numDossier + ", "
-					+ dateArriveeHotel + ", " + dateDepartHotel + ", "
-					+ nbChambresReservees + ", " + nbPetitDejReserves);
+			Debugger.println("ReservHotel : " + nomHotel + ", " + ville + ", " + pays + ", " + numDossier + ", "
+					+ dateArriveeHotel + ", " + dateDepartHotel + ", " + nbChambresReservees + ", "
+					+ nbPetitDejReserves);
 		}
 		this.nomHotel = new SimpleStringProperty(nomHotel);
 		this.ville = new SimpleStringProperty(ville);
@@ -49,7 +48,7 @@ public class ReserveHotel implements Object {
 		this.dateDepartHotel = dateDepartHotel;
 		this.dateArriveeHotel = dateArriveeHotel;
 		this.nbChambresReservees = new SimpleIntegerProperty(nbChambresReservees);
-    	this.nbPetitDejReserves = new SimpleIntegerProperty(nbPetitDejReserves);
+		this.nbPetitDejReserves = new SimpleIntegerProperty(nbPetitDejReserves);
 	}
 
 	@Override
@@ -72,7 +71,8 @@ public class ReserveHotel implements Object {
 
 	@Override
 	public void updateSQL(Connection c) throws SQLException {
-		String insert = "UPDATE " + dbName + " SET nbChambresReservees=?, nbPetitDejReserves=? WHERE nomHotel=?, ville=?, pays=?, numDossier=?, dateDepartHotel=?, dateArriveeHotel=?";
+		String insert = "UPDATE " + dbName
+				+ " SET nbChambresReservees=?, nbPetitDejReserves=? WHERE nomHotel=?, ville=?, pays=?, numDossier=?, dateDepartHotel=?, dateArriveeHotel=?";
 		c.commit();
 		PreparedStatement preparedStatementInsert = c.prepareStatement(insert);
 		preparedStatementInsert.setInt(1, this.getNbChambresReservees());
@@ -90,9 +90,9 @@ public class ReserveHotel implements Object {
 
 	@Override
 	public Object createFromSQL(ResultSet res) throws SQLException {
-		return new ReserveHotel(res.getString(1), res.getString(2), res.getString(3), res.getInt(4), res.getDate(5), res.getDate(6), res.getInt(7), res.getInt(8));
+		return new ReserveHotel(res.getString(1), res.getString(2), res.getString(3), res.getInt(4), res.getDate(5),
+				res.getDate(6), res.getInt(7), res.getInt(8));
 	}
-
 
 	public String getNomHotel() {
 		return nomHotel.get();
@@ -138,7 +138,7 @@ public class ReserveHotel implements Object {
 		this.pays.set(pays);
 	}
 
-	//Attention à l'utilisation de setNumDossier
+	// Attention à l'utilisation de setNumDossier
 	public void setNumDossier(Integer numDossier) {
 		this.numDossier.set(numDossier);
 	}
@@ -158,5 +158,10 @@ public class ReserveHotel implements Object {
 	public void setNbPetitDejReserves(Integer nbPetitDejReserves) {
 		this.nbPetitDejReserves.set(nbPetitDejReserves);
 	}
-	
+
+	@Override
+	public void deleteSQL(Connection c) throws SQLException {
+		// TODO Auto-generated method stub
+		
+	}
 }

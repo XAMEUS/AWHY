@@ -1,6 +1,7 @@
 package org.awhy.ui.popup;
 
 import java.sql.Date;
+import java.util.Optional;
 
 import org.awhy.core.objects.LieuAVisiter;
 import org.awhy.core.objects.ReserveVisite;
@@ -32,30 +33,31 @@ public class PopupVisite {
 		grid.setHgap(10);
 		grid.setVgap(10);
 		grid.setPadding(new Insets(20, 20, 10, 10));
-		
+
 		DatePicker dateVisite = new DatePicker();
 		TextField nbPersonnes = new TextField();
 		grid.add(new Label("Date de la visite:"), 0, 0);
 		grid.add(dateVisite, 0, 1);
 		grid.add(new Label("Nombre de places voulues:"), 1, 0);
 		grid.add(nbPersonnes, 1, 1);
-		
+
 		dialog.getDialogPane().setContent(grid);
 
-		dialog.showAndWait();
-				
-		try {
-			if(Integer.valueOf(nbPersonnes.getText()) <= 0)
+		Optional<Pair<String, String>> result = dialog.showAndWait();
+		if (result.isPresent()) {
+			try {
+				if (Integer.valueOf(nbPersonnes.getText()) <= 0)
+					return false;
+				tp.setText(data.getNomLieu() + data.getVille());
+				tp.objects.add(new ReserveVisite(data.getNomLieu(), data.getVille(), data.getPays(), s.getNumDossier(),
+						Date.valueOf(dateVisite.getValue()), Integer.valueOf(nbPersonnes.getText())));
+				return true;
+			} catch (NumberFormatException e) {
+				Debugger.println("PopupVisite: valeur incorrecte: " + e.toString());
+				PopupError.bang();
 				return false;
-			tp.setText(data.getNomLieu() + data.getVille());
-			tp.objects.add(new ReserveVisite(data.getNomLieu(), data.getVille(), data.getPays(), s.getNumDossier(), 
-					Date.valueOf(dateVisite.getValue()), Integer.valueOf(nbPersonnes.getText())));
-			return true;
+			}
 		}
-		catch (NumberFormatException e) {
-			Debugger.println("PopupVisite: valeur incorrecte: " + e.toString());
-			PopupError.bang();
-			return false;
-		}
+		return false;
 	}
 }

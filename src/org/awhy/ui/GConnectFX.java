@@ -22,10 +22,10 @@ import javafx.util.Pair;
 
 public class GConnectFX {
 	public static void connnect() throws SQLException {
-		
+
 		if (Controller.dialog == null)
 			Controller.dialog = new org.awhy.core.Dialog();
-		
+
 		Dialog<Pair<String, String>> dialog = new Dialog<>();
 		dialog.setTitle("AWHY: Connection");
 		dialog.setHeaderText("Se connecter à la base de données");
@@ -40,7 +40,7 @@ public class GConnectFX {
 
 		TextField username = new TextField();
 		username.setPromptText("Username");
-        username.setPrefWidth(400);
+		username.setPrefWidth(400);
 		PasswordField password = new PasswordField();
 		password.setPromptText("Password");
 		TextField url = new TextField();
@@ -61,11 +61,11 @@ public class GConnectFX {
 		Platform.runLater(() -> username.requestFocus());
 
 		dialog.setResultConverter(dialogButton -> {
-		    if (dialogButton == loginButtonType) {
-		    	Controller.dialog.user = username.getText();
-		    	Controller.dialog.passwd = password.getText();
-		    	Controller.dialog.url = url.getText();
-		    	try {
+			if (dialogButton == loginButtonType) {
+				Controller.dialog.user = username.getText();
+				Controller.dialog.passwd = password.getText();
+				Controller.dialog.url = url.getText();
+				try {
 					Controller.dialog.connect();
 				} catch (SQLException e) {
 					e.printStackTrace();
@@ -100,14 +100,14 @@ public class GConnectFX {
 
 					alert.showAndWait();
 				}
-		    }
-		    return null;
+			}
+			return null;
 		});
 
 		Optional<Pair<String, String>> result = dialog.showAndWait();
 
 		result.ifPresent(usernamePassword -> {
-		    System.out.println("Username=" + usernamePassword.getKey() + ", Password=" + usernamePassword.getValue());
+			System.out.println("Username=" + usernamePassword.getKey() + ", Password=" + usernamePassword.getValue());
 		});
 	}
 }
