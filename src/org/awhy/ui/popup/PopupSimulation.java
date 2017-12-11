@@ -241,7 +241,6 @@ public class PopupSimulation {
 		grid.add(recapVisite, 2, 3);
 
 		Text placesOK;
-		possible = false;
 		if (possible) {
 			placesOK = new Text("Réservation possible");
 			dialog.getDialogPane().getButtonTypes().addAll(confirmButtonType);
