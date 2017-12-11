@@ -171,10 +171,21 @@ public class PopupSimulation {
 			PreparedStatement cPS = c.prepareStatement(check);
 			cPS.setString(1, res.getString(1));
 			cPS.setDate(2, res.getDate(2));
-			System.out.println(check);
 			ResultSet cRes = cPS.executeQuery();
-			while (cRes.next()) {
-				if (cRes.getInt(4) < res.getInt(1)) {
+			System.out.println(check);
+			
+			check = "select nbPersonnes from DateCircuit where idCircuit=? and dateDepartCircuit=?";
+			cPS = c.prepareStatement(check);
+			cPS.setString(1, res.getString(1));
+			cPS.setDate(2, res.getDate(2));
+			ResultSet ccRes = cPS.executeQuery();
+			System.out.println(check);
+			
+			while (ccRes.next()) {
+				int nbPlaces = ccRes.getInt(1);
+				if (cRes.next())
+					nbPlaces -= cRes.getInt(1);
+				if (nbPlaces < res.getInt(4)) {
 					possible = false;
 					circuit.deleteSQL(c);
 					circuitsPasOk.add(circuit);
@@ -185,6 +196,7 @@ public class PopupSimulation {
 			if(circuit != null)
 				circuits.add(circuit);
 			cPS.close();
+			break;
 		}
 		pS.close();
 
@@ -196,7 +208,7 @@ public class PopupSimulation {
 			ReserveHotel hotel = (ReserveHotel) new ReserveHotel().createFromSQL(res);
 			Date curr = new Date(res.getDate(5).getTime());
 			while (res.getDate(6).after(curr)) {
-				String check = "select (h.nbChambresTotal - sum(rhr.nbChambresReservees)) from (select nomHotel, ville, pays, nbChambresTotal from Hotel) h, (select rh.nomHotel, rh.ville, rh.pays, rh.nbChambresReservees from ReserveHotel rh, Reservation r where rh.numDossier = r.numDossier and rh.nomHotel = ? and rh.ville = ? and rh.pays = ? and (dateDepartHotel <= ? and dateArriveeHotel > ?)) rhr where h.nomHotel = rhr.nomHotel and h.ville = rhr.ville and h.pays = rhr.pays group by h.nomHotel, h.ville, h.pays, h.nbChambresTotal";
+				String check = "select sum(rh.nbChambresReservees) from ReserveHotel rh, Reservation r where rh.numDossier = r.numDossier and rh.nomHotel = ? and rh.ville = ? and rh.pays = ? and (dateDepartHotel <= ? and dateArriveeHotel >= ?)";
 				PreparedStatement cPS = c.prepareStatement(check);
 				cPS.setString(1, res.getString(1));
 				cPS.setString(2, res.getString(2));
@@ -204,15 +216,26 @@ public class PopupSimulation {
 				cPS.setDate(4, curr);
 				cPS.setDate(5, curr);
 				ResultSet cRes = cPS.executeQuery();
-				while (cRes.next())
-					if (res.getInt(7) > cRes.getInt(1)) {
+				
+				check = "select nbChambresTotal from Hotel h where nomHotel = ? and ville = ? and pays = ?";
+				cPS = c.prepareStatement(check);
+				cPS.setString(1, res.getString(1));
+				cPS.setString(2, res.getString(2));
+				cPS.setString(3, res.getString(3));
+				ResultSet ccRes = cPS.executeQuery();
+				
+				while (ccRes.next()) {
+					int nbPlaces = ccRes.getInt(1);
+					if (cRes.next())
+						nbPlaces -= cRes.getInt(1);
+					if (nbPlaces < res.getInt(7)) {
 						possible = false;
 						hotel.deleteSQL(c);
 						hotelsPasOk.add(hotel);
 						hotel = null;
 						break;
 					}
-				
+				}
 				if(hotel != null)
 					hotels.add(hotel);
 				cPS.close();
