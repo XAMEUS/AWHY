@@ -128,7 +128,7 @@ public class ReserveVisite implements Object {
 	@Override
 	public void deleteSQL(Connection c) throws SQLException {
 		String insert = "DELETE from " + dbName
-				+ " WHERE nomLieu=?, ville=?, pays=?, numDossier=?, dateVisite=?";
+				+ " WHERE nomLieu=? and ville=? and pays=? and numDossier=? and dateVisite=?";
 		c.commit();
 		PreparedStatement preparedStatementInsert = c.prepareStatement(insert);
 		preparedStatementInsert.setString(1, this.getNomLieu());

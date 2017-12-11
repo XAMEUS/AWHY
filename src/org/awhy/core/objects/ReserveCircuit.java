@@ -101,7 +101,7 @@ public class ReserveCircuit implements Object {
 	@Override
 	public void deleteSQL(Connection c) throws SQLException {
 		String insert = "DELETE from " + dbName
-				+ " WHERE idCircuit=?, dateDepartCircuit=?, numDossier=?";
+				+ " WHERE idCircuit=? and dateDepartCircuit=? and numDossier=?";
 		c.commit();
 		PreparedStatement preparedStatementInsert = c.prepareStatement(insert);
 		preparedStatementInsert.setString(1, this.getIdCircuit());
