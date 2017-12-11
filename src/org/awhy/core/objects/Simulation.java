@@ -1,4 +1,5 @@
 package org.awhy.core.objects;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,14 +10,13 @@ import org.awhy.core.Dialog;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
-
 public class Simulation implements Object {
 
 	public final SimpleIntegerProperty numDossier;
 	public SimpleStringProperty nomClient;
 	public SimpleStringProperty prenomClient;
 	public static String dbName = "Simulation";
-	
+
 	public void insertSQL(Connection c) throws SQLException {
 		String insert = "INSERT INTO " + dbName + " VALUES " + "(?, ?, ?)";
 		c.commit();
@@ -34,7 +34,7 @@ public class Simulation implements Object {
 		this.nomClient = new SimpleStringProperty();
 		this.prenomClient = new SimpleStringProperty();
 	}
-	
+
 	public Simulation(Dialog d) throws SQLException {
 		ResultSet r = d.executeQuery("select numdossier.nextval from simulation");
 		long id = 0;
@@ -49,7 +49,7 @@ public class Simulation implements Object {
 		PreparedStatement preparedStatementInsert = d.getConnection().prepareStatement(insert);
 		preparedStatementInsert.setLong(1, id);
 		ResultSet nR = preparedStatementInsert.executeQuery();
-		while(nR.next()) {
+		while (nR.next()) {
 			this.nomClient = new SimpleStringProperty(nR.getString(2));
 			this.prenomClient = new SimpleStringProperty(nR.getString(3));
 		}
@@ -69,31 +69,29 @@ public class Simulation implements Object {
 		return new Simulation(res.getInt(1), res.getString(2), res.getString(3));
 	}
 
-
 	public Integer getNumDossier() {
 		return numDossier.get();
 	}
-	
-	//Attention à l'utilisation de setNumDossier !
+
+	// Attention à l'utilisation de setNumDossier !
 	public void setNumDossier(Integer numDossier) {
 		this.numDossier.set(numDossier);
 	}
 
-	
-	//Attention à l'utilisation de setNumDossier !
+	// Attention à l'utilisation de setNumDossier !
 	public void setNomClient(String nomClient) {
 		this.nomClient = new SimpleStringProperty(nomClient);
 	}
-	
+
 	public String getNomClient() {
 		return nomClient.get().trim();
 	}
 
-	//Attention à l'utilisation de setNumDossier !
+	// Attention à l'utilisation de setNumDossier !
 	public void setPrenomClient(String prenomClient) {
 		this.prenomClient = new SimpleStringProperty(prenomClient);
 	}
-	
+
 	public String getPrenomClient() {
 		return prenomClient.get().trim();
 	}

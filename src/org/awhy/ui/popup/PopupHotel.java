@@ -52,23 +52,24 @@ public class PopupHotel {
 		grid.add(nbPDej, 1, 3);
 
 		dialog.getDialogPane().setContent(grid);
-		
+
 		Optional<ButtonType> result = dialog.showAndWait();
 		if (result.isPresent()) {
 			try {
-				if(Integer.valueOf(nbPersonnes.getText()) <= 0 || Integer.valueOf(nbPDej.getText()) < 0 || Date.valueOf(depart.getValue()).after(Date.valueOf(arrivee.getValue())))
+				if (Integer.valueOf(nbPersonnes.getText()) <= 0 || Integer.valueOf(nbPDej.getText()) < 0
+						|| Date.valueOf(depart.getValue()).after(Date.valueOf(arrivee.getValue())))
 					return false;
 				tp.setText(data.getNomHotel());
-				tp.objects.add(new ReserveHotel(data.getNomHotel(), data.getVille(), data.getPays(), s.getNumDossier(), 
-						Date.valueOf(depart.getValue()), Date.valueOf(arrivee.getValue()), Integer.valueOf(nbPersonnes.getText()), Integer.valueOf(nbPDej.getText())));
+				tp.objects.add(new ReserveHotel(data.getNomHotel(), data.getVille(), data.getPays(), s.getNumDossier(),
+						Date.valueOf(depart.getValue()), Date.valueOf(arrivee.getValue()),
+						Integer.valueOf(nbPersonnes.getText()), Integer.valueOf(nbPDej.getText())));
 				return true;
 
-			}
-			catch (NumberFormatException e) {
+			} catch (NumberFormatException e) {
 				Debugger.println("PopupHotel: valeur incorrecte: " + e.toString());
 				PopupError.bang();
 				return false;
-			}			
+			}
 		}
 		return false;
 	}

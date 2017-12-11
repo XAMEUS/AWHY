@@ -13,6 +13,7 @@ import javafx.scene.layout.GridPane;
 public class PopupEndroit {
 	public String ville;
 	public String pays;
+
 	public int show() {
 		Dialog<ButtonType> dialog = new Dialog<>();
 		dialog.setTitle("Recherche dans un emplacement");
@@ -42,10 +43,12 @@ public class PopupEndroit {
 			try {
 				this.ville = ville.getText().trim();
 				this.pays = pays.getText().trim();
-				if(!this.ville.isEmpty())
-					this.ville = this.ville.substring(0, 1).toUpperCase() + (this.ville.length() > 1 ? this.ville.substring(1).toLowerCase() : "");
-				if(!this.pays.isEmpty())
-					this.pays = this.pays.substring(0, 1).toUpperCase() + (this.pays.length() > 1 ? this.pays.substring(1).toLowerCase() : "");
+				if (!this.ville.isEmpty())
+					this.ville = this.ville.substring(0, 1).toUpperCase()
+							+ (this.ville.length() > 1 ? this.ville.substring(1).toLowerCase() : "");
+				if (!this.pays.isEmpty())
+					this.pays = this.pays.substring(0, 1).toUpperCase()
+							+ (this.pays.length() > 1 ? this.pays.substring(1).toLowerCase() : "");
 				return 1;
 			} catch (NullPointerException | NumberFormatException e) {
 				return -1;

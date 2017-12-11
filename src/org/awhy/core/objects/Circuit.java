@@ -16,32 +16,32 @@ public class Circuit implements Object {
 	public final SimpleStringProperty paysDepart;
 	public final SimpleStringProperty villeArrivee;
 	public final SimpleStringProperty paysArrivee;
-  	public final SimpleIntegerProperty nbJoursTotal;
-  	public final SimpleIntegerProperty prixCircuit;
+	public final SimpleIntegerProperty nbJoursTotal;
+	public final SimpleIntegerProperty prixCircuit;
 
 	public static String dbName = "Circuit";
 
 	public Circuit() {
-	    this.idCircuit = new SimpleStringProperty();
-	    this.descriptif = new SimpleStringProperty();
-	    this.villeDepart = new SimpleStringProperty();
-	    this.paysDepart = new SimpleStringProperty();
-	    this.villeArrivee = new SimpleStringProperty();
-	    this.paysArrivee = new SimpleStringProperty();
-	    this.nbJoursTotal = new SimpleIntegerProperty();
-	    this.prixCircuit = new SimpleIntegerProperty();
+		this.idCircuit = new SimpleStringProperty();
+		this.descriptif = new SimpleStringProperty();
+		this.villeDepart = new SimpleStringProperty();
+		this.paysDepart = new SimpleStringProperty();
+		this.villeArrivee = new SimpleStringProperty();
+		this.paysArrivee = new SimpleStringProperty();
+		this.nbJoursTotal = new SimpleIntegerProperty();
+		this.prixCircuit = new SimpleIntegerProperty();
 	}
 
-	public Circuit(String idCircuit, String descriptif, String villeDepart, String paysDepart,
-                      String villeArrivee, String paysArrivee, int nbJoursTotal, int prixCircuit){
-	    this.idCircuit = new SimpleStringProperty(idCircuit);
-	    this.descriptif = new SimpleStringProperty(descriptif);
-	    this.villeDepart = new SimpleStringProperty(villeDepart);
-	    this.paysDepart = new SimpleStringProperty(paysDepart);
-	    this.villeArrivee = new SimpleStringProperty(villeArrivee);
-	    this.paysArrivee = new SimpleStringProperty(paysArrivee);
-	    this.nbJoursTotal = new SimpleIntegerProperty(nbJoursTotal);
-	    this.prixCircuit = new SimpleIntegerProperty(prixCircuit);
+	public Circuit(String idCircuit, String descriptif, String villeDepart, String paysDepart, String villeArrivee,
+			String paysArrivee, int nbJoursTotal, int prixCircuit) {
+		this.idCircuit = new SimpleStringProperty(idCircuit);
+		this.descriptif = new SimpleStringProperty(descriptif);
+		this.villeDepart = new SimpleStringProperty(villeDepart);
+		this.paysDepart = new SimpleStringProperty(paysDepart);
+		this.villeArrivee = new SimpleStringProperty(villeArrivee);
+		this.paysArrivee = new SimpleStringProperty(paysArrivee);
+		this.nbJoursTotal = new SimpleIntegerProperty(nbJoursTotal);
+		this.prixCircuit = new SimpleIntegerProperty(prixCircuit);
 	}
 
 	@Override
@@ -63,7 +63,8 @@ public class Circuit implements Object {
 
 	@Override
 	public void updateSQL(Connection c) throws SQLException {
-		String insert = "UPDATE " + dbName + " SET descriptif=?, villeDepart=?, paysDepart=?, villeArrivee=?, paysArrivee=?, nbJoursTotal=?, prixCircuit=? WHERE idCircuit=?";
+		String insert = "UPDATE " + dbName
+				+ " SET descriptif=?, villeDepart=?, paysDepart=?, villeArrivee=?, paysArrivee=?, nbJoursTotal=?, prixCircuit=? WHERE idCircuit=?";
 		c.commit();
 		PreparedStatement preparedStatementInsert = c.prepareStatement(insert);
 		preparedStatementInsert.setString(1, this.getDescriptif());
@@ -81,10 +82,11 @@ public class Circuit implements Object {
 
 	@Override
 	public Object createFromSQL(ResultSet res) throws SQLException {
-		return new Circuit(res.getString(1), res.getString(2), res.getString(3), res.getString(4), res.getString(5), res.getString(6), res.getInt(7), res.getInt(8));
+		return new Circuit(res.getString(1), res.getString(2), res.getString(3), res.getString(4), res.getString(5),
+				res.getString(6), res.getInt(7), res.getInt(8));
 	}
 
-  	public String getIdCircuit() {
+	public String getIdCircuit() {
 		return idCircuit.get();
 	}
 
@@ -112,12 +114,11 @@ public class Circuit implements Object {
 		return nbJoursTotal.get();
 	}
 
-  	public Integer getPrixCircuit() {
+	public Integer getPrixCircuit() {
 		return prixCircuit.get();
 	}
 
-
-  	public void setIdCircuit(String idCircuit) {
+	public void setIdCircuit(String idCircuit) {
 		this.idCircuit.set(idCircuit);
 	}
 
@@ -145,7 +146,7 @@ public class Circuit implements Object {
 		this.nbJoursTotal.set(nbJoursTotal);
 	}
 
-  	public void setPrixCircuit(Integer prixCircuit) {
+	public void setPrixCircuit(Integer prixCircuit) {
 		this.prixCircuit.set(prixCircuit);
 	}
 

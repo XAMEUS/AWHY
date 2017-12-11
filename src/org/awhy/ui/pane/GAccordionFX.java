@@ -57,11 +57,11 @@ public class GAccordionFX extends VBox {
 		sp.setFitToHeight(true);
 		sp.setFitToWidth(true);
 
-		this.top = new ToolBar(new Text("Sim: " + s.getNumDossier()));
+		this.top = new ToolBar(new Text("Simulation n°: " + s.getNumDossier()));
 		this.getChildren().add(this.top);
 		this.getChildren().add(sp);
 
-		Button b1 = new Button("Add Hotel");
+		Button b1 = new Button("Ajouter Hotel");
 		b1.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
@@ -70,18 +70,18 @@ public class GAccordionFX extends VBox {
 					PopupEndroit endroit = new PopupEndroit();
 					endroit.show();
 					String query = "select * from hotel";
-					if(!endroit.ville.isEmpty() || !endroit.pays.isEmpty())
+					if (!endroit.ville.isEmpty() || !endroit.pays.isEmpty())
 						query += " where ";
-					if(!endroit.ville.isEmpty())
+					if (!endroit.ville.isEmpty())
 						query += "ville LIKE ?";
-					if(!endroit.ville.isEmpty() && !endroit.pays.isEmpty())
+					if (!endroit.ville.isEmpty() && !endroit.pays.isEmpty())
 						query += " and ";
-					if(!endroit.pays.isEmpty())
+					if (!endroit.pays.isEmpty())
 						query += "pays LIKE ?";
 					PreparedStatement pS = Controller.dialog.getConnection().prepareStatement(query);
-					if(!endroit.ville.isEmpty())
+					if (!endroit.ville.isEmpty())
 						pS.setString(1, "%" + endroit.ville + "%");
-					if(!endroit.pays.isEmpty())
+					if (!endroit.pays.isEmpty())
 						pS.setString((endroit.ville.isEmpty()) ? 1 : 2, "%" + endroit.pays + "%");
 					ResultSet res = pS.executeQuery();
 					Controller.container.setTableView(new HotelTable(res));
@@ -92,11 +92,10 @@ public class GAccordionFX extends VBox {
 						row.setOnMouseClicked(e -> {
 							if (e.getClickCount() == 2 && (!row.isEmpty())) {
 								Hotel rowData = row.getItem();
-								if(PopupHotel.show(tp, rowData, s, null, null, 0)) {
+								if (PopupHotel.show(tp, rowData, s, null, null, 0)) {
 									ac.getPanes().add(tp);
 									confirmer.setVisible(true);
-								}
-								else
+								} else
 									PopupError.bang();
 							}
 						});
@@ -108,7 +107,7 @@ public class GAccordionFX extends VBox {
 			}
 		});
 
-		Button b2 = new Button("Add LAV");
+		Button b2 = new Button("Ajouter LAV");
 		b2.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
@@ -117,18 +116,18 @@ public class GAccordionFX extends VBox {
 					PopupEndroit endroit = new PopupEndroit();
 					endroit.show();
 					String query = "select * from lieuavisiter";
-					if(!endroit.ville.isEmpty() || !endroit.pays.isEmpty())
+					if (!endroit.ville.isEmpty() || !endroit.pays.isEmpty())
 						query += " where ";
-					if(!endroit.ville.isEmpty())
+					if (!endroit.ville.isEmpty())
 						query += "ville LIKE ?";
-					if(!endroit.ville.isEmpty() && !endroit.pays.isEmpty())
+					if (!endroit.ville.isEmpty() && !endroit.pays.isEmpty())
 						query += " and ";
-					if(!endroit.pays.isEmpty())
+					if (!endroit.pays.isEmpty())
 						query += "pays LIKE ?";
 					PreparedStatement pS = Controller.dialog.getConnection().prepareStatement(query);
-					if(!endroit.ville.isEmpty())
+					if (!endroit.ville.isEmpty())
 						pS.setString(1, "%" + endroit.ville + "%");
-					if(!endroit.pays.isEmpty())
+					if (!endroit.pays.isEmpty())
 						pS.setString((endroit.ville.isEmpty()) ? 1 : 2, "%" + endroit.pays + "%");
 					ResultSet res = pS.executeQuery();
 					Controller.container.setTableView(new LieuAVisiterTable(res));
@@ -139,9 +138,9 @@ public class GAccordionFX extends VBox {
 						row.setOnMouseClicked(e -> {
 							if (e.getClickCount() == 2 && (!row.isEmpty())) {
 								LieuAVisiter rowData = row.getItem();
-								if(PopupVisite.show(tp, rowData, s)) {
-										ac.getPanes().add(tp);
-										confirmer.setVisible(true);
+								if (PopupVisite.show(tp, rowData, s)) {
+									ac.getPanes().add(tp);
+									confirmer.setVisible(true);
 								}
 							}
 						});
@@ -153,7 +152,7 @@ public class GAccordionFX extends VBox {
 			}
 		});
 
-		Button b3 = new Button("Add Circuit");
+		Button b3 = new Button("Ajouter Circuit");
 		b3.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
@@ -162,30 +161,29 @@ public class GAccordionFX extends VBox {
 					PopupEndroit endroit = new PopupEndroit();
 					endroit.show();
 					String query = "select * from circuit";
-					if(!endroit.ville.isEmpty() || !endroit.pays.isEmpty())
+					if (!endroit.ville.isEmpty() || !endroit.pays.isEmpty())
 						query += " where ";
-					if(!endroit.ville.isEmpty())
+					if (!endroit.ville.isEmpty())
 						query += "villeDepart LIKE ?";
-					if(!endroit.ville.isEmpty() && !endroit.pays.isEmpty())
+					if (!endroit.ville.isEmpty() && !endroit.pays.isEmpty())
 						query += " and ";
-					if(!endroit.pays.isEmpty())
+					if (!endroit.pays.isEmpty())
 						query += "paysDepart LIKE ?";
 					PreparedStatement pS = Controller.dialog.getConnection().prepareStatement(query);
-					if(!endroit.ville.isEmpty())
+					if (!endroit.ville.isEmpty())
 						pS.setString(1, "%" + endroit.ville + "%");
-					if(!endroit.pays.isEmpty())
+					if (!endroit.pays.isEmpty())
 						pS.setString((endroit.ville.isEmpty()) ? 1 : 2, "%" + endroit.pays + "%");
 					ResultSet res = pS.executeQuery();
 					Controller.container.setTableView(new CircuitTable(res));
 					pS.close();
-					// TODO : on click, reservation.
 					TableView<Circuit> v = (TableView<Circuit>) (Controller.tableView);
 					v.setRowFactory(tv -> {
 						TableRow<Circuit> row = new TableRow<>();
 						row.setOnMouseClicked(e -> {
 							if (e.getClickCount() == 2 && (!row.isEmpty())) {
 								Circuit rowData = row.getItem();
-								if(PopupCircuit.show(tp, rowData, s)) {
+								if (PopupCircuit.show(tp, rowData, s)) {
 									ac.getPanes().add(tp);
 									confirmer.setVisible(true);
 								}
@@ -204,10 +202,10 @@ public class GAccordionFX extends VBox {
 			public void handle(ActionEvent event) {
 				PopupNom nom = new PopupNom();
 
-				switch(nom.show()) {
-				case(-1):
+				switch (nom.show()) {
+				case (-1):
 					PopupError.bang();
-				case(0):
+				case (0):
 					return;
 				}
 				try {
@@ -219,8 +217,8 @@ public class GAccordionFX extends VBox {
 							System.out.println(o);
 							o.insertSQL(Controller.dialog.getConnection());
 							Controller.container.setPane(null);
-							Controller.container
-							.setTableView(new SimulationTable(Controller.executeQuery("select * from Simulation")));
+							Controller.container.setTableView(
+									new SimulationTable(Controller.executeQuery("select * from Simulation")));
 						}
 					}
 					Controller.dialog.getConnection().commit();

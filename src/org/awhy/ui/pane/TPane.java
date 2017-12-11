@@ -6,6 +6,6 @@ import org.awhy.core.objects.Object;
 
 import javafx.scene.control.TitledPane;
 
-public class TPane extends TitledPane{
+public class TPane extends TitledPane {
 	public ArrayList<Object> objects = new ArrayList<>();
 }

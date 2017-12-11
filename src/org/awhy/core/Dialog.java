@@ -48,7 +48,7 @@ public class Dialog {
 
 	public ResultSet executeQuery(String sql) throws SQLException {
 		// Ty pierre
-//		this.connect();
+		// this.connect();
 		if (Debugger.isEnabled())
 			Debugger.print("executeQuery: " + sql);
 		ResultSet res = stmt.executeQuery(sql);
@@ -56,41 +56,41 @@ public class Dialog {
 			Debugger.println(" - OK");
 		return res;
 	}
-	
+
 	public ResultSet executeFile(String path, boolean continueOnError) throws SQLException, IOException {
 		if (Debugger.isEnabled())
 			Debugger.print("executeFile: " + path + "\n");
-        StringBuffer sqlFile = new StringBuffer();
-        String tmpFile = new String();
-        BufferedReader file = new BufferedReader(new FileReader(new File(path)));
-        while(true) {
-        	tmpFile = file.readLine();
-        	if(tmpFile == null) break;
-        	for(int i = 0; i < tmpFile.length() - 1; i++) {
-        		if(tmpFile.charAt(i) == '-' && tmpFile.charAt(i+1) == '-') {
-        			if(i > 0)
-        				tmpFile = tmpFile.substring(0, i-1);
-        			else
-        				tmpFile = null;
-    				break;
-        		}
-        	}
-        	if(tmpFile != null)
-        		sqlFile.append(tmpFile);
-        }
-        file.close();
-        String[] queries = sqlFile.toString().split(";");
-        for(String query : queries) {
-        	try {
-        		this.executeQuery(query);
-        	}
-        	catch (SQLException e) {
-        		if(continueOnError)
-        			Debugger.println(e + "\n");
-        		else
-        			throw new SQLException(e);
-        	}
-      }
+		StringBuffer sqlFile = new StringBuffer();
+		String tmpFile = new String();
+		BufferedReader file = new BufferedReader(new FileReader(new File(path)));
+		while (true) {
+			tmpFile = file.readLine();
+			if (tmpFile == null)
+				break;
+			for (int i = 0; i < tmpFile.length() - 1; i++) {
+				if (tmpFile.charAt(i) == '-' && tmpFile.charAt(i + 1) == '-') {
+					if (i > 0)
+						tmpFile = tmpFile.substring(0, i - 1);
+					else
+						tmpFile = null;
+					break;
+				}
+			}
+			if (tmpFile != null)
+				sqlFile.append(tmpFile);
+		}
+		file.close();
+		String[] queries = sqlFile.toString().split(";");
+		for (String query : queries) {
+			try {
+				this.executeQuery(query);
+			} catch (SQLException e) {
+				if (continueOnError)
+					Debugger.println(e + "\n");
+				else
+					throw new SQLException(e);
+			}
+		}
 		if (Debugger.isEnabled())
 			Debugger.println("File - OK\n");
 		return res;

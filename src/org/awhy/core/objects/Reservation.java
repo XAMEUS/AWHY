@@ -24,7 +24,7 @@ public class Reservation implements Object {
 		this.idClient = new SimpleIntegerProperty();
 	}
 
-	public Reservation(int numDossier,Date date, String infoPaiement, int idClient) {
+	public Reservation(int numDossier, Date date, String infoPaiement, int idClient) {
 		this.numDossier = new SimpleIntegerProperty(numDossier);
 		this.datePaiement = date;
 		this.infoPaiement = new SimpleStringProperty(infoPaiement);
@@ -58,7 +58,7 @@ public class Reservation implements Object {
 		preparedStatementInsert.close();
 		c.commit();
 	}
-	
+
 	@Override
 	public Object createFromSQL(ResultSet res) throws SQLException {
 		return new Reservation(res.getInt(1), res.getDate(2), res.getString(3), res.getInt(4));
@@ -80,7 +80,7 @@ public class Reservation implements Object {
 		return idClient.get();
 	}
 
-	//Attention à l'utilisation de setNumDossier !
+	// Attention à l'utilisation de setNumDossier !
 	public void setNumDossier(Integer numDossier) {
 		this.numDossier.set(numDossier);
 	}

@@ -13,6 +13,7 @@ import javafx.scene.layout.GridPane;
 public class PopupNom {
 	public String nom;
 	public String prenom;
+
 	public int show() {
 		Dialog<ButtonType> dialog = new Dialog<>();
 		dialog.setTitle("Nom Client");
@@ -40,7 +41,7 @@ public class PopupNom {
 
 		if (result.isPresent()) {
 			try {
-				if(nomClient.getText().trim().isEmpty() || prenomClient.getText().trim().isEmpty())
+				if (nomClient.getText().trim().isEmpty() || prenomClient.getText().trim().isEmpty())
 					return -1;
 				this.nom = nomClient.getText();
 				this.prenom = prenomClient.getText();

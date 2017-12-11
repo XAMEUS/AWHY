@@ -8,13 +8,13 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class Awhy extends Application {
-	
+
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 
 		Controller.mainWindow = primaryStage;
 		Controller.root = new GContainerFX();
-		
+
 		Scene scene = new Scene((Parent) Controller.root, 1600, 900);
 
 		// setting color to the scene
@@ -28,7 +28,7 @@ public class Awhy extends Application {
 
 		// Displaying the contents of the stage
 		primaryStage.show();
-		
+
 	}
 
 	public static void main(String args[]) {
