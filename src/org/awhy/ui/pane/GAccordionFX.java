@@ -97,10 +97,12 @@ public class GAccordionFX extends VBox {
 						row.setOnMouseClicked(e -> {
 							if (e.getClickCount() == 2 && (!row.isEmpty())) {
 								Hotel rowData = row.getItem();
-								if(PopupHotel.show(tp, rowData, s, null, null, 0)) {
+								if(PopupHotel.show(tp, rowData, s, null, null, null)) {
 									ac.getPanes().add(tp);
 									confirmer.setVisible(true);
 								}
+								else
+									PopupError.bang();
 							}
 						});
 						return row;
