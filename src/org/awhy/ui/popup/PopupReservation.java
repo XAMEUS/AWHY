@@ -1,13 +1,9 @@
 package org.awhy.ui.popup;
 
-import java.sql.Connection;
 import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Optional;
 
-import org.awhy.core.objects.Client;
 import org.awhy.core.objects.Reservation;
 import org.awhy.ui.Controller;
 
@@ -24,8 +20,7 @@ public class PopupReservation {
 	public static void show(int numDossier, int idClient) {
 
 		Dialog<ButtonType> dialog = new Dialog<>();
-		String query = "SELECT min(dateDepartHotel), max(dateArriveeHotel) FROM ReserveHotel WHERE numDossier=?";
-
+		
 		dialog.setTitle("Reservation");
 		dialog.setHeaderText("Ajouter un paiement");
 

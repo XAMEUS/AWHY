@@ -1,18 +1,14 @@
 package org.awhy.ui.pane;
 
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import org.awhy.core.Dialog;
 import org.awhy.core.objects.Circuit;
 import org.awhy.core.objects.Hotel;
 import org.awhy.core.objects.LieuAVisiter;
 import org.awhy.core.objects.Object;
-import org.awhy.core.objects.ReserveHotel;
 import org.awhy.core.objects.Simulation;
-import org.awhy.core.objects.Ville;
 import org.awhy.ui.Controller;
 import org.awhy.ui.popup.PopupCircuit;
 import org.awhy.ui.popup.PopupEndroit;
@@ -24,7 +20,6 @@ import org.awhy.ui.tables.CircuitTable;
 import org.awhy.ui.tables.HotelTable;
 import org.awhy.ui.tables.LieuAVisiterTable;
 import org.awhy.ui.tables.SimulationTable;
-import org.awhy.utils.Debugger;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;

@@ -1,11 +1,6 @@
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Scanner;
 
 import org.awhy.core.Dialog;
-import org.awhy.core.objects.Client;
-import org.awhy.core.objects.Hotel;
 import org.awhy.core.objects.Ville;
 
 public class TestTransactionVille {
