@@ -167,7 +167,7 @@ public class PopupSimulation {
 		res = pS.executeQuery();
 		while (res.next()) {
 			ReserveCircuit circuit = (ReserveCircuit) new ReserveCircuit().createFromSQL(res);
-			String check = "select (dc.nbPersonnes - sum(rcd.nbPersonnesCircuit)) as nbPlaces from DateCircuit dc, (select idCircuit, dateDepartCircuit, nbPersonnesCircuit from ReserveCircuit rc, Reservation r where r.numDossier = rc.numDossier and rc.idCircuit = ? and rc.dateDepartCircuit = ?) rcd where dc.idCircuit = rcd.idCircuit and dc.dateDepartCircuit = rcd.dateDepartCircuit group by dc.idCircuit, dc.dateDepartCircuit, dc.nbPersonnes";
+			String check = "select sum(nbPersonnesCircuit) from ReserveCircuit rc, Reservation r where rc.numDossier = r.numDossier and idCircuit=? and dateDepartCircuit=?";
 			PreparedStatement cPS = c.prepareStatement(check);
 			cPS.setString(1, res.getString(1));
 			cPS.setDate(2, res.getDate(2));
