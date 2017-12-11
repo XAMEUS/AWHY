@@ -36,7 +36,8 @@ public class TPane extends TitledPane {
 	}
 	
 	public void setInvalid() {
-		this.setText(this.getText() + " [INVALIDE]");
+		this.setText(this.getText() + " [INVALIDE - SUPPRIME]");
 		this.valid = false;
+		this.setContent(null);
 	}
 }
