@@ -196,7 +196,6 @@ public class PopupSimulation {
 					nbPlaces -= cRes.getInt(1);
 				if (nbPlaces < res.getInt(4)) {
 					possible = false;
-					circuit.deleteSQL(c);
 					circuitsPasOk.add(circuit);
 					circuit = null;
 					break;
@@ -239,7 +238,6 @@ public class PopupSimulation {
 						nbPlaces -= cRes.getInt(1);
 					if (nbPlaces < res.getInt(7)) {
 						possible = false;
-						hotel.deleteSQL(c);
 						hotelsPasOk.add(hotel);
 						hotel = null;
 						break;
@@ -317,6 +315,7 @@ public class PopupSimulation {
 					cp.add(new Text(r.toString()));
 					cp.setInvalid();
 					accordion.ac.getPanes().add(cp);
+					r.deleteSQL(c);
 				}
 				for (ReserveHotel r : hotels) {
 					HotelPane hp = new HotelPane(accordion.ac);
@@ -328,6 +327,7 @@ public class PopupSimulation {
 					hp.add(new Text(r.toString()));
 					hp.setInvalid();
 					accordion.ac.getPanes().add(hp);
+					r.deleteSQL(c);
 				}
 				accordion.confirmer.setOnAction(new EventHandler<ActionEvent>() {
 					@Override
@@ -340,6 +340,7 @@ public class PopupSimulation {
 									Controller.container.setPane(null);
 									Controller.container.setTableView(
 											new SimulationTable(Controller.executeQuery("select * from Simulation")));
+									PopupSimulation.show(numDossier, nomClient, prenomClient, c);;
 								}
 							}
 							Controller.dialog.getConnection().commit();
