@@ -40,13 +40,15 @@ public class GAccordionFX extends VBox {
 	private ToolBar top;
 	private ToolBar bot;
 	private Button confirmer;
+	
+	public Accordion ac;
 
 	public final Simulation s;
 
 	public GAccordionFX(Simulation s) {
 		this.s = s;
 		this.getChildren().add(new VBox());
-		Accordion ac = new Accordion();
+		ac = new Accordion();
 		StackPane pane = new StackPane();
 		pane.setAlignment(Pos.TOP_CENTER);
 		pane.getChildren().add(new Text("TODO"));

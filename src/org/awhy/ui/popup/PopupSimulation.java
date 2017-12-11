@@ -14,7 +14,10 @@ import org.awhy.core.objects.ReserveHotel;
 import org.awhy.core.objects.ReserveVisite;
 import org.awhy.core.objects.Simulation;
 import org.awhy.ui.Controller;
+import org.awhy.ui.pane.CircuitPane;
 import org.awhy.ui.pane.GAccordionFX;
+import org.awhy.ui.pane.HotelPane;
+import org.awhy.ui.pane.VisitePane;
 import org.awhy.ui.tables.ReserveCircuitTable;
 import org.awhy.ui.tables.ReserveHotelTable;
 import org.awhy.ui.tables.ReserveVisiteTable;
@@ -232,7 +235,7 @@ public class PopupSimulation {
 		grid.add(recapVisite, 2, 3);
 
 		Text placesOK;
-		//possible = false;
+		possible = false;
 		if (possible) {
 			placesOK = new Text("Réservation possible");
 			dialog.getDialogPane().getButtonTypes().addAll(confirmButtonType);
@@ -271,7 +274,33 @@ public class PopupSimulation {
 				
 				GAccordionFX accordion = new GAccordionFX(new Simulation(numDossier, nomClient, prenomClient));
 				Controller.container.setPane(accordion);
-				
+				for (ReserveVisite r : visites) {
+					VisitePane vp = new VisitePane(accordion.ac);
+					vp.add(new Text(r.toString()));
+					accordion.ac.getPanes().add(vp);
+				}
+				for (ReserveCircuit r : circuits) {
+					CircuitPane cp = new CircuitPane(accordion.ac);
+					cp.add(new Text(r.toString()));
+					accordion.ac.getPanes().add(cp);
+				}
+				for (ReserveCircuit r : circuitsPasOk) {
+					CircuitPane cp = new CircuitPane(accordion.ac);
+					cp.add(new Text(r.toString()));
+					cp.setInvalid();
+					accordion.ac.getPanes().add(cp);
+				}
+				for (ReserveHotel r : hotels) {
+					HotelPane hp = new HotelPane(accordion.ac);
+					hp.add(new Text(r.toString()));
+					accordion.ac.getPanes().add(hp);
+				}
+				for (ReserveHotel r : hotelsPasOk) {
+					HotelPane hp = new HotelPane(accordion.ac);
+					hp.add(new Text(r.toString()));
+					hp.setInvalid();
+					accordion.ac.getPanes().add(hp);
+				}
 			}
 		}
 	}
