@@ -100,8 +100,16 @@ public class ReserveCircuit implements Object {
 
 	@Override
 	public void deleteSQL(Connection c) throws SQLException {
-		// TODO Auto-generated method stub
-		
+		String insert = "DELETE from " + dbName
+				+ " WHERE idCircuit=?, dateDepartCircuit=?, numDossier=?";
+		c.commit();
+		PreparedStatement preparedStatementInsert = c.prepareStatement(insert);
+		preparedStatementInsert.setString(1, this.getIdCircuit());
+		preparedStatementInsert.setDate(2, this.getDateDepartCircuit());
+		preparedStatementInsert.setInt(3, this.getNumDossier());
+		preparedStatementInsert.executeUpdate();
+		preparedStatementInsert.close();
+		c.commit();
 	}
 
 }

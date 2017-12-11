@@ -41,15 +41,8 @@ public class PopupCircuit {
 		grid.setHgap(10);
 		grid.setVgap(10);
 		grid.setPadding(new Insets(20, 20, 10, 10));
-
-		// TODO : nb personne dans reserve circuit
-		// TextField nbPersonnes = new TextField();
-		// grid.add(new Label("Nombre de personnes:"), 0, 0);
-		// grid.add(nbPersonnes, 1, 0);
-
 		dialog.getDialogPane().setContent(grid);
 
-		// TODO: afficher les etape dans la popup
 		try {
 			EtapesTable et = new EtapesTable(
 					Controller.executeQuery("select * from etapes where idCircuit = " + data.getIdCircuit()));
@@ -60,34 +53,8 @@ public class PopupCircuit {
 
 		Optional<ButtonType> result = dialog.showAndWait();
 
-		if (result.isPresent()) {
+		if (result.isPresent())
 			return PopupCircuit.show2(tp, data, s);
-			// try {
-			// Controller.container.setTableView(new DateCircuitTable(
-			// Controller.executeQuery("select * from dateCircuit where
-			// idCircuit = " + data.getIdCircuit())));
-			// //TODO: reserver date, new popup ?
-			// TableView<DateCircuit> v = (TableView<DateCircuit>)
-			// (Controller.tableView);
-			// v.setRowFactory(tv -> {
-			// TableRow<DateCircuit> row = new TableRow<>();
-			// row.setOnMouseClicked(event -> {
-			// if (event.getClickCount() == 2 && (!row.isEmpty())) {
-			// DateCircuit rowData = row.getItem();
-			// // tp.setText ne fonctionne pas ?
-			// tp.object = new ReserveCircuit(data.getIdCircuit(),
-			// rowData.getDateDepartCircuit(),
-			// s.getNumDossier(), Integer.valueOf(nbPersonnes.getText()));
-			// System.out.println(rowData.getDateDepartCircuit());
-			// // TODO : revenir aux circuits
-			// }
-			// });
-			// return row;
-			// });
-			// } catch (SQLException e) {
-			// e.printStackTrace();
-			// }
-		}
 		return false;
 	}
 
@@ -96,7 +63,7 @@ public class PopupCircuit {
 		Dialog<ButtonType> dialog = new Dialog<>();
 		dialog.setTitle("Reserve Circuit");
 		dialog.setHeaderText(
-				"Réserver le circuit n°" + data.getIdCircuit() + "à une date et un nombre de personnes spécifiques");
+				"Réserver le circuit n°" + data.getIdCircuit().trim() + " à une date et un nombre de personnes spécifiques");
 
 		ButtonType confirmButtonType = new ButtonType("Continuer", ButtonData.OK_DONE);
 		dialog.getDialogPane().getButtonTypes().addAll(confirmButtonType);
@@ -115,12 +82,11 @@ public class PopupCircuit {
 		try {
 			final DateCircuitTable dct = new DateCircuitTable(
 					Controller.executeQuery("select * from dateCircuit where idCircuit = " + data.getIdCircuit()));
-			grid.add(dct, 0, 1);
+			grid.add(dct, 0, 0);
 
 			Optional<ButtonType> result = dialog.showAndWait();
 
 			if (result.isPresent()) {
-				// TODO: reserver date, new popup ?
 				DateCircuit dc = dct.getSelectionModel().getSelectedItem();
 				Date dateDepart = dc.getDateDepartCircuit();
 				tp.objects.add(new ReserveCircuit(data.getIdCircuit(), dateDepart, s.getNumDossier(),
@@ -181,8 +147,6 @@ public class PopupCircuit {
 					Date depart = new Date(dateDepart.getTime() + (jours + etape.getNbJours()) * 24 * 60 * 60 * 1000);
 					PopupHotel.show(tp, hotels.getSelectionModel().getSelectedItem(), s, arrivee, depart, nbPersonnes);
 					jours += etape.getNbJours();
-					// TODO : why #c06c2ba ?
-					// return true;
 				}
 			}
 		} catch (SQLException e) {

@@ -127,7 +127,17 @@ public class ReserveVisite implements Object {
 
 	@Override
 	public void deleteSQL(Connection c) throws SQLException {
-		// TODO Auto-generated method stub
-		
+		String insert = "DELETE from " + dbName
+				+ " WHERE nomLieu=?, ville=?, pays=?, numDossier=?, dateVisite=?";
+		c.commit();
+		PreparedStatement preparedStatementInsert = c.prepareStatement(insert);
+		preparedStatementInsert.setString(1, this.getNomLieu());
+		preparedStatementInsert.setString(2, this.getVille());
+		preparedStatementInsert.setString(3, this.getPays());
+		preparedStatementInsert.setInt(4, this.getNumDossier());
+		preparedStatementInsert.setDate(5, this.getDateVisite());
+		preparedStatementInsert.executeUpdate();
+		preparedStatementInsert.close();
+		c.commit();
 	}
 }
