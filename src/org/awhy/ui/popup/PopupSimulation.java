@@ -9,20 +9,29 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.awhy.core.objects.Object;
 import org.awhy.core.objects.ReserveCircuit;
 import org.awhy.core.objects.ReserveHotel;
 import org.awhy.core.objects.ReserveVisite;
 import org.awhy.core.objects.Simulation;
 import org.awhy.ui.Controller;
+import org.awhy.ui.pane.CircuitPane;
 import org.awhy.ui.pane.GAccordionFX;
+import org.awhy.ui.pane.HotelPane;
+import org.awhy.ui.pane.TPane;
+import org.awhy.ui.pane.VisitePane;
 import org.awhy.ui.tables.ReserveCircuitTable;
 import org.awhy.ui.tables.ReserveHotelTable;
 import org.awhy.ui.tables.ReserveVisiteTable;
+import org.awhy.ui.tables.SimulationTable;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
+import javafx.scene.control.TitledPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 
@@ -167,7 +176,7 @@ public class PopupSimulation {
 		res = pS.executeQuery();
 		while (res.next()) {
 			ReserveCircuit circuit = (ReserveCircuit) new ReserveCircuit().createFromSQL(res);
-			String check = "select (dc.nbPersonnes - sum(rcd.nbPersonnesCircuit)) as nbPlaces from DateCircuit dc, (select idCircuit, dateDepartCircuit, nbPersonnesCircuit from ReserveCircuit rc, Reservation r where r.numDossier = rc.numDossier and rc.idCircuit = ? and rc.dateDepartCircuit = ?) rcd where dc.idCircuit = rcd.idCircuit and dc.dateDepartCircuit = rcd.dateDepartCircuit group by dc.idCircuit, dc.dateDepartCircuit, dc.nbPersonnes";
+			String check = "select sum(nbPersonnesCircuit) from ReserveCircuit rc, Reservation r where rc.numDossier = r.numDossier and idCircuit=? and dateDepartCircuit=?";
 			PreparedStatement cPS = c.prepareStatement(check);
 			cPS.setString(1, res.getString(1));
 			cPS.setDate(2, res.getDate(2));
@@ -255,7 +264,6 @@ public class PopupSimulation {
 		grid.add(recapVisite, 2, 3);
 
 		Text placesOK;
-		//possible = false;
 		if (possible) {
 			placesOK = new Text("Réservation possible");
 			dialog.getDialogPane().getButtonTypes().addAll(confirmButtonType);
@@ -294,7 +302,52 @@ public class PopupSimulation {
 				
 				GAccordionFX accordion = new GAccordionFX(new Simulation(numDossier, nomClient, prenomClient));
 				Controller.container.setPane(accordion);
-				
+				for (ReserveVisite r : visites) {
+					VisitePane vp = new VisitePane(accordion.ac);
+					vp.add(new Text(r.toString()));
+					accordion.ac.getPanes().add(vp);
+				}
+				for (ReserveCircuit r : circuits) {
+					CircuitPane cp = new CircuitPane(accordion.ac);
+					cp.add(new Text(r.toString()));
+					accordion.ac.getPanes().add(cp);
+				}
+				for (ReserveCircuit r : circuitsPasOk) {
+					CircuitPane cp = new CircuitPane(accordion.ac);
+					cp.add(new Text(r.toString()));
+					cp.setInvalid();
+					accordion.ac.getPanes().add(cp);
+				}
+				for (ReserveHotel r : hotels) {
+					HotelPane hp = new HotelPane(accordion.ac);
+					hp.add(new Text(r.toString()));
+					accordion.ac.getPanes().add(hp);
+				}
+				for (ReserveHotel r : hotelsPasOk) {
+					HotelPane hp = new HotelPane(accordion.ac);
+					hp.add(new Text(r.toString()));
+					hp.setInvalid();
+					accordion.ac.getPanes().add(hp);
+				}
+				accordion.confirmer.setOnAction(new EventHandler<ActionEvent>() {
+					@Override
+					public void handle(ActionEvent event) {
+						try {
+							for (TitledPane tp : accordion.ac.getPanes()) {
+								for (Object o : ((TPane) tp).objects) {
+									System.out.println(o);
+									o.insertSQL(Controller.dialog.getConnection());
+									Controller.container.setPane(null);
+									Controller.container.setTableView(
+											new SimulationTable(Controller.executeQuery("select * from Simulation")));
+								}
+							}
+							Controller.dialog.getConnection().commit();
+						} catch (SQLException e) {
+							e.printStackTrace();
+						}
+					}
+				});
 			}
 		}
 	}
