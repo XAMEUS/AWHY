@@ -8,7 +8,6 @@ import org.awhy.core.objects.Reservation;
 import org.awhy.core.objects.Simulation;
 import org.awhy.ui.popup.PopupError;
 import org.awhy.ui.popup.PopupInfoReservation;
-import org.awhy.ui.popup.PopupReservation;
 import org.awhy.ui.popup.PopupSimulation;
 import org.awhy.ui.tables.CircuitTable;
 import org.awhy.ui.tables.ClientTable;
@@ -205,9 +204,9 @@ public class GMenuFX extends MenuBar {
 				} catch (SQLException e) {
 					Controller.alert("SQLException", e);
 				} catch (IOException e) {
-				Controller.alert("IOException", e);
+					Controller.alert("IOException", e);
 				} catch (NullPointerException e) {
-					PopupError.bang();
+					;
 				}
 			}
 		});
