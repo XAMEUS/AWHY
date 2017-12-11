@@ -7,7 +7,7 @@ Liste des requetes SQL utilisées dans le code JAVA.
 "select numdossier.nextval from simulation"
 
 --Affiche la simulation du dossier numero <numDossier>. (création de la simulation)
-"select * from Simulation where numDossier= (?)"
+"select * from Simulation where numDossier=?"
 
 
 
@@ -62,26 +62,14 @@ Liste des requetes SQL utilisées dans le code JAVA.
 "SELECT sum(prix) FROM ReserveVisite R, LieuAVisiter L WHERE numDossier=? and R.nomLieu = L.nomLieu and R.ville = L.ville and R.pays = L.pays"
 
 --Vérification que le nombre de place disponible est suffisant pour chaque circuit de la réservation. (Recapitulatif d'une reservation)
---(La vérification que les nombres obtenus sont supérieurs à 0 se fait en JAVA)
-"SELECT nbPersonnesCircuit, idCircuit, dateDepartCircuit FROM ReserveCircuit WHERE numDossier=?"
-"select (dc.nbPersonnes - sum(rcd.nbPersonnesCircuit)) as nbPlaces
-from DateCircuit dc, (
-    select idCircuit, dateDepartCircuit, nbPersonnesCircuit
-    from ReserveCircuit rc, Reservation r
-    where r.numDossier = rc.numDossier and rc.idCircuit = ? and rc.dateDepartCircuit = ?) rcd
-where dc.idCircuit = rcd.idCircuit and dc.dateDepartCircuit = rcd.dateDepartCircuit
-group by dc.idCircuit, dc.dateDepartCircuit, dc.nbPersonnes"
+"select sum(rh.nbChambresReservees) from ReserveHotel rh, Reservation r where rh.numDossier = r.numDossier and rh.nomHotel = ? and rh.ville = ? and rh.pays = ? and (dateDepartHotel <= ? and dateArriveeHotel >= ?)"
+"select nbPersonnes from DateCircuit where idCircuit=? and dateDepartCircuit=?"
 
---Vérification que le nombre de place disponible est suffisant pour chaque hotel de la réservation. (Recapitulatif d'une reservation)
---(La vérification que les nombres obtenus sont supérieurs à 0 se fait en JAVA)
-"SELECT nomHotel, ville, pays, nbChambresReservees, dateDepartHotel, dateArriveeHotel FROM ReserveHotel WHERE numDossier=?"
-"select (h.nbChambresTotal - sum(rhr.nbChambresReservees))
-from (select nomHotel, ville, pays, nbChambresTotal from Hotel) h, (
-    select rh.nomHotel, rh.ville, rh.pays, rh.nbChambresReservees
-    from ReserveHotel rh, Reservation r
-    where rh.numDossier = r.numDossier and rh.nomHotel = ? and rh.ville = ? and rh.pays = ? and (dateDepartHotel <= ? and dateArriveeHotel > ?)) rhr
-where h.nomHotel = rhr.nomHotel and h.ville = rhr.ville and h.pays = rhr.pays
-group by h.nomHotel, h.ville, h.pays, h.nbChambresTotal"
+--Vérification que le nombre de place disponible est suffisant pour chaque hotel de la réservation pour chaque jour. (Recapitulatif d'une reservation)
+"select sum(nbPersonnesCircuit) from ReserveCircuit rc, Reservation r where rc.numDossier = r.numDossier and idCircuit=? and dateDepartCircuit=?"
+"select nbChambresTotal from Hotel h where nomHotel = ? and ville = ? and pays = ?"
+
+
 
 --Affiche les circuits de la reservation. (Recapitulatif d'une reservation)
 "select * from reservecircuit where numDossier = '" + numDossier + "'"
