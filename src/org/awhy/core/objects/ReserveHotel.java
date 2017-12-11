@@ -175,4 +175,9 @@ public class ReserveHotel implements Object {
 		preparedStatementInsert.close();
 		c.commit();
 	}
+	
+	@Override
+	public String toString() {
+		return "Hotel : " + this.getNomHotel().trim() + " du " + this.getDateArriveeHotel() + " au " + this.getDateArriveeHotel();
+	}
 }

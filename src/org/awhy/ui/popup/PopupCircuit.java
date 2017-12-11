@@ -26,6 +26,7 @@ import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.scene.text.Text;
 
 public class PopupCircuit {
 	public static boolean show(CircuitPane tp, Circuit data, Simulation s) {
@@ -64,6 +65,7 @@ public class PopupCircuit {
 		dialog.setTitle("Reserve Circuit");
 		dialog.setHeaderText(
 				"Réserver le circuit n°" + data.getIdCircuit().trim() + " à une date et un nombre de personnes spécifiques");
+		tp.setText("Réserver le circuit n°" + data.getIdCircuit().trim());
 
 		ButtonType confirmButtonType = new ButtonType("Continuer", ButtonData.OK_DONE);
 		dialog.getDialogPane().getButtonTypes().addAll(confirmButtonType);
@@ -109,6 +111,7 @@ public class PopupCircuit {
 	public static boolean show3(CircuitPane tp, Circuit data, Simulation s, ResultSet res, int nbPersonnes,
 			Date dateDepart) {
 
+		tp.setText(tp.getText() + " " + nbPersonnes);
 		int jours = 0;
 		System.out.println("depart: " + dateDepart);
 		try {
@@ -138,13 +141,17 @@ public class PopupCircuit {
 				Optional<ButtonType> result = dialog.showAndWait();
 
 				if (result.isPresent()) {
-					for (int i = 0; i < etape.getNbJours(); i++)
-						tp.objects.add(new ReserveVisite(etape.getNomLieu(), etape.getVille(), etape.getPays(),
+					for (int i = 0; i < etape.getNbJours(); i++) {
+						ReserveVisite rv = new ReserveVisite(etape.getNomLieu(), etape.getVille(), etape.getPays(),
 								s.getNumDossier(), new Date(dateDepart.getTime() + (jours + i) * 24 * 60 * 60 * 1000),
-								nbPersonnes));
+								nbPersonnes);
+						tp.objects.add(rv);
+						tp.add(new Text("Etape : " + rv.toString()));
+					}
+						
 					System.out.println("jours: " + jours);
-					Date arrivee = new Date(dateDepart.getTime() + jours * 24 * 60 * 60 * 1000);
-					Date depart = new Date(dateDepart.getTime() + (jours + etape.getNbJours()) * 24 * 60 * 60 * 1000);
+					Date depart = new Date(dateDepart.getTime() + jours * 24 * 60 * 60 * 1000);
+					Date arrivee = new Date(dateDepart.getTime() + (jours + etape.getNbJours()) * 24 * 60 * 60 * 1000);
 					PopupHotel.show(tp, hotels.getSelectionModel().getSelectedItem(), s, arrivee, depart, nbPersonnes);
 					jours += etape.getNbJours();
 				}

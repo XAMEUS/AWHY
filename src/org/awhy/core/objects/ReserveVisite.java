@@ -140,4 +140,9 @@ public class ReserveVisite implements Object {
 		preparedStatementInsert.close();
 		c.commit();
 	}
+	
+	@Override
+	public String toString() {
+		return "Visite " + this.getNomLieu().trim() + " à "+ this.getVille().trim() + ", " + this.getPays().trim() + " pour le " + this.getDateVisite();
+	}
 }

@@ -12,7 +12,9 @@ import java.util.Optional;
 import org.awhy.core.objects.ReserveCircuit;
 import org.awhy.core.objects.ReserveHotel;
 import org.awhy.core.objects.ReserveVisite;
+import org.awhy.core.objects.Simulation;
 import org.awhy.ui.Controller;
+import org.awhy.ui.pane.GAccordionFX;
 import org.awhy.ui.tables.ReserveCircuitTable;
 import org.awhy.ui.tables.ReserveHotelTable;
 import org.awhy.ui.tables.ReserveVisiteTable;
@@ -40,6 +42,8 @@ public class PopupSimulation {
 		
 		List<ReserveCircuit> circuits = new ArrayList<ReserveCircuit>();
 		List<ReserveHotel> hotels = new ArrayList<ReserveHotel>();
+		List<ReserveCircuit> circuitsPasOk = new ArrayList<ReserveCircuit>();
+		List<ReserveHotel> hotelsPasOk = new ArrayList<ReserveHotel>();
 		List<ReserveVisite> visites = new ArrayList<ReserveVisite>();
 
 		GridPane grid = new GridPane();
@@ -141,7 +145,7 @@ public class PopupSimulation {
 		pS.setInt(1, numDossier);
 		res = pS.executeQuery();
 		while (res.next())
-			cout += res.getInt(1);
+			cout += res.getLong(1);
 		pS.close();
 
 		query = "SELECT sum(prix) FROM ReserveVisite R, LieuAVisiter L WHERE numDossier=? and R.nomLieu = L.nomLieu and R.ville = L.ville and R.pays = L.pays";
@@ -162,8 +166,7 @@ public class PopupSimulation {
 		pS.setInt(1, numDossier);
 		res = pS.executeQuery();
 		while (res.next()) {
-			ReserveCircuit circuit = new ReserveCircuit();
-			circuit.createFromSQL(res);
+			ReserveCircuit circuit = (ReserveCircuit) new ReserveCircuit().createFromSQL(res);
 			String check = "select (dc.nbPersonnes - sum(rcd.nbPersonnesCircuit)) as nbPlaces from DateCircuit dc, (select idCircuit, dateDepartCircuit, nbPersonnesCircuit from ReserveCircuit rc, Reservation r where r.numDossier = rc.numDossier and rc.idCircuit = ? and rc.dateDepartCircuit = ?) rcd where dc.idCircuit = rcd.idCircuit and dc.dateDepartCircuit = rcd.dateDepartCircuit group by dc.idCircuit, dc.dateDepartCircuit, dc.nbPersonnes";
 			PreparedStatement cPS = c.prepareStatement(check);
 			cPS.setString(1, res.getString(1));
@@ -174,6 +177,7 @@ public class PopupSimulation {
 				if (cRes.getInt(4) < res.getInt(1)) {
 					possible = false;
 					circuit.deleteSQL(c);
+					circuitsPasOk.add(circuit);
 					circuit = null;
 					break;
 				}
@@ -189,8 +193,7 @@ public class PopupSimulation {
 		pS.setInt(1, numDossier);
 		res = pS.executeQuery();
 		while (res.next()) {
-			ReserveHotel hotel = new ReserveHotel();
-			hotel.createFromSQL(res);
+			ReserveHotel hotel = (ReserveHotel) new ReserveHotel().createFromSQL(res);
 			Date curr = new Date(res.getDate(5).getTime());
 			while (res.getDate(6).after(curr)) {
 				String check = "select (h.nbChambresTotal - sum(rhr.nbChambresReservees)) from (select nomHotel, ville, pays, nbChambresTotal from Hotel) h, (select rh.nomHotel, rh.ville, rh.pays, rh.nbChambresReservees from ReserveHotel rh, Reservation r where rh.numDossier = r.numDossier and rh.nomHotel = ? and rh.ville = ? and rh.pays = ? and (dateDepartHotel <= ? and dateArriveeHotel > ?)) rhr where h.nomHotel = rhr.nomHotel and h.ville = rhr.ville and h.pays = rhr.pays group by h.nomHotel, h.ville, h.pays, h.nbChambresTotal";
@@ -205,9 +208,11 @@ public class PopupSimulation {
 					if (res.getInt(7) > cRes.getInt(1)) {
 						possible = false;
 						hotel.deleteSQL(c);
+						hotelsPasOk.add(hotel);
 						hotel = null;
 						break;
 					}
+				
 				if(hotel != null)
 					hotels.add(hotel);
 				cPS.close();
@@ -227,6 +232,7 @@ public class PopupSimulation {
 		grid.add(recapVisite, 2, 3);
 
 		Text placesOK;
+		//possible = false;
 		if (possible) {
 			placesOK = new Text("Réservation possible");
 			dialog.getDialogPane().getButtonTypes().addAll(confirmButtonType);
@@ -240,7 +246,6 @@ public class PopupSimulation {
 		dialog.getDialogPane().setContent(grid);
 
 		Optional<ButtonType> resDialog = dialog.showAndWait();
-
 		if (resDialog.isPresent()) {
 			System.out.println(resDialog.get());
 			if(possible) {
@@ -250,7 +255,6 @@ public class PopupSimulation {
 				} else if (resDialog.get() == confirmButtonType) {
 					if (PopupClient.show(numDossier, nomClient, prenomClient) == false)
 						PopupError.bang();
-
 				}
 			}
 			else if(resDialog.get() == editSimulation) {
@@ -264,7 +268,10 @@ public class PopupSimulation {
 					visites.add(visite);
 				}
 				pS.close();
-				//TODO: finish that
+				
+				GAccordionFX accordion = new GAccordionFX(new Simulation(numDossier, nomClient, prenomClient));
+				Controller.container.setPane(accordion);
+				
 			}
 		}
 	}
