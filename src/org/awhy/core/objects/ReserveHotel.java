@@ -178,6 +178,6 @@ public class ReserveHotel implements Object {
 	
 	@Override
 	public String toString() {
-		return "Hotel : " + this.getNomHotel().trim() + " du " + this.getDateArriveeHotel() + " au " + this.getDateArriveeHotel();
+		return "Hotel : " + this.getNomHotel().trim() + " du " + this.getDateDepartHotel() + " au " + this.getDateArriveeHotel();
 	}
 }
