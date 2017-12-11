@@ -42,9 +42,9 @@ public class PopupHotel {
 		TextField nbPersonnes = new TextField();
 		nbPersonnes.setText(String.valueOf(n));
 		TextField nbPDej = new TextField();
-		grid.add(new Label("Départ:"), 0, 0);
+		grid.add(new Label("Arrivée à l'hôtel:"), 0, 0);
 		grid.add(depart, 1, 0);
-		grid.add(new Label("Arrivée:"), 0, 1);
+		grid.add(new Label("Départ de l'hôtel:"), 0, 1);
 		grid.add(arrivee, 1, 1);
 		grid.add(new Label("Nombre de chambres:"), 0, 2);
 		grid.add(nbPersonnes, 1, 2);
