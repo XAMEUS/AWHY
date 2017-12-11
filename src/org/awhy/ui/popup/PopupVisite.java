@@ -1,11 +1,13 @@
 package org.awhy.ui.popup;
 
 import java.sql.Date;
+import java.sql.SQLException;
 import java.util.Optional;
 
 import org.awhy.core.objects.LieuAVisiter;
 import org.awhy.core.objects.ReserveVisite;
 import org.awhy.core.objects.Simulation;
+import org.awhy.ui.Controller;
 import org.awhy.ui.pane.VisitePane;
 import org.awhy.utils.Debugger;
 
@@ -53,6 +55,12 @@ public class PopupVisite {
 						Date.valueOf(dateVisite.getValue()), Integer.valueOf(nbPersonnes.getText()));
 				tp.objects.add(rv);
 				tp.add(new Text(rv.toString()));
+				try {
+					Controller.container.setTableView(null);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				return true;
 			} catch (NumberFormatException e) {
 				Debugger.println("PopupVisite: valeur incorrecte: " + e.toString());
