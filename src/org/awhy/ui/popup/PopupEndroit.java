@@ -38,7 +38,8 @@ public class PopupEndroit {
 		dialog.getDialogPane().setContent(grid);
 
 		Optional<ButtonType> result = dialog.showAndWait();
-
+		this.ville = "";
+		this.pays = "";
 		if (result.isPresent()) {
 			try {
 				this.ville = ville.getText().trim();
