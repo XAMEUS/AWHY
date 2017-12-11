@@ -4,18 +4,30 @@ import java.util.ArrayList;
 
 import org.awhy.core.objects.Object;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Node;
+import javafx.scene.control.Accordion;
+import javafx.scene.control.Button;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 
 public class TPane extends TitledPane {
 	public ArrayList<Object> objects = new ArrayList<>();
 	private GridPane content;
 	private int i = 0;
 	
-	public TPane() {
+	public TPane(Accordion ac) {
 		content = new GridPane();
-		this.setContent(this.content);
+		Button button = new Button("Enlever");
+		button.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				ac.getPanes().remove(TPane.this);
+			}
+		});
+		this.setContent(new VBox(content, button));
 	}
 	
 	public void add(Node e) {
