@@ -166,8 +166,7 @@ public class PopupSimulation {
 		pS.setInt(1, numDossier);
 		res = pS.executeQuery();
 		while (res.next()) {
-			ReserveCircuit circuit = new ReserveCircuit();
-			circuit.createFromSQL(res);
+			ReserveCircuit circuit = (ReserveCircuit) new ReserveCircuit().createFromSQL(res);
 			String check = "select (dc.nbPersonnes - sum(rcd.nbPersonnesCircuit)) as nbPlaces from DateCircuit dc, (select idCircuit, dateDepartCircuit, nbPersonnesCircuit from ReserveCircuit rc, Reservation r where r.numDossier = rc.numDossier and rc.idCircuit = ? and rc.dateDepartCircuit = ?) rcd where dc.idCircuit = rcd.idCircuit and dc.dateDepartCircuit = rcd.dateDepartCircuit group by dc.idCircuit, dc.dateDepartCircuit, dc.nbPersonnes";
 			PreparedStatement cPS = c.prepareStatement(check);
 			cPS.setString(1, res.getString(1));
@@ -194,8 +193,7 @@ public class PopupSimulation {
 		pS.setInt(1, numDossier);
 		res = pS.executeQuery();
 		while (res.next()) {
-			ReserveHotel hotel = new ReserveHotel();
-			hotel.createFromSQL(res);
+			ReserveHotel hotel = (ReserveHotel) new ReserveHotel().createFromSQL(res);
 			Date curr = new Date(res.getDate(5).getTime());
 			while (res.getDate(6).after(curr)) {
 				String check = "select (h.nbChambresTotal - sum(rhr.nbChambresReservees)) from (select nomHotel, ville, pays, nbChambresTotal from Hotel) h, (select rh.nomHotel, rh.ville, rh.pays, rh.nbChambresReservees from ReserveHotel rh, Reservation r where rh.numDossier = r.numDossier and rh.nomHotel = ? and rh.ville = ? and rh.pays = ? and (dateDepartHotel <= ? and dateArriveeHotel > ?)) rhr where h.nomHotel = rhr.nomHotel and h.ville = rhr.ville and h.pays = rhr.pays group by h.nomHotel, h.ville, h.pays, h.nbChambresTotal";
@@ -234,6 +232,7 @@ public class PopupSimulation {
 		grid.add(recapVisite, 2, 3);
 
 		Text placesOK;
+		//possible = false;
 		if (possible) {
 			placesOK = new Text("Réservation possible");
 			dialog.getDialogPane().getButtonTypes().addAll(confirmButtonType);
@@ -272,7 +271,7 @@ public class PopupSimulation {
 				
 				GAccordionFX accordion = new GAccordionFX(new Simulation(numDossier, nomClient, prenomClient));
 				Controller.container.setPane(accordion);
-
+				
 			}
 		}
 	}
